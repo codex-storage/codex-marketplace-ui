@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ErrorBoundary } from "../../components/ErrorBoundary/ErrorBoundary.tsx";
 import { Files } from "../../components/Files/Files.tsx";
 import { Card, Upload } from "@codex-storage/marketplace-ui-components";
-import { CodexSdk } from "../../sdk/codex.ts";
+import { CodexSdk } from "../../sdk/codex";
 import { Welcome } from "../../components/Welcome/Welcome.tsx";
-import { FilesStorage } from "../../utils/file-storage.ts";
+import { FilesStorage } from "../../utils/file-storage";
 
 export const Route = createFileRoute("/dashboard/")({
   component: About,

@@ -7,7 +7,6 @@ import { CodexDataContent } from "@codex-storage/sdk-js";
 export function useData() {
   const { data = [] } = useQuery({
     queryFn: (): Promise<CodexDataContent[]> => {
-      // TODO refactor
       return Promise.resolve().then(async () => {
         const res = await CodexSdk.data.cids();
 

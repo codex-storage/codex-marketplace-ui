@@ -1,6 +1,6 @@
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { createFileRoute, useRouterState } from "@tanstack/react-router";
-import { PrettyBytes } from "../../utils/bytes.ts";
+import { PrettyBytes } from "../../utils/bytes";
 import { Button, WebFileIcon } from "@codex-storage/marketplace-ui-components";
 
 function ProtectedIcon({ isProtected }: { isProtected: boolean }) {

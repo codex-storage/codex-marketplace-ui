@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { COPY_DURATION, ICON_SIZE } from "../../utils/constants.ts";
+import { COPY_DURATION, ICON_SIZE } from "../../utils/constants";
 import { Copy } from "lucide-react";
 import { Button } from "@codex-storage/marketplace-ui-components";
 

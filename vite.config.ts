@@ -17,4 +17,10 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      "../sdk/codex": "../mock",
+      "../../sdk/codex": "../../mock",
+    },
+  },
 });

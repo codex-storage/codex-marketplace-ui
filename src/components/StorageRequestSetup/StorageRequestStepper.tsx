@@ -79,7 +79,7 @@ export function StorageRequestStepper({ className, open, onClose }: Props) {
 
       setProgress(false);
       setToast({
-        message: "Error when trying to update: " + error,
+        message: "Error when creating storage request: " + error.message,
         time: Date.now(),
       });
     },

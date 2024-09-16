@@ -1,9 +1,9 @@
 import { Download, FilesIcon, ReceiptText, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { PrettyBytes } from "../../utils/bytes.ts";
-import { Dates } from "../../utils/dates.ts";
+import { PrettyBytes } from "../../utils/bytes";
+import { Dates } from "../../utils/dates";
 import "./Files.css";
-import { ICON_SIZE, SIDE_DURATION } from "../../utils/constants.ts";
+import { ICON_SIZE, SIDE_DURATION } from "../../utils/constants";
 import {
   ButtonIcon,
   EmptyPlaceholder,
