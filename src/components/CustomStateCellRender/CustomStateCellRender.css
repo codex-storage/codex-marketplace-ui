@@ -7,3 +7,28 @@
   top: 2px;
   margin-right: 0.5rem;
 }
+
+.cell-state {
+  border-radius: var(--codex-border-radius);
+  padding: 0.5rem;
+}
+
+.cell-state--error {
+  background-color: rgba(var(--codex-color-error), 0.2);
+  color: rgb(var(--codex-color-error));
+}
+
+.cell-state--success {
+  background-color: rgba(var(--codex-color-success), 0.2);
+  color: rgb(var(--codex-color-success));
+}
+
+.cell-state--warning {
+  background-color: rgba(var(--codex-color-warning), 0.2);
+  color: rgb(var(--codex-color-warning));
+}
+
+.cell-state--loading {
+  background-color: rgba(var(--codex-color-grey), 0.2);
+  color: rgb(var(--codex-color-grey));
+}
