@@ -97,6 +97,10 @@
   .storageRequestReview-alert {
     flex-direction: column;
   }
+
+  .storageRequestReview-expiration {
+    min-width: 100%;
+  }
 }
 
 @media (min-width: 801px) {

@@ -3,6 +3,7 @@
   border: 1px solid var(--codex-border-color);
   background-color: var(--codex-background-secondary);
   padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .files-title {
