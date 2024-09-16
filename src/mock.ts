@@ -11,6 +11,7 @@ import {
   CodexMarketplace,
   CodexNode,
 } from "@codex-storage/sdk-js";
+import { FilesStorage } from "./utils/file-storage";
 
 class CodexDataMock extends CodexData {
   override upload(
@@ -139,7 +140,25 @@ class CodexNodeMock extends CodexNode {
 }
 
 class CodexMarketplaceMock extends CodexMarketplace {
-  override purchases(): Promise<SafeValue<CodexPurchase[]>> {
+  override async purchases(): Promise<SafeValue<CodexPurchase[]>> {
+    await FilesStorage.set(
+      "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqY",
+      {
+        name: "codex.jpg",
+        mimetype: "image/jpg",
+        uploadedAt: new Date().toJSON(),
+      }
+    );
+
+    await FilesStorage.set(
+      "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqZ",
+      {
+        name: "codex.mp4",
+        mimetype: "video/mp4",
+        uploadedAt: new Date().toJSON(),
+      }
+    );
+
     return Promise.resolve({
       error: false,
       data: [
@@ -183,7 +202,7 @@ class CodexMarketplaceMock extends CodexMarketplace {
               maxSlotLoss: 1,
             },
             content: {
-              cid: "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqY",
+              cid: "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqZ",
             },
             expiry: "18000",
             nonce:
