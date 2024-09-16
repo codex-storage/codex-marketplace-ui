@@ -79,7 +79,7 @@ export function StorageRequestStepper({ className, open, onClose }: Props) {
 
       setProgress(false);
       setToast({
-        message: "Error when creating storage request: " + error.message,
+        message: "Error when trying to update: " + error.message,
         time: Date.now(),
       });
     },
@@ -182,7 +182,7 @@ export function StorageRequestStepper({ className, open, onClose }: Props) {
 
   return (
     <>
-      <Backdrop open={open} onClose={onClose} />
+      <Backdrop open={open} onClose={onClose} removeScroll={true} />
       <div
         className={classnames(
           ["storageRequest"],

@@ -23,13 +23,7 @@ const Purchases = () => {
   const [open, setOpen] = useState(false);
   const { data, isPending } = useQuery({
     queryFn: () =>
-      CodexSdk.marketplace
-        .purchases()
-        .then((s) => Promises.rejectOnError(s))
-        .then((data) => {
-          // TODO add temporary data
-          return data;
-        }),
+      CodexSdk.marketplace.purchases().then((s) => Promises.rejectOnError(s)),
     queryKey: ["purchases"],
     refetchOnWindowFocus: false,
     retry: false,

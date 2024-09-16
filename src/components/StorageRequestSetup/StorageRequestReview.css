@@ -83,7 +83,19 @@
 
 @media (max-width: 800px) {
   .storageRequestReview-numbers {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  .storageRequestReview-presets {
+    flex-direction: column;
+  }
+
+  .storageRequestReview-presets-blocs {
+    flex-direction: column;
+  }
+
+  .storageRequestReview-alert {
+    flex-direction: column;
   }
 }
 
@@ -91,4 +103,8 @@
   .storageRequestReview-numbers {
     grid-template-columns: 1fr 1fr 1fr;
   }
+}
+
+.document-noOverflow {
+  overflow: hidden;
 }
