@@ -1,13 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ErrorBoundary } from "@sentry/react";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
-import { Spinner } from "@codex-storage/marketplace-ui-components";
+import {
+  SpaceAllocation,
+  Spinner,
+} from "@codex-storage/marketplace-ui-components";
 import { useQuery } from "@tanstack/react-query";
 import { Promises } from "../../utils/promises";
 import { CodexSdk } from "../../sdk/codex";
 import "./availabilities.css";
 import { AvailabilitiesTable } from "../../components/Availability/AvailabilitiesTable";
 import { AvailabilityCreate } from "../../components/Availability/AvailabilityCreate";
+import { Strings } from "../../utils/strings";
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -61,12 +65,12 @@ export function Availabilities() {
       refetchOnWindowFocus: true,
     });
 
-    // const allocation = availabilities
-    //   .map((a) => ({
-    //     title: Strings.shortId(a.id),
-    //     size: a.totalSize,
-    //   }))
-    //   .slice(0, 6);
+    const allocation = availabilities
+      .map((a) => ({
+        title: Strings.shortId(a.id),
+        size: a.totalSize,
+      }))
+      .slice(0, 6);
 
     return (
       <div className="container">
@@ -85,7 +89,7 @@ export function Availabilities() {
           )}
 
           <div className="availabilities-space">
-            <div>{/* <SpaceAllocation data={allocation} /> */}</div>
+            <div>{<SpaceAllocation data={allocation} />}</div>
             <div>
               <AvailabilityCreate space={space} />
             </div>
