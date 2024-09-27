@@ -211,7 +211,7 @@ export function StorageRequestReview({
           title={"Proof probability"}
           data={storageRequest.proofProbability.toString()}
           onChange={onProofProbabilityChange}
-          helper="Proof request frequency in seconds"></CardNumbers>
+          helper="Proof request frequency"></CardNumbers>
       </div>
 
       <div className="storageRequestReview-presets">

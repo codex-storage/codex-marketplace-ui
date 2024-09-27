@@ -8,7 +8,6 @@ import {
   StepperState,
 } from "@codex-storage/marketplace-ui-components";
 import { Dispatch, useState } from "react";
-import * as Sentry from "@sentry/browser";
 
 export function useStorageRequestMutation(
   dispatch: Dispatch<StepperAction>,
@@ -42,10 +41,6 @@ export function useStorageRequestMutation(
       });
     },
     onError: (error) => {
-      if (import.meta.env.PROD) {
-        Sentry.captureException(error);
-      }
-
       setError(error);
 
       WebStorage.set("storage-request-step", state.step - 1);

@@ -8,6 +8,7 @@ import {
 import { Promises } from "../../utils/promises";
 
 const report = false;
+export let isCodexOnline: boolean | null = null;
 
 export function NodeIndicator() {
   const queryClient = useQueryClient();
@@ -37,7 +38,7 @@ export function NodeIndicator() {
     gcTime: 0,
   });
 
-  const isCodexOnline = !isError && !!data;
+  isCodexOnline = !isError && !!data;
 
   useEffect(() => {
     queryClient.invalidateQueries({

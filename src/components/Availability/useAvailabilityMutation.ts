@@ -8,8 +8,6 @@ import {
   StepperAction,
   StepperState,
 } from "@codex-storage/marketplace-ui-components";
-import * as Sentry from "@sentry/browser";
-import { SafeValue } from "@codex-storage/sdk-js/async";
 import { Times } from "../../utils/times";
 import { CodexSdk } from "../../sdk/codex";
 
@@ -34,16 +32,21 @@ export function useAvailabilityMutation(
 
       const fn: (
         input: Omit<AvailabilityState, "totalSizeUnit" | "durationUnit">
-      ) => Promise<SafeValue<unknown>> = input.id
+      ) => Promise<unknown> = input.id
         ? (input) =>
-            marketplace.updateAvailability({ ...input, id: input.id || "" })
-        : (input) => marketplace.createAvailability(input);
+            marketplace
+              .updateAvailability({ ...input, id: input.id || "" })
+              .then((s) => Promises.rejectOnError(s))
+        : (input) =>
+            marketplace
+              .createAvailability(input)
+              .then((s) => Promises.rejectOnError(s));
 
       return fn({
         ...input,
         duration: time,
         totalSize: Math.trunc(totalSize * unit),
-      }).then((s) => Promises.rejectOnError(s));
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["availabilities"] });
@@ -60,10 +63,6 @@ export function useAvailabilityMutation(
       });
     },
     onError: (error) => {
-      if (import.meta.env.PROD) {
-        Sentry.captureException(error);
-      }
-
       setError(error);
 
       WebStorage.set("availability-step", state.step - 1);
@@ -73,6 +72,8 @@ export function useAvailabilityMutation(
         step: state.step,
       });
     },
+
+    throwOnError: false,
   });
 
   return { mutateAsync, error };

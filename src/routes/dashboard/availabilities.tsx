@@ -27,7 +27,6 @@ export function Availabilities() {
           .then((res) => res.sort((a, b) => b.totalSize - a.totalSize)),
       queryKey: ["availabilities"],
       initialData: [],
-      throwOnError: true,
 
       // No need to retry because if the connection to the node
       // is back again, all the queries will be invalidated.

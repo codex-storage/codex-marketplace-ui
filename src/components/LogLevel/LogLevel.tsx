@@ -9,7 +9,6 @@ import {
   Toast,
 } from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
-import * as Sentry from "@sentry/browser";
 
 export function LogLevel() {
   const queryClient = useQueryClient();
@@ -26,10 +25,6 @@ export function LogLevel() {
       queryClient.invalidateQueries({ queryKey: ["debug"] });
     },
     onError: (error) => {
-      if (import.meta.env.PROD) {
-        Sentry.captureException(error);
-      }
-
       setToast({
         message: "Error when trying to update: " + error.message,
         time: Date.now(),
