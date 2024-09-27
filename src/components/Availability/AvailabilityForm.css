@@ -1,0 +1,19 @@
+.availabilityForm-itemInput {
+  width: 100%;
+}
+
+.availabilityForm-item {
+  margin-bottom: 1rem;
+}
+
+.availabilityForm-item--error .input,
+.availabilityForm-item--error .inputGroup-helper,
+.availabilityForm-item--error .inputGroup-select {
+  color: rgb(var(--codex-color-error));
+  border-color: rgb(var(--codex-color-error));
+}
+
+.availabilityForm-row {
+  display: flex;
+  gap: 0.5rem;
+}

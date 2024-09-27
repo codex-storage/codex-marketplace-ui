@@ -1,0 +1,15 @@
+.availability-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.availability-action {
+  cursor: pointer;
+  color: var(--codex-color-primary);
+  transition: opacity 0.35s;
+}
+
+.availability-action:hover {
+  opacity: 0.7;
+}

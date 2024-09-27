@@ -1,0 +1,13 @@
+.reservations-title {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+@media (min-width: 801px) {
+  .reservations {
+    min-width: 500px;
+  }
+}

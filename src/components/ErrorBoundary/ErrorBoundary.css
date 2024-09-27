@@ -1,7 +1,0 @@
-.errorBoundary {
-  border-radius: var(--codex-border-radius);
-  border: 1px solid var(--codex-border-color);
-  background-color: var(--codex-background-secondary);
-  margin: auto;
-  padding: 1.5rem;
-}

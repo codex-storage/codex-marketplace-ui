@@ -20,8 +20,21 @@ export function NodeIndicator() {
     queryKey: ["spr"],
     queryFn: async () =>
       CodexSdk.node.spr().then((data) => Promises.rejectOnError(data, report)),
-    retry: false,
     refetchInterval: 5000,
+
+    // No need to retry because we defined a refetch interval
+    retry: false,
+
+    // The client node should be local, so display the cache value while
+    // making a background request looks good.
+    staleTime: 0,
+
+    // Refreshing when focus returns can be useful if a user comes back
+    // to the UI after performing an operation in the terminal.
+    refetchOnWindowFocus: true,
+
+    // Cache is not useful for the spr endpoint
+    gcTime: 0,
   });
 
   const isCodexOnline = !isError && !!data;

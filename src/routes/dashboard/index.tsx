@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ErrorBoundary } from "../../components/ErrorBoundary/ErrorBoundary.tsx";
 import { Files } from "../../components/Files/Files.tsx";
 import { Card, Upload } from "@codex-storage/marketplace-ui-components";
 import { CodexSdk } from "../../sdk/codex";
 import { Welcome } from "../../components/Welcome/Welcome.tsx";
 import { FilesStorage } from "../../utils/file-storage";
+import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder.tsx";
+import { ErrorBoundary } from "@sentry/react";
 
 export const Route = createFileRoute("/dashboard/")({
   component: About,
@@ -22,19 +23,37 @@ function About() {
   return (
     <>
       <div className="dashboard">
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <Card title="Upload a file">
             <Upload multiple codexData={CodexSdk.data} onSuccess={onSuccess} />
           </Card>
         </ErrorBoundary>
 
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <Welcome />
         </ErrorBoundary>
       </div>
 
       <div className="container-fluid">
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <Files />
         </ErrorBoundary>
       </div>

@@ -5,7 +5,14 @@ import {
   MenuItemComponentProps,
   Page,
 } from "@codex-storage/marketplace-ui-components";
-import { Home, ShoppingBag, Server, Settings, HelpCircle } from "lucide-react";
+import {
+  Home,
+  ShoppingBag,
+  Server,
+  Settings,
+  HelpCircle,
+  TriangleAlert,
+} from "lucide-react";
 import { ICON_SIZE } from "../utils/constants";
 import { NodeIndicator } from "../components/NodeIndicator/NodeIndicator";
 import { HttpNetworkIndicator } from "../components/HttpNetworkIndicator/HttpNetworkIndicator";
@@ -56,7 +63,7 @@ const Layout = () => {
       Component: (p: MenuItemComponentProps) => (
         <Link to="/dashboard/availabilities" {...p}>
           <Server size={ICON_SIZE} />
-          Availabilities
+          Sales
         </Link>
       ),
     },
@@ -80,9 +87,25 @@ const Layout = () => {
         </Link>
       ),
     },
+    {
+      type: "menu-item",
+      Component: (p: MenuItemComponentProps) => (
+        <Link to="/dashboard/disclaimer" {...p}>
+          <TriangleAlert size={ICON_SIZE} />
+          Disclaimer
+        </Link>
+      ),
+    },
   ] satisfies MenuItem[];
 
-  return <Page children={<Outlet />} items={items} Right={Right} />;
+  return (
+    <Page
+      children={<Outlet />}
+      items={items}
+      Right={Right}
+      version={import.meta.env.PACKAGE_VERSION}
+    />
+  );
 };
 
 export const Route = createFileRoute("/dashboard")({

@@ -1,7 +1,6 @@
 import { CodexSdk } from "../../sdk/codex";
 import "./StorageRequestFileChooser.css";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { WebStorage } from "../../utils/web-storage";
+import { ChangeEvent, useEffect } from "react";
 import { classnames } from "../../utils/classnames";
 import {
   Dropdown,
@@ -10,57 +9,37 @@ import {
   WebFileIcon,
 } from "@codex-storage/marketplace-ui-components";
 import { useData } from "../../hooks/useData";
+import { StorageRequestComponentProps } from "./types";
 
-type Props = {
-  onChangeNextState: (value: "enable" | "disable") => void;
-};
-
-export function StorageRequestFileChooser({ onChangeNextState }: Props) {
+export function StorageRequestFileChooser({
+  storageRequest,
+  dispatch,
+  onStorageRequestChange,
+}: StorageRequestComponentProps) {
   const files = useData();
-  const [cid, setCid] = useState("");
-  const cache = useRef("");
 
   useEffect(() => {
-    WebStorage.get<string>("storage-request-step-1").then((val) => {
-      cache.current = val || "";
-
-      setCid(val || "");
-      onChangeNextState(!val ? "disable" : "enable");
+    dispatch({
+      type: "toggle-buttons",
+      isNextEnable: !!storageRequest.cid,
+      isBackEnable: true,
     });
-
-    return () => {
-      WebStorage.set("storage-request-step-1", cache.current || "");
-    };
-  }, [onChangeNextState]);
+  }, [dispatch, storageRequest]);
 
   const onSelected = (o: DropdownOption) => {
-    setCid(o.subtitle || "");
-    onChangeNextState(!o.subtitle ? "disable" : "enable");
-    cache.current = o.subtitle || "";
+    onStorageRequestChange({ cid: o.subtitle });
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCid(e.currentTarget.value);
-    onChangeNextState(!e.currentTarget.value ? "disable" : "enable");
-    cache.current = e.currentTarget.value;
+    const value = e.currentTarget.value;
+    onStorageRequestChange({ cid: value });
   };
 
-  const onSuccess = (data: string, file: File) => {
-    WebStorage.set(data, {
-      type: file.type,
-      name: file.name,
-    });
-
-    onChangeNextState("enable");
-
-    setCid(data);
-    cache.current = data;
+  const onSuccess = (data: string) => {
+    onStorageRequestChange({ cid: data });
   };
 
-  const onDelete = () => {
-    setCid("");
-    onChangeNextState("disable");
-  };
+  const onDelete = () => onStorageRequestChange({ cid: "" });
 
   const options =
     files.map((f) => {
@@ -84,12 +63,12 @@ export function StorageRequestFileChooser({ onChangeNextState }: Props) {
         id="cid"
         placeholder="Select or type your CID"
         onChange={onChange}
-        value={cid}
+        value={storageRequest.cid}
         options={options}
         onSelected={onSelected}
         className={classnames(
           ["storageRequestFileChooser-dropdown"],
-          ["storageRequestFileChooser-dropdown-success", !!cid]
+          ["storageRequestFileChooser-dropdown-success", !!storageRequest.cid]
         )}
       />
 

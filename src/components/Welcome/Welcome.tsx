@@ -1,4 +1,4 @@
-import { SimpleText } from "@codex-storage/marketplace-ui-components";
+import { Alert, SimpleText } from "@codex-storage/marketplace-ui-components";
 import "./Welcome.css";
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
@@ -14,6 +14,13 @@ export function Welcome() {
           explore its features. Your feedback is invaluable as we continue to
           improve!
         </SimpleText>
+        <Alert
+          variant="warning"
+          title="Disclaimer"
+          className="welcome-disclaimer">
+          The website and the content herein is not intended for public use and
+          is for informational and demonstration purposes only.
+        </Alert>
       </div>
 
       <Link to="/dashboard/help" className="welcome-link">

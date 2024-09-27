@@ -5,5 +5,6 @@ interface ImportMetaEnv {
 }
 
 interface ImportMeta {
+  readonly PACKAGE_VERSION: string;
   readonly env: ImportMetaEnv;
 }

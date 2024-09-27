@@ -37,6 +37,17 @@ export const Route = createFileRoute("/dashboard/help")({
         <div className="help-item">
           <HelpCircle className="help-itemIcon" size={"1rem"} />
           <div className="help-itemBody">
+            <p className="help-itemTitle">Can Codex handle big files ?</p>
+            <p className="help-text">
+              Codex can handle very large files, which is its main purpose.
+              However, for this UI, the files used should not be too large.
+            </p>
+          </div>
+        </div>
+
+        <div className="help-item">
+          <HelpCircle className="help-itemIcon" size={"1rem"} />
+          <div className="help-itemBody">
             <p className="help-itemTitle">Is it production ready ?</p>
             <p className="help-text">
               Not at all! This is a very early alpha version. You should expect

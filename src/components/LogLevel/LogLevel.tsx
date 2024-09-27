@@ -15,7 +15,6 @@ export function LogLevel() {
   const queryClient = useQueryClient();
   const [level, setLevel] = useState<CodexLogLevel>("DEBUG");
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ["debug"],
     mutationFn: (level: CodexLogLevel) =>
       CodexSdk.debug.setLogLevel(level).then((s) => Promises.rejectOnError(s)),
     onSuccess: () => {
@@ -72,6 +71,7 @@ export function LogLevel() {
         id="level"
         label="Log level"
         options={levels}
+        value={level}
         onChange={onChange}></Select>
       <Button
         variant="primary"

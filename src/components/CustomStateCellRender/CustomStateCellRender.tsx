@@ -1,9 +1,6 @@
 import { CheckCircle, CircleDashed, ShieldAlert } from "lucide-react";
 import "./CustomStateCellRender.css";
-import { StateCell, Tooltip } from "@codex-storage/marketplace-ui-components";
-
-// Import css
-StateCell;
+import { Tooltip } from "@codex-storage/marketplace-ui-components";
 
 type Props = {
   state: string;
@@ -17,10 +14,12 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
     started: CircleDashed,
     finished: CheckCircle,
     cancelled: ShieldAlert,
+    errored: ShieldAlert,
   };
 
   const states = {
     cancelled: "error",
+    errored: "error",
     pending: "warning",
     started: "loading",
     submitted: "loading",

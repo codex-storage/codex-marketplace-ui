@@ -1,0 +1,13 @@
+.disclaimer {
+  max-width: 600px;
+  margin: auto;
+}
+
+.disclaimer-title {
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+.disclaimer-text {
+  line-height: 1.5rem;
+}

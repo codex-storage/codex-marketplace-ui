@@ -1,6 +1,102 @@
 .availabilities {
+  height: 100%;
+}
+
+.availabilities-actions {
+  padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
+  justify-content: flex-end;
+}
+
+.availabilities-loader {
+  margin: auto;
+  display: block;
+}
+
+.availabilities-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.availabilities-table {
+  order: 2;
+}
+
+.availabilities-space {
+  display: flex;
+  align-items: flex-start;
+  order: 1;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.availabilities-space .nodeSpaceAllocation-legendRow,
+.availabilities-space .nodeSpaceAllocation-barItem {
+  transition: opacity 0.35s;
+  opacity: 0.8;
+}
+
+.availabilities-table:has(.table-tbodyTr:first-child:hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-0,
+.availabilities-table:has(.table-tbodyTr:first-child:hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:first-child {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(2):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-1,
+.availabilities-table:has(.table-tbodyTr:nth-child(2):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(2) {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(3):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-2,
+.availabilities-table:has(.table-tbodyTr:nth-child(3):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(3) {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(4):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-3,
+.availabilities-table:has(.table-tbodyTr:nth-child(4):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(4) {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(5):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-4,
+.availabilities-table:has(.table-tbodyTr:nth-child(5):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(5) {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(6):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-5,
+.availabilities-table:has(.table-tbodyTr:nth-child(6):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(6) {
+  opacity: 1;
+}
+
+.availabilities-table:has(.table-tbodyTr:nth-child(7):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-quota-6,
+.availabilities-table:has(.table-tbodyTr:nth-child(7):hover)
+  + .availabilities-space
+  .nodeSpaceAllocation-legendRow:nth-child(7) {
+  opacity: 1;
 }

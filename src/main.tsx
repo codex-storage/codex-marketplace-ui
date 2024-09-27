@@ -1,4 +1,8 @@
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import {
+  ErrorComponentProps,
+  RouterProvider,
+  createRouter,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -9,6 +13,7 @@ import { routeTree } from "./routeTree.gen";
 import { Failure } from "@codex-storage/marketplace-ui-components";
 import * as Sentry from "@sentry/react";
 import { CodexSdk } from "./sdk/codex";
+import { ErrorPlaceholder } from "./components/ErrorPlaceholder/ErrorPlaceholder.tsx";
 
 if (import.meta.env.PROD) {
   Sentry.init({
@@ -41,6 +46,11 @@ const router = createRouter({
       />
     );
   },
+  defaultErrorComponent:
+    () =>
+    ({ error }: ErrorComponentProps) => (
+      <ErrorPlaceholder error={error} subtitle="Cannot retrieve the data." />
+    ),
 });
 
 // Register the router instance for type safety

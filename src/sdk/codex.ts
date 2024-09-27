@@ -1,42 +1,33 @@
 import { Codex } from "@codex-storage/sdk-js";
 import { WebStorage } from "../utils/web-storage";
 
-// TODO rename
-let _client: Codex;
-let _url: string;
+let client: Codex = new Codex(import.meta.env.VITE_CODEX_API_URL);
+let url: string = import.meta.env.VITE_CODEX_API_URL;
 
 export const CodexSdk = {
   url() {
-    return _url;
+    return url;
   },
 
   load() {
-    return WebStorage.get<string>("codex-node-url").then((url) => {
-      _url = url || import.meta.env.VITE_CODEX_API_URL;
-      _client = new Codex(_url);
+    return WebStorage.get<string>("codex-node-url").then((u) => {
+      url = u || import.meta.env.VITE_CODEX_API_URL;
+      client = new Codex(url);
     });
   },
 
-  updateURL(url: string) {
-    _url = url;
-    _client = new Codex(url);
+  updateURL(u: string) {
+    url = u;
+    client = new Codex(url);
 
     return WebStorage.set("codex-node-url", url);
   },
 
-  get debug() {
-    return _client.debug;
-  },
+  debug: client.debug,
 
-  get data() {
-    return _client.data;
-  },
+  data: client.data,
 
-  get node() {
-    return _client.node;
-  },
+  node: client.node,
 
-  get marketplace() {
-    return _client.marketplace;
-  },
+  marketplace: client.marketplace,
 };

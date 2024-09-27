@@ -1,0 +1,5 @@
+@media (min-width: 801px) {
+  .storageRequestCreate {
+    min-width: 700px;
+  }
+}

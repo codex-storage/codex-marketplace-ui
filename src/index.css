@@ -12,6 +12,7 @@
   --codex-color-blue: 30, 64, 175;
   --codex-color-grey: 170, 170, 170;
   --codex-color-primary: #c1f0a4;
+  --codex-color-primary-rgb: 193, 240, 164;
   --codex-color-primary-variant: #c1f0a4cc;
   --codex-color-on-primary: #333;
   --codex-color-disabled: #717171;
@@ -66,6 +67,7 @@ html {
   min-height: 100%;
   display: flex;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {

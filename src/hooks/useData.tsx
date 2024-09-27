@@ -1,64 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import { FilesStorage } from "../utils/file-storage";
 import { CodexSdk } from "../sdk/codex";
-import * as Sentry from "@sentry/browser";
-import { CodexDataContent } from "@codex-storage/sdk-js";
+import { CodexDataResponse } from "@codex-storage/sdk-js";
+import { Promises } from "../utils/promises";
 
 export function useData() {
-  const { data = [] } = useQuery({
-    queryFn: (): Promise<CodexDataContent[]> => {
-      return Promise.resolve().then(async () => {
-        const res = await CodexSdk.data.cids();
+  const { data = { content: [] } satisfies CodexDataResponse } =
+    useQuery<CodexDataResponse>({
+      queryFn: () =>
+        CodexSdk.data.cids().then((res) => Promises.rejectOnError(res)),
+      queryKey: ["cids"],
 
-        if (res.error) {
-          if (import.meta.env.PROD) {
-            Sentry.captureException(res.data);
-          }
-          return [];
-        }
+      initialData: { content: [] } satisfies CodexDataResponse,
 
-        const metadata = await FilesStorage.list();
+      // No need to retry because if the connection to the node
+      // is back again, all the queries will be invalidated.
+      retry: false,
 
-        return res.data.content.map((content, index) => {
-          if (content.manifest.filename) {
-            return content;
-          }
+      // The client node should be local, so display the cache value while
+      // making a background request looks good.
+      staleTime: 0,
 
-          const value = metadata.find(([cid]) => content.cid === cid);
+      // Don't expect something new when coming back to the UI
+      refetchOnWindowFocus: false,
+    });
 
-          if (!value) {
-            return {
-              cid: content.cid,
-              manifest: {
-                ...content.manifest,
-                mimetype: "N/A",
-                uploadedAt: new Date(0, 0, 0, 0, 0, 0).toJSON(),
-                filename: "N/A" + index,
-              },
-            };
-          }
-
-          const {
-            mimetype = "",
-            name = "",
-            uploadedAt = new Date(0, 0, 0, 0, 0, 0).toJSON(),
-          } = value[1];
-
-          return {
-            cid: content.cid,
-            manifest: {
-              ...content.manifest,
-              mimetype,
-              filename: name,
-              uploadedAt: uploadedAt,
-            },
-          };
-        });
-      });
-    },
-    queryKey: ["cids"],
-    refetchOnWindowFocus: false,
-  });
-
-  return data;
+  return data.content;
 }

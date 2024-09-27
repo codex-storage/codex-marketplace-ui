@@ -19,6 +19,7 @@ import { Route as DashboardRequestsImport } from './routes/dashboard/requests'
 import { Route as DashboardPurchasesImport } from './routes/dashboard/purchases'
 import { Route as DashboardHelpImport } from './routes/dashboard/help'
 import { Route as DashboardFavoritesImport } from './routes/dashboard/favorites'
+import { Route as DashboardDisclaimerImport } from './routes/dashboard/disclaimer'
 import { Route as DashboardAvailabilitiesImport } from './routes/dashboard/availabilities'
 import { Route as DashboardAboutImport } from './routes/dashboard/about'
 
@@ -64,6 +65,11 @@ const DashboardFavoritesRoute = DashboardFavoritesImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
+const DashboardDisclaimerRoute = DashboardDisclaimerImport.update({
+  path: '/disclaimer',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
 const DashboardAvailabilitiesRoute = DashboardAvailabilitiesImport.update({
   path: '/availabilities',
   getParentRoute: () => DashboardRoute,
@@ -104,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/availabilities'
       fullPath: '/dashboard/availabilities'
       preLoaderRoute: typeof DashboardAvailabilitiesImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/disclaimer': {
+      id: '/dashboard/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/dashboard/disclaimer'
+      preLoaderRoute: typeof DashboardDisclaimerImport
       parentRoute: typeof DashboardImport
     }
     '/dashboard/favorites': {
@@ -156,6 +169,7 @@ declare module '@tanstack/react-router' {
 interface DashboardRouteChildren {
   DashboardAboutRoute: typeof DashboardAboutRoute
   DashboardAvailabilitiesRoute: typeof DashboardAvailabilitiesRoute
+  DashboardDisclaimerRoute: typeof DashboardDisclaimerRoute
   DashboardFavoritesRoute: typeof DashboardFavoritesRoute
   DashboardHelpRoute: typeof DashboardHelpRoute
   DashboardPurchasesRoute: typeof DashboardPurchasesRoute
@@ -167,6 +181,7 @@ interface DashboardRouteChildren {
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAboutRoute: DashboardAboutRoute,
   DashboardAvailabilitiesRoute: DashboardAvailabilitiesRoute,
+  DashboardDisclaimerRoute: DashboardDisclaimerRoute,
   DashboardFavoritesRoute: DashboardFavoritesRoute,
   DashboardHelpRoute: DashboardHelpRoute,
   DashboardPurchasesRoute: DashboardPurchasesRoute,
@@ -184,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
+  '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
@@ -196,6 +212,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
+  '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
@@ -210,6 +227,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
+  '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
@@ -225,6 +243,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/about'
     | '/dashboard/availabilities'
+    | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
     | '/dashboard/purchases'
@@ -236,6 +255,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard/about'
     | '/dashboard/availabilities'
+    | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
     | '/dashboard/purchases'
@@ -248,6 +268,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/about'
     | '/dashboard/availabilities'
+    | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
     | '/dashboard/purchases'
@@ -291,6 +312,7 @@ export const routeTree = rootRoute
       "children": [
         "/dashboard/about",
         "/dashboard/availabilities",
+        "/dashboard/disclaimer",
         "/dashboard/favorites",
         "/dashboard/help",
         "/dashboard/purchases",
@@ -305,6 +327,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/availabilities": {
       "filePath": "dashboard/availabilities.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/disclaimer": {
+      "filePath": "dashboard/disclaimer.tsx",
       "parent": "/dashboard"
     },
     "/dashboard/favorites": {

@@ -1,27 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ErrorBoundary } from "../../components/ErrorBoundary/ErrorBoundary";
 import "./settings.css";
 import { LogLevel } from "../../components/LogLevel/LogLevel";
-import { CodexUrlSettings } from "../../CodexUrllSettings/CodexUrlSettings";
 import { Debug } from "../../components/Debug/Debug";
+import { CodexUrlSettings } from "../../components/CodexUrllSettings/CodexUrlSettings";
+import { ErrorBoundary } from "@sentry/react";
+import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
 
 export const Route = createFileRoute("/dashboard/settings")({
   component: () => (
     <>
       <div className="settings">
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <LogLevel />
         </ErrorBoundary>
       </div>
 
       <div className="settings">
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <CodexUrlSettings />
         </ErrorBoundary>
       </div>
 
       <div className="settings">
-        <ErrorBoundary card={true}>
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
           <Debug />
         </ErrorBoundary>
       </div>

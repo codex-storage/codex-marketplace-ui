@@ -8,6 +8,10 @@
   flex-direction: column;
 }
 
+.welcome-disclaimer {
+  margin: 1rem 0;
+}
+
 .welcome-title {
   font-weight: bold;
   font-size: 1.125rem;

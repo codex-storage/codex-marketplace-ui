@@ -1,11 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ErrorBoundary } from "../../components/ErrorBoundary/ErrorBoundary";
 import { Files } from "../../components/Files/Files";
+import { ErrorBoundary } from "@sentry/react";
+import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
+import { Card } from "@codex-storage/marketplace-ui-components";
 
 export const Route = createFileRoute("/dashboard/favorites")({
   component: () => (
     <>
-      <ErrorBoundary card={true}>
+      <ErrorBoundary
+        fallback={({ error }) => (
+          <Card title="Error">
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the favorites."
+            />
+          </Card>
+        )}>
         <div className="container">
           <Files />
         </div>

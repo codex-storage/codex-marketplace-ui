@@ -6,45 +6,60 @@ import {
   CodexPurchase,
 } from "@codex-storage/sdk-js/async";
 import {
+  CodexAvailability,
+  CodexAvailabilityCreateResponse,
+  CodexCreateAvailabilityInput,
   CodexDebug,
   CodexDebugInfo,
   CodexMarketplace,
   CodexNode,
+  CodexNodeSpace,
+  CodexReservation,
 } from "@codex-storage/sdk-js";
 import { FilesStorage } from "./utils/file-storage";
 import { PurchaseStorage } from "./utils/purchases-storage";
+import { GB } from "./utils/constants";
 
 class CodexDataMock extends CodexData {
   override upload(
     _: File,
     onProgress?: (loaded: number, total: number) => void
-  ): Promise<UploadResponse> {
-    console.info("upload");
-    return new Promise<UploadResponse>((resolve) => {
-      let timeout: number;
+  ): UploadResponse {
+    let timeout: number;
 
-      resolve({
-        abort: () => {
-          window.clearInterval(timeout);
-        },
-        result: new Promise((resolve) => {
-          let count = 0;
-          timeout = window.setInterval(() => {
-            count++;
+    return {
+      abort: () => {
+        window.clearInterval(timeout);
+      },
+      result: new Promise((resolve) => {
+        let count = 0;
+        timeout = window.setInterval(() => {
+          count++;
 
-            onProgress?.(500 * count, 1500);
+          onProgress?.(500 * count, 1500);
 
-            if (count === 3) {
-              window.clearInterval(timeout);
+          if (count === 3) {
+            window.clearInterval(timeout);
 
-              resolve({
-                error: false,
-                data: Date.now().toString(),
-              });
-            }
-          }, 1500);
-        }),
-      });
+            resolve({
+              error: false,
+              data: Date.now().toString(),
+            });
+          }
+        }, 1500);
+      }),
+    };
+  }
+
+  override space(): Promise<SafeValue<CodexNodeSpace>> {
+    return Promise.resolve({
+      error: false,
+      data: {
+        totalBlocks: 3443,
+        quotaMaxBytes: 8 * GB,
+        quotaUsedBytes: 5 * GB,
+        quotaReservedBytes: 0.5 * GB,
+      },
     });
   }
 
@@ -231,6 +246,69 @@ class CodexMarketplaceMock extends CodexMarketplace {
     return Promise.resolve({
       error: false,
       data: "0xb6da73cef67948fb99ed60385e6392e2f195a07e03e7eff53e2718f70eef3082",
+    });
+  }
+
+  override availabilities(): Promise<SafeValue<CodexAvailability[]>> {
+    return Promise.resolve({
+      error: false,
+      data: [
+        {
+          id: "0x123456789",
+          totalSize: GB * 3,
+          duration: 3600 * 24 * 30,
+          minPrice: 0,
+          maxCollateral: 10,
+        },
+        {
+          id: "0x987654321",
+          totalSize: GB * 2,
+          duration: 3600 * 24 * 30,
+          minPrice: 0,
+          maxCollateral: 10,
+        },
+      ],
+    });
+  }
+
+  override createAvailability(
+    input: CodexCreateAvailabilityInput
+  ): Promise<SafeValue<CodexAvailabilityCreateResponse>> {
+    return Promise.resolve({
+      error: false,
+      data: {
+        ...input,
+        id: "0xb6da73cef67948fb99ed60385e6392e2f195a07e03e7eff53e2718f70eef3082",
+        freeSize: "0",
+      },
+    });
+  }
+
+  override reservations(): Promise<SafeValue<CodexReservation[]>> {
+    return Promise.resolve({
+      error: false,
+      data: [
+        {
+          id: "0x123456789",
+          availabilityId: "0x12345678910",
+          requestId: "0x1234567891011",
+          size: GB * 0.5 + "",
+          slotIndex: "2",
+        },
+        {
+          id: "0x987654321",
+          availabilityId: "0x9876543210",
+          requestId: "0x98765432100",
+          /**
+           * Size in bytes
+           */
+          size: GB * 0.25 + "",
+          /**
+           * Slot Index as hexadecimal string
+           */
+          slotIndex: "1",
+        },
+      ],
     });
   }
 }
