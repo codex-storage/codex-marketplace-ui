@@ -14,6 +14,7 @@ import { Failure } from "@codex-storage/marketplace-ui-components";
 import * as Sentry from "@sentry/react";
 import { CodexSdk } from "./sdk/codex";
 import { ErrorPlaceholder } from "./components/ErrorPlaceholder/ErrorPlaceholder.tsx";
+import { DebugErrorsDataLoad } from "./components/DebugErrors/DebugErrors.tsx";
 
 if (import.meta.env.PROD) {
   Sentry.init({
@@ -71,13 +72,15 @@ const rootElement = document.getElementById("root")!;
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
 
-  CodexSdk.load().then(() => {
-    root.render(
-      <StrictMode>
-        <App>
-          <RouterProvider router={router} />
-        </App>
-      </StrictMode>
-    );
-  });
+  CodexSdk.load()
+    .then(DebugErrorsDataLoad)
+    .then(() => {
+      root.render(
+        <StrictMode>
+          <App>
+            <RouterProvider router={router} />
+          </App>
+        </StrictMode>
+      );
+    });
 }

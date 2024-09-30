@@ -11,6 +11,7 @@ import {
   CodexCreateAvailabilityInput,
   CodexDebug,
   CodexDebugInfo,
+  CodexError,
   CodexMarketplace,
   CodexNode,
   CodexNodeSpace,
@@ -19,6 +20,7 @@ import {
 import { FilesStorage } from "./utils/file-storage";
 import { PurchaseStorage } from "./utils/purchases-storage";
 import { GB } from "./utils/constants";
+import { DebugErrors, DebugErrorsData } from "./components/DebugErrors/DebugErrors";
 
 class CodexDataMock extends CodexData {
   override upload(
@@ -32,6 +34,7 @@ class CodexDataMock extends CodexData {
         window.clearInterval(timeout);
       },
       result: new Promise((resolve) => {
+
         let count = 0;
         timeout = window.setInterval(() => {
           count++;
@@ -41,10 +44,17 @@ class CodexDataMock extends CodexData {
           if (count === 3) {
             window.clearInterval(timeout);
 
-            resolve({
-              error: false,
-              data: Date.now().toString(),
-            });
+            if (DebugErrorsData.uploadApi) {
+              resolve({
+                error: true,
+                data: new CodexError("Error generated because it is on in the settings."),
+              });
+            } else {
+              resolve({
+                error: false,
+                data: Date.now().toString(),
+              });
+            }
           }
         }, 1500);
       }),
@@ -52,6 +62,14 @@ class CodexDataMock extends CodexData {
   }
 
   override space(): Promise<SafeValue<CodexNodeSpace>> {
+    if (DebugErrorsData.nodeSpaceApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
+
     return Promise.resolve({
       error: false,
       data: {
@@ -64,6 +82,13 @@ class CodexDataMock extends CodexData {
   }
 
   override cids(): Promise<SafeValue<CodexDataResponse>> {
+    if (DebugErrorsData.filesApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: {
@@ -146,6 +171,13 @@ class CodexDebugMock extends CodexDebug {
 
 class CodexNodeMock extends CodexNode {
   override spr(): Promise<SafeValue<{ spr: string }>> {
+    if (DebugErrorsData.nodeConnectionApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: {
@@ -157,6 +189,13 @@ class CodexNodeMock extends CodexNode {
 
 class CodexMarketplaceMock extends CodexMarketplace {
   override async purchases(): Promise<SafeValue<CodexPurchase[]>> {
+    if (DebugErrorsData.purchasesApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     await PurchaseStorage.set(
       "0x1aad5b0495097f98010b87079e07f4f1bf283f533670057123e493b452e601a3",
       "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqY"
@@ -243,6 +282,13 @@ class CodexMarketplaceMock extends CodexMarketplace {
   }
 
   override createStorageRequest(): Promise<SafeValue<string>> {
+    if (DebugErrorsData.storageRequestApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: "0xb6da73cef67948fb99ed60385e6392e2f195a07e03e7eff53e2718f70eef3082",
@@ -250,6 +296,13 @@ class CodexMarketplaceMock extends CodexMarketplace {
   }
 
   override availabilities(): Promise<SafeValue<CodexAvailability[]>> {
+    if (DebugErrorsData.availabilitiesApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: [
@@ -274,6 +327,13 @@ class CodexMarketplaceMock extends CodexMarketplace {
   override createAvailability(
     input: CodexCreateAvailabilityInput
   ): Promise<SafeValue<CodexAvailabilityCreateResponse>> {
+    if (DebugErrorsData.createAvailabilityApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: {
@@ -285,6 +345,13 @@ class CodexMarketplaceMock extends CodexMarketplace {
   }
 
   override reservations(): Promise<SafeValue<CodexReservation[]>> {
+    if (DebugErrorsData.reservationsApi) {
+      return Promise.resolve({
+        error: true,
+        data: new CodexError("Error generated because it is on in the settings."),
+      })
+    }
+
     return Promise.resolve({
       error: false,
       data: [
