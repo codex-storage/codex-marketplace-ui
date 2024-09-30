@@ -5,6 +5,7 @@ import { Debug } from "../../components/Debug/Debug";
 import { CodexUrlSettings } from "../../components/CodexUrllSettings/CodexUrlSettings";
 import { ErrorBoundary } from "@sentry/react";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
+import { DebugErrors } from "../../components/DebugErrors/DebugErrors";
 
 export const Route = createFileRoute("/dashboard/settings")({
   component: () => (
@@ -42,6 +43,29 @@ export const Route = createFileRoute("/dashboard/settings")({
             />
           )}>
           <Debug />
+        </ErrorBoundary>
+      </div>
+
+      <div className="settings">
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
+          <h3>Debug errors</h3>
+
+          <br />
+
+          <p>
+            For each following option, if it is activated, the related API
+            called will generate an error.
+          </p>
+
+          <br />
+
+          <DebugErrors />
         </ErrorBoundary>
       </div>
 
