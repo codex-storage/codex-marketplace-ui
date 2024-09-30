@@ -20,7 +20,7 @@ import {
 import { FilesStorage } from "./utils/file-storage";
 import { PurchaseStorage } from "./utils/purchases-storage";
 import { GB } from "./utils/constants";
-import { DebugErrors, DebugErrorsData } from "./components/DebugErrors/DebugErrors";
+import { DebugErrorsData } from "./components/DebugErrors/debug-errors.domain";
 
 class CodexDataMock extends CodexData {
   override upload(

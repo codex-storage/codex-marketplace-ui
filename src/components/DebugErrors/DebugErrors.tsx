@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { WebStorage } from "../../utils/web-storage";
+import { DebugErrorsData, UpdateErrorsData } from "./debug-errors.domain";
 
-type State = {
+export type State = {
   uploadApi: boolean;
   filesApi: boolean;
   nodeSpaceApi: boolean;
@@ -13,26 +14,6 @@ type State = {
   reservationsApi: boolean;
 };
 
-export let DebugErrorsData: State = {
-  uploadApi: false,
-  filesApi: false,
-  nodeSpaceApi: false,
-  nodeConnectionApi: false,
-  purchasesApi: false,
-  storageRequestApi: false,
-  availabilitiesApi: false,
-  createAvailabilityApi: false,
-  reservationsApi: false,
-};
-
-export function DebugErrorsDataLoad() {
-  return WebStorage.get<State>("debug-errors").then((debug) => {
-    if (debug) {
-      DebugErrorsData = debug;
-    }
-  });
-}
-
 export function DebugErrors() {
   const [data, setData] = useState<State>(DebugErrorsData);
 
@@ -40,7 +21,7 @@ export function DebugErrors() {
     const target = e.currentTarget;
     const newData = { ...data, [target.name]: target.checked || false };
 
-    DebugErrorsData = newData;
+    UpdateErrorsData(newData);
 
     WebStorage.set("debug-errors", newData);
 

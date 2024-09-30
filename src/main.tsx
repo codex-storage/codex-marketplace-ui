@@ -14,7 +14,7 @@ import { Failure } from "@codex-storage/marketplace-ui-components";
 import * as Sentry from "@sentry/react";
 import { CodexSdk } from "./sdk/codex";
 import { ErrorPlaceholder } from "./components/ErrorPlaceholder/ErrorPlaceholder.tsx";
-import { DebugErrorsDataLoad } from "./components/DebugErrors/DebugErrors.tsx";
+import { DebugErrorsDataLoad } from "./components/DebugErrors/debug-errors.domain.ts";
 
 if (import.meta.env.PROD) {
   Sentry.init({

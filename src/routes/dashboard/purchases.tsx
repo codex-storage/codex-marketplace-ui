@@ -13,7 +13,7 @@ import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceho
 import { ErrorBoundary } from "@sentry/react";
 
 const Purchases = () => {
-  const { data, isPending, error } = useQuery({
+  const { data, isPending } = useQuery({
     queryFn: () =>
       CodexSdk.marketplace.purchases().then((s) => Promises.rejectOnError(s)),
     queryKey: ["purchases"],
