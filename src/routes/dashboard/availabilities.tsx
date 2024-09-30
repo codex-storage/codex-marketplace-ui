@@ -43,6 +43,9 @@ export function Availabilities() {
       // Refreshing when focus returns can be useful if a user comes back
       // to the UI after performing an operation in the terminal.
       refetchOnWindowFocus: true,
+
+      // Throw the error to the error boundary
+      throwOnError: true,
     });
 
     // Error will be catched in ErrorBounday
@@ -63,6 +66,9 @@ export function Availabilities() {
       // Refreshing when focus returns can be useful if a user comes back
       // to the UI after performing an operation in the terminal.
       refetchOnWindowFocus: true,
+
+      // Throw the error to the error boundary
+      throwOnError: true,
     });
 
     const allocation = availabilities
