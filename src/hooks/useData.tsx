@@ -22,6 +22,9 @@ export function useData() {
 
       // Don't expect something new when coming back to the UI
       refetchOnWindowFocus: false,
+
+      // Throw the error to the error boundary
+      throwOnError: true,
     });
 
   return data.content;

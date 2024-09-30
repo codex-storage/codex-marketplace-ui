@@ -13,7 +13,7 @@ import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceho
 import { ErrorBoundary } from "@sentry/react";
 
 const Purchases = () => {
-  const { data, isPending } = useQuery({
+  const { data, isPending, error } = useQuery({
     queryFn: () =>
       CodexSdk.marketplace.purchases().then((s) => Promises.rejectOnError(s)),
     queryKey: ["purchases"],
@@ -29,6 +29,11 @@ const Purchases = () => {
     // Refreshing when focus returns can be useful if a user comes back
     // to the UI after performing an operation in the terminal.
     refetchOnWindowFocus: true,
+
+    initialData: [],
+
+    // Throw the error to the error boundary
+    throwOnError: true,
   });
 
   if (isPending) {
@@ -49,23 +54,22 @@ const Purchases = () => {
     "state",
   ];
 
-  const cells =
-    (data ?? []).map((p, index) => {
-      const r = p.request;
-      const ask = p.request.ask;
-      const duration = parseInt(p.request.ask.duration, 10);
-      const pf = parseInt(p.request.ask.proofProbability, 10);
+  const cells = data.map((p, index) => {
+    const r = p.request;
+    const ask = p.request.ask;
+    const duration = parseInt(p.request.ask.duration, 10);
+    const pf = parseInt(p.request.ask.proofProbability, 10);
 
-      return [
-        <FileCell requestId={r.id} purchaseCid={r.content.cid} index={index} />,
-        <TruncateCell value={r.id} />,
-        <Cell value={Times.pretty(duration)} />,
-        <Cell value={ask.slots.toString()} />,
-        <Cell value={ask.reward + " CDX"} />,
-        <Cell value={pf.toString()} />,
-        <CustomStateCellRender state={p.state} message={p.error} />,
-      ];
-    }) || [];
+    return [
+      <FileCell requestId={r.id} purchaseCid={r.content.cid} index={index} />,
+      <TruncateCell value={r.id} />,
+      <Cell value={Times.pretty(duration)} />,
+      <Cell value={ask.slots.toString()} />,
+      <Cell value={ask.reward + " CDX"} />,
+      <Cell value={pf.toString()} />,
+      <CustomStateCellRender state={p.state} message={p.error} />,
+    ];
+  });
 
   return (
     <div className="container">

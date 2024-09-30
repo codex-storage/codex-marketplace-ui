@@ -10,12 +10,14 @@ import {
 } from "@codex-storage/marketplace-ui-components";
 import { useData } from "../../hooks/useData";
 import { StorageRequestComponentProps } from "./types";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function StorageRequestFileChooser({
   storageRequest,
   dispatch,
   onStorageRequestChange,
 }: StorageRequestComponentProps) {
+  const queryClient = useQueryClient();
   const files = useData();
 
   useEffect(() => {
@@ -36,6 +38,8 @@ export function StorageRequestFileChooser({
   };
 
   const onSuccess = (data: string) => {
+    queryClient.invalidateQueries({ queryKey: ["cids"] });
+
     onStorageRequestChange({ cid: data });
   };
 
@@ -92,6 +96,7 @@ export function StorageRequestFileChooser({
         editable={false}
         onDeleteItem={onDelete}
         codexData={CodexSdk.data}
+        successMessage={"Success, the CID has been copied to the field on top."}
       />
     </>
   );

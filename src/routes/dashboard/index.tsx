@@ -3,23 +3,21 @@ import { Files } from "../../components/Files/Files.tsx";
 import { Card, Upload } from "@codex-storage/marketplace-ui-components";
 import { CodexSdk } from "../../sdk/codex";
 import { Welcome } from "../../components/Welcome/Welcome.tsx";
-import { FilesStorage } from "../../utils/file-storage";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder.tsx";
 import { ErrorBoundary } from "@sentry/react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/dashboard/")({
   component: About,
 });
 
-const onSuccess = (cid: string, file: File) => {
-  FilesStorage.set(cid, {
-    name: file.name,
-    mimetype: file.type,
-    uploadedAt: new Date().toJSON(),
-  });
-};
-
 function About() {
+  const queryClient = useQueryClient();
+
+  const onSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["cids"] });
+  };
+
   return (
     <>
       <div className="dashboard">
@@ -49,10 +47,12 @@ function About() {
       <div className="container-fluid">
         <ErrorBoundary
           fallback={({ error }) => (
-            <ErrorPlaceholder
-              error={error}
-              subtitle="Cannot retrieve the data."
-            />
+            <Card title="Error">
+              <ErrorPlaceholder
+                error={error}
+                subtitle="Cannot retrieve the data."
+              />
+            </Card>
           )}>
           <Files />
         </ErrorBoundary>
