@@ -140,7 +140,7 @@ export function AvailabilitySheetCreate({
         className={className}
       />
 
-      <Sheets open={state.open} onClose={onClose} mode="bottom">
+      <Sheets open={state.open} onClose={onClose}>
         <Stepper
           className="availabilityCreate"
           titles={steps.current}
