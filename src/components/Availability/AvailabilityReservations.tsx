@@ -11,13 +11,14 @@ import { Promises } from "../../utils/promises";
 import { CodexAvailability } from "@codex-storage/sdk-js";
 import { useEffect } from "react";
 import { ErrorPlaceholder } from "../ErrorPlaceholder/ErrorPlaceholder";
+import { availabilityColors } from "./availability.colors";
 
 type Props = {
   availability: CodexAvailability | null;
   open: boolean;
   onClose: () => unknown;
 };
-
+// TODO remove this
 export function AvailabilityReservations({
   availability,
   onClose,
@@ -91,13 +92,15 @@ export function AvailabilityReservations({
   const totalSize = availability.totalSize;
   const totalUsed = data.reduce((acc, val) => acc + parseInt(val.size, 10), 0);
   const spaceData = [
-    ...data.map((val) => ({
+    ...data.map((val, index) => ({
       title: val.id,
       size: parseInt(val.size, 10),
+      color: availabilityColors[index],
     })),
     {
       title: "Sale space remaining",
       size: totalSize - totalUsed,
+      color: availabilityColors[availabilityColors.length - 1],
     },
   ];
   const isEmpty = !data.length;

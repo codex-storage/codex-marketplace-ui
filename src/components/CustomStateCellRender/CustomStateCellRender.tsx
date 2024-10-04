@@ -1,6 +1,6 @@
 import { CheckCircle, CircleDashed, ShieldAlert } from "lucide-react";
 import "./CustomStateCellRender.css";
-import { Tooltip } from "@codex-storage/marketplace-ui-components";
+import { Cell, Tooltip } from "@codex-storage/marketplace-ui-components";
 
 type Props = {
   state: string;
@@ -29,20 +29,22 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
   const Icon = icons[state as keyof typeof icons] || CircleDashed;
 
   return (
-    <p
-      className={
-        "cell-state cell-state--custom cell-state--" +
-        states[state as keyof typeof states]
-      }>
-      {message ? (
-        <Tooltip message={message}>
+    <Cell>
+      <p
+        className={
+          "cell-state cell-state--custom cell-state--" +
+          states[state as keyof typeof states]
+        }>
+        {message ? (
+          <Tooltip message={message}>
+            <Icon size={"1rem"} className="cell-stateIcon" />
+          </Tooltip>
+        ) : (
           <Icon size={"1rem"} className="cell-stateIcon" />
-        </Tooltip>
-      ) : (
-        <Icon size={"1rem"} className="cell-stateIcon" />
-      )}
+        )}
 
-      <span>{state}</span>
-    </p>
+        <span>{state}</span>
+      </p>
+    </Cell>
   );
 };

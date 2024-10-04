@@ -6,7 +6,7 @@ import {
 } from "@codex-storage/marketplace-ui-components";
 import { useEffect, useRef, useState } from "react";
 import { AvailabilityForm } from "./AvailabilityForm";
-import { Plus } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { AvailabilityConfirm } from "./AvailabilityConfirmation";
 import { WebStorage } from "../../utils/web-storage";
@@ -15,10 +15,12 @@ import { STEPPER_DURATION } from "../../utils/constants";
 import { useAvailabilityMutation } from "./useAvailabilityMutation";
 import { AvailabilitySuccess } from "./AvailabilitySuccess";
 import { AvailabilityError } from "./AvailabilityError";
-import "./AvailabilityCreate.css";
+import "./AvailabilityEdit.css";
 
 type Props = {
   space: CodexNodeSpace;
+  hasLabel?: boolean;
+  className?: string;
 };
 
 const CONFIRM_STATE = 2;
@@ -32,13 +34,18 @@ const defaultAvailabilityData: AvailabilityState = {
   durationUnit: "days",
 };
 
-export function AvailabilityCreate({ space }: Props) {
+export function AvailabilityEdit({
+  space,
+  className = "",
+  hasLabel = true,
+}: Props) {
   const steps = useRef(["Sale", "Confirmation", "Success"]);
   const [availability, setAvailability] = useState<AvailabilityState>(
     defaultAvailabilityData
   );
   const { state, dispatch } = useStepperReducer();
   const { mutateAsync, error } = useAvailabilityMutation(dispatch, state);
+  const [availabilityId, setAvailabilityId] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -57,6 +64,26 @@ export function AvailabilityCreate({ space }: Props) {
       }
     });
   }, [dispatch]);
+
+  // We use a custom event to not re render the sunburst component
+  useEffect(() => {
+    const onAvailabilityIdChange = (e: Event) => {
+      const custom = e as CustomEvent;
+      setAvailabilityId(custom.detail);
+    };
+
+    document.addEventListener(
+      "codexavailabilityid",
+      onAvailabilityIdChange,
+      false
+    );
+
+    return () =>
+      document.removeEventListener(
+        "codexavailabilityid",
+        onAvailabilityIdChange
+      );
+  }, []);
 
   const components = [
     AvailabilityForm,
@@ -126,7 +153,13 @@ export function AvailabilityCreate({ space }: Props) {
 
   return (
     <>
-      <Button label="Sale" Icon={Plus} onClick={onOpen} variant="primary" />
+      <Button
+        label={hasLabel ? "Sale" : ""}
+        Icon={!availabilityId ? Plus : Pencil}
+        onClick={onOpen}
+        variant="primary"
+        className={className}
+      />
 
       <Modal open={state.open} onClose={onClose} displayCloseButton={false}>
         <Stepper

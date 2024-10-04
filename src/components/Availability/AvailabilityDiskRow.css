@@ -1,0 +1,10 @@
+.availabilityDiskRow {
+  border-bottom: 5px solid var(--codex-border-color);
+  background-color: var(--codex-background-light);
+}
+
+.availabilityDiskRow-cell-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

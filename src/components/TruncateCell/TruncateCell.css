@@ -5,3 +5,22 @@
 .truncateCell .tooltip:hover:after {
   left: -33%;
 }
+
+.truncateCell-point {
+  height: 0.5rem;
+  width: 3rem;
+  border-radius: var(--codex-border-radius);
+  display: inline-block;
+}
+
+.truncateCell--ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.table-tbodyTr:hover .truncateCell--ellipsis {
+  white-space: unset;
+  word-break: break-all;
+}

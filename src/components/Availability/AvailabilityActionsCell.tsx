@@ -1,18 +1,15 @@
-import { StretchHorizontal } from "lucide-react";
+import { Pencil } from "lucide-react";
 import "./AvailabilityActionsCell.css";
 import { CodexAvailability } from "@codex-storage/sdk-js/async";
+import { Cell } from "@codex-storage/marketplace-ui-components";
 
 type Props = {
   availability: CodexAvailability;
   // onEdit: () => void;
-  onReservationsShow: (availability: CodexAvailability) => void;
 };
 
-export function AvailabilityActionsCell({
-  availability,
-  // onEdit,
-  onReservationsShow,
-}: Props) {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+export function AvailabilityActionsCell(_: Props) {
   // const onEditClick = async () => {
   //   const unit = availability.totalSize >= 1_000_000_000 ? "gb" : "mb";
   //   const totalSize =
@@ -29,23 +26,20 @@ export function AvailabilityActionsCell({
   //   onEdit();
   // };
 
-  const onReservationsClick = () => onReservationsShow(availability);
-
   return (
-    <div className="availability-actions">
-      {/* <a
+    <Cell>
+      <div className="availability-actions">
+        {/* <a
         className="cell--action availability-action"
         title="Edit"
         onClick={onEditClick}>
         <Pen width={"1.25rem"} />
       </a> */}
 
-      <a
-        className="cell--action availability-action"
-        title="Reservations"
-        onClick={onReservationsClick}>
-        <StretchHorizontal width={"1.25rem"} />
-      </a>
-    </div>
+        <a className="cell--action availability-action" title="Reservations">
+          <Pencil width={"1.25rem"} />
+        </a>
+      </div>
+    </Cell>
   );
 }

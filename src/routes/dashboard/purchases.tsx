@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { CodexSdk } from "../../sdk/codex";
-import { Cell, Spinner, Table } from "@codex-storage/marketplace-ui-components";
+import {
+  Cell,
+  Row,
+  Spinner,
+  Table,
+} from "@codex-storage/marketplace-ui-components";
 import { StorageRequestCreate } from "../../components/StorageRequestSetup/StorageRequestCreate";
 import "./purchases.css";
 import { FileCell } from "../../components/FileCellRender/FileCell";
@@ -54,21 +59,28 @@ const Purchases = () => {
     "state",
   ];
 
-  const cells = data.map((p, index) => {
+  const rows = data.map((p, index) => {
     const r = p.request;
     const ask = p.request.ask;
     const duration = parseInt(p.request.ask.duration, 10);
     const pf = parseInt(p.request.ask.proofProbability, 10);
 
-    return [
-      <FileCell requestId={r.id} purchaseCid={r.content.cid} index={index} />,
-      <TruncateCell value={r.id} />,
-      <Cell value={Times.pretty(duration)} />,
-      <Cell value={ask.slots.toString()} />,
-      <Cell value={ask.reward + " CDX"} />,
-      <Cell value={pf.toString()} />,
-      <CustomStateCellRender state={p.state} message={p.error} />,
-    ];
+    return (
+      <Row
+        cells={[
+          <FileCell
+            requestId={r.id}
+            purchaseCid={r.content.cid}
+            index={index}
+          />,
+          <TruncateCell value={r.id} />,
+          <Cell>{Times.pretty(duration)}</Cell>,
+          <Cell>{ask.slots.toString()}</Cell>,
+          <Cell>{ask.reward + " CDX"}</Cell>,
+          <Cell>{pf.toString()}</Cell>,
+          <CustomStateCellRender state={p.state} message={p.error} />,
+        ]}></Row>
+    );
   });
 
   return (
@@ -77,7 +89,7 @@ const Purchases = () => {
         <StorageRequestCreate />
       </div>
 
-      <Table headers={headers} cells={cells} />
+      <Table headers={headers} rows={rows} />
     </div>
   );
 };

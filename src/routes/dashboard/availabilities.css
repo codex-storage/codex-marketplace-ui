@@ -14,89 +14,142 @@
   display: block;
 }
 
+.availabilities-create {
+  position: absolute;
+  margin: auto;
+  border-radius: 100%;
+  height: 6rem;
+  width: 6rem;
+}
+
+.availabilities-create .button-label {
+  display: none;
+}
+
+.availabilities-header {
+  position: relative;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
 .availabilities-content {
   display: flex;
   flex-direction: column;
 }
 
-.availabilities-table {
-  order: 2;
+.nodeSpaceAllocation-bar {
+  background-color: var(--codex-background-light);
+  padding: 0.25rem;
+  border-radius: var(--codex-border-radius);
 }
 
-.availabilities-space {
-  display: flex;
-  align-items: flex-start;
-  order: 1;
-  gap: 1rem;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.availabilities-space .nodeSpaceAllocation-legendRow,
-.availabilities-space .nodeSpaceAllocation-barItem {
+.availabilities-space-allocation .nodeSpaceAllocation-legendRow,
+.availabilities-space-allocation .nodeSpaceAllocation-barItem {
   transition: opacity 0.35s;
-  opacity: 0.8;
+  opacity: 0.3;
 }
 
-.availabilities-table:has(.table-tbodyTr:first-child:hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-0,
-.availabilities-table:has(.table-tbodyTr:first-child:hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:first-child {
+.availabilities-space-allocation .nodeSpaceAllocation-barItem:hover {
   opacity: 1;
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(2):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-1,
-.availabilities-table:has(.table-tbodyTr:nth-child(2):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(2) {
-  opacity: 1;
+.availabilities-space-allocation {
+  flex: 1;
+}
+/*
+// This isn't the best approach, but it will suffice for now.
+// The issue is that there is no sibling index to create a generic rule.
+// Additionally, rerendering the components with React on hover feels like overkill.
+// We are also uncertain about the number of availabilities that will be in the table,
+// so this workaround is acceptable for the time being.
+// @for $i from 1 through 30 {
+//   .availabilities-table:has(.table-tbodyTr:nth-child(#{$i}):hover)
+//     + .availabilities-space
+//     .nodeSpaceAllocation-barItem:nth-child(#{$i}),
+//   .availabilities-table:has(.table-tbodyTr:nth-child(#{$i}):hover)
+//     + .availabilities-space
+//     .nodeSpaceAllocation-legendRow:nth-child(#{$i}) {
+//     opacity: 1;
+//   }
+
+//   .availabilities-table:has(.table-tbodyTr:nth-child(#{$i}):hover)
+//     + .availabilities-space
+//     .nodeSpaceAllocation-barItem:nth-child(#{$i})::after {
+//     opacity: 1;
+//     z-index: 1;
+//   }
+
+//   .availabilities-table:has(
+//       ~ .availabilities-space
+//         .nodeSpaceAllocation-barItem:nth-child(#{$i}):hover
+//     )
+//     .table-tbodyTr:nth-child(#{$i}) {
+//     background-color: var(--codex-background-light);
+//   }
+// }
+*/
+
+.plus {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  z-index: 1;
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(3):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-2,
-.availabilities-table:has(.table-tbodyTr:nth-child(3):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(3) {
-  opacity: 1;
+.plus .button-label {
+  display: none;
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(4):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-3,
-.availabilities-table:has(.table-tbodyTr:nth-child(4):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(4) {
-  opacity: 1;
+.progress {
+  border: 1px solid var(--codex-border-color);
+  height: 8px;
+  width: 200px;
+  border-radius: var(--codex-border-radius);
+  background-color: var(--codex-background);
+  display: flex;
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(5):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-4,
-.availabilities-table:has(.table-tbodyTr:nth-child(5):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(5) {
-  opacity: 1;
+.progress-bar {
+  height: 100%;
+  background-color: var(--codex-progress-bar);
+  display: inline-block;
+  border-radius: var(--codex-border-radius);
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(6):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-5,
-.availabilities-table:has(.table-tbodyTr:nth-child(6):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(6) {
-  opacity: 1;
+.progress-container {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.availabilities-table:has(.table-tbodyTr:nth-child(7):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-quota-6,
-.availabilities-table:has(.table-tbodyTr:nth-child(7):hover)
-  + .availabilities-space
-  .nodeSpaceAllocation-legendRow:nth-child(7) {
-  opacity: 1;
+.slot {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 1rem,
+    rgb(var(--codex-color-primary-rgb)) 1rem,
+    rgb(var(--codex-color-primary-rgb)) 1.5rem
+  );
+  background-size: 200% 200%;
+  animation: barberpole 10s linear infinite;
+}
+
+@keyframes barberpole {
+  100% {
+    background-position: 100% 100%;
+  }
 }

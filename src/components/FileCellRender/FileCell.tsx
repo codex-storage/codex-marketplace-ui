@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { Tooltip, WebFileIcon } from "@codex-storage/marketplace-ui-components";
+import {
+  Cell,
+  Tooltip,
+  WebFileIcon,
+} from "@codex-storage/marketplace-ui-components";
 import "./FileCell.css";
 import { FileMetadata, FilesStorage } from "../../utils/file-storage";
 import { PurchaseStorage } from "../../utils/purchases-storage";
@@ -44,7 +48,7 @@ export function FileCell({ requestId, purchaseCid }: Props) {
   const cidTruncated = cid.slice(0, 10) + "...";
 
   return (
-    <>
+    <Cell>
       <div className="fileCell">
         <WebFileIcon type={metadata.mimetype} />
         <div>
@@ -58,6 +62,6 @@ export function FileCell({ requestId, purchaseCid }: Props) {
           </span>
         </div>
       </div>
-    </>
+    </Cell>
   );
 }

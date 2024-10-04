@@ -2,7 +2,11 @@ import {
   StepperAction,
   StepperState,
 } from "@codex-storage/marketplace-ui-components";
-import { CodexNodeSpace } from "@codex-storage/sdk-js";
+import {
+  CodexAvailability,
+  CodexNodeSpace,
+  CodexReservation,
+} from "@codex-storage/sdk-js";
 import { Dispatch } from "react";
 
 export type AvailabilityState = {
@@ -13,6 +17,7 @@ export type AvailabilityState = {
   minPrice: number;
   maxCollateral: number;
   totalSizeUnit: "gb" | "tb";
+  name?: string;
 };
 
 export type AvailabilityComponentProps = {
@@ -22,4 +27,9 @@ export type AvailabilityComponentProps = {
   onAvailabilityChange: (data: Partial<AvailabilityState>) => void;
   availability: AvailabilityState;
   error: Error | null;
+};
+
+export type AvailabilityWithSlots = CodexAvailability & {
+  name: string;
+  slots: CodexReservation[];
 };

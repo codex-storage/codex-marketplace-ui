@@ -1,10 +1,14 @@
 import { Input, InputGroup } from "@codex-storage/marketplace-ui-components";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import "./AvailabilityForm.css";
 import { AvailabilityComponentProps } from "./types";
 import { classnames } from "../../utils/classnames";
 import { AvailabilitySpaceAllocation } from "./AvailabilitySpaceAllocation";
-import { availabilityMax, isAvailabilityValid } from "./availability.domain";
+import {
+  availabilityMax,
+  availabilityUnit,
+  isAvailabilityValid,
+} from "./availability.domain";
 
 export function AvailabilityForm({
   dispatch,
@@ -12,6 +16,12 @@ export function AvailabilityForm({
   availability,
   space,
 }: AvailabilityComponentProps) {
+  const [availabilityValue, setAvailabilityValue] = useState(
+    (
+      availability.totalSize / availabilityUnit(availability.totalSizeUnit)
+    ).toFixed(2)
+  );
+
   useEffect(() => {
     const max = availabilityMax(space);
     const isValid = isAvailabilityValid(availability, max);
@@ -44,9 +54,12 @@ export function AvailabilityForm({
   const onAvailablityChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
     const v = element.value;
+    const unit = availabilityUnit(availability.totalSizeUnit);
+
+    setAvailabilityValue(v);
 
     onAvailabilityChange({
-      [element.name]: v,
+      [element.name]: parseFloat(v) * unit,
     });
   };
 
@@ -54,13 +67,31 @@ export function AvailabilityForm({
     const element = e.currentTarget;
 
     onAvailabilityChange({
-      [element.name]: parseFloat(element.value),
+      [element.name]:
+        element.name === "name" ? element.value : parseFloat(element.value),
     });
   };
 
-  const max = availabilityMax(space);
-  const isValid = isAvailabilityValid(availability, max);
+  // const domain = new AvailabilityDomain(space, availability);
 
+  const onMaxSize = () => {
+    const available =
+      space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes;
+
+    const unit = availabilityUnit(availability.totalSizeUnit);
+
+    setAvailabilityValue((available / unit).toFixed(2));
+
+    onAvailabilityChange({
+      totalSize: available,
+    });
+  };
+
+  const available =
+    space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes;
+  const isValid = available >= availability.totalSize;
+  const unit = availabilityUnit(availability.totalSizeUnit);
+  const max = available / unit;
   const helper = isValid
     ? "Total size of sale's storage in bytes"
     : "The total size cannot exceed the space available.";
@@ -84,13 +115,18 @@ export function AvailabilityForm({
         max={max.toFixed(2)}
         onChange={onAvailablityChange}
         onGroupChange={onTotalSizeUnitChange}
-        value={availability.totalSize.toString()}
+        value={availabilityValue}
         step={"0.01"}
         group={[
           ["gb", "GB"],
           ["tb", "TB"],
         ]}
         groupValue={availability.totalSizeUnit}
+        extra={
+          <a onClick={onMaxSize} className="availabilityForm-itemInput-maxSize">
+            Use max size
+          </a>
+        }
       />
 
       <div className="availabilityForm-item">
@@ -142,6 +178,21 @@ export function AvailabilityForm({
             value={availability.maxCollateral.toString()}
           />
         </div>
+      </div>
+
+      <div className="availabilityForm-item">
+        <Input
+          id="name"
+          name="name"
+          type="string"
+          label="Nickname"
+          max={9}
+          helper="You can add a custom name to easily retrieve your sale."
+          inputClassName="availabilityForm-itemInput"
+          onChange={onInputChange}
+          value={availability.name?.toString()}
+          maxLength={9}
+        />
       </div>
     </>
   );

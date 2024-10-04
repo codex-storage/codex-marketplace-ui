@@ -1,0 +1,8 @@
+.availabilityTable-chevron {
+  cursor: pointer;
+  transition: transform 0.35s;
+}
+
+.availabilityTable-chevron--open {
+  transform: rotate(180deg);
+}
