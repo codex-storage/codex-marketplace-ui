@@ -2,7 +2,7 @@ import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { Times } from "../../utils/times";
 import { Strings } from "../../utils/strings";
 import { PrettyBytes } from "../../utils/bytes";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CallbackDataParams, ECBasicOption } from "echarts/types/dist/shared";
 import * as echarts from "echarts";
 import { availabilityColors } from "./availability.colors";
@@ -19,10 +19,12 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
   const chart = useRef<echarts.EChartsType | null>(null);
   const [, setRefresher] = useState(Date.now());
 
-  if (div.current && !chart.current) {
-    chart.current = echarts.init(div.current);
-    setRefresher(Date.now());
-  }
+  useEffect(() => {
+    if (div.current && !chart.current) {
+      chart.current = echarts.init(div.current);
+      setRefresher(Date.now());
+    }
+  }, [chart, div]);
 
   const data = availabilities.map((a, index) => {
     return {
