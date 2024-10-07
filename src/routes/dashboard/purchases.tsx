@@ -11,6 +11,7 @@ import { TruncateCell } from "../../components/TruncateCell/TruncateCell";
 import { Times } from "../../utils/times";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
 import { ErrorBoundary } from "@sentry/react";
+import { CodexError } from "@codex-storage/sdk-js";
 
 const Purchases = () => {
   const { data, isPending, error } = useQuery({
@@ -85,9 +86,24 @@ const Purchases = () => {
 export const Route = createFileRoute("/dashboard/purchases")({
   component: () => (
     <ErrorBoundary
-      fallback={({ error }) => (
-        <ErrorPlaceholder error={error} subtitle="Cannot retrieve the data." />
-      )}>
+      fallback={({ error }) => {
+        console.info("error", error);
+        if (error instanceof CodexError && error.code === 503) {
+          return (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="The marketplace is not enabled in your Node. Please restart you node with persistence argument, check the documentation for more details."
+            />
+          );
+        }
+
+        return (
+          <ErrorPlaceholder
+            error={error}
+            subtitle="Cannot retrieve the data."
+          />
+        );
+      }}>
       <Purchases />
     </ErrorBoundary>
   ),

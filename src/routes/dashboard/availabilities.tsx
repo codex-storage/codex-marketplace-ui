@@ -8,6 +8,7 @@ import { CodexSdk } from "../../sdk/codex";
 import "./availabilities.css";
 import { AvailabilitiesTable } from "../../components/Availability/AvailabilitiesTable";
 import { AvailabilityCreate } from "../../components/Availability/AvailabilityCreate";
+import { CodexError } from "@codex-storage/sdk-js";
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -105,9 +106,24 @@ export function Availabilities() {
 export const Route = createFileRoute("/dashboard/availabilities")({
   component: () => (
     <ErrorBoundary
-      fallback={({ error }) => (
-        <ErrorPlaceholder error={error} subtitle="Cannot retrieve the data." />
-      )}>
+      fallback={({ error }) => {
+        console.info("error", error);
+        if (error instanceof CodexError && error.code === 503) {
+          return (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="The marketplace is not enabled in your Node. Please restart you node with persistence argument, check the documentation for more details."
+            />
+          );
+        }
+
+        return (
+          <ErrorPlaceholder
+            error={error}
+            subtitle="Cannot retrieve the data."
+          />
+        );
+      }}>
       <Availabilities />
     </ErrorBoundary>
   ),
