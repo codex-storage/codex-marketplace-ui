@@ -155,9 +155,28 @@ class CodexDebugMock extends CodexDebug {
               peerId: "16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Ca",
               record:
                 '(envelope: (publicKey: secp256k1 key (04559c0e8847d8ccf31e457c1858b33ad53aa909ca40b96957a17b2677961443bfc564aa39b13cd2b26cfb1924ea7a54a9ed56d40349e2389c4ab23de7e712f643), domain: "libp2p-peer-record", payloadType: @[3, 1], payload: @[10, 39, 0, 37, 8, 2, 18, 33, 3, 85, 156, 14, 136, 71, 216, 204, 243, 30, 69, 124, 24, 88, 179, 58, 213, 58, 169, 9, 202, 64, 185, 105, 87, 161, 123, 38, 119, 150, 20, 67, 191, 16, 162, 228, 143, 183, 6, 26, 11, 10, 9, 4, 127, 0, 0, 1, 145, 2, 31, 155], signature: 3045022100E9ED63BA027C5C35462CAF58D1C524C9F0AA4AD584E1355B3FC8D46ABB17961F02205750258D76E6544B5C178F0D8133F318E14B5D838F0E1CD36527F708B3FB78C4), data: (peerId: 16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Ca, seqNo: 1726214690, addresses: @[(address: /ip4/127.0.0.1/udp/8091)]))',
-              address: "127.0.0.1:8091",
+              address: "102.220.118.12:8091",
               seen: true,
             },
+            {
+              nodeId:
+                "aa308c16f7a89d5b0c729546453683e01be37d9505ad90e8e28b2cb044d3619d",
+              peerId: "16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Cb",
+              record:
+                '(envelope: (publicKey: secp256k1 key (04559c0e8847d8ccf31e457c1858b33ad53aa909ca40b96957a17b2677961443bfc564aa39b13cd2b26cfb1924ea7a54a9ed56d40349e2389c4ab23de7e712f643), domain: "libp2p-peer-record", payloadType: @[3, 1], payload: @[10, 39, 0, 37, 8, 2, 18, 33, 3, 85, 156, 14, 136, 71, 216, 204, 243, 30, 69, 124, 24, 88, 179, 58, 213, 58, 169, 9, 202, 64, 185, 105, 87, 161, 123, 38, 119, 150, 20, 67, 191, 16, 162, 228, 143, 183, 6, 26, 11, 10, 9, 4, 127, 0, 0, 1, 145, 2, 31, 155], signature: 3045022100E9ED63BA027C5C35462CAF58D1C524C9F0AA4AD584E1355B3FC8D46ABB17961F02205750258D76E6544B5C178F0D8133F318E14B5D838F0E1CD36527F708B3FB78C4), data: (peerId: 16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Ca, seqNo: 1726214690, addresses: @[(address: /ip4/127.0.0.1/udp/8091)]))',
+              address: "100.42.192.12:8091",
+              seen: true,
+            },
+            {
+              nodeId:
+                "aa308c16f7a89d5b0c729546453683e01be37d9505ad90e8e28b2cb044d3619d",
+              peerId: "16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Cc",
+              record:
+                '(envelope: (publicKey: secp256k1 key (04559c0e8847d8ccf31e457c1858b33ad53aa909ca40b96957a17b2677961443bfc564aa39b13cd2b26cfb1924ea7a54a9ed56d40349e2389c4ab23de7e712f643), domain: "libp2p-peer-record", payloadType: @[3, 1], payload: @[10, 39, 0, 37, 8, 2, 18, 33, 3, 85, 156, 14, 136, 71, 216, 204, 243, 30, 69, 124, 24, 88, 179, 58, 213, 58, 169, 9, 202, 64, 185, 105, 87, 161, 123, 38, 119, 150, 20, 67, 191, 16, 162, 228, 143, 183, 6, 26, 11, 10, 9, 4, 127, 0, 0, 1, 145, 2, 31, 155], signature: 3045022100E9ED63BA027C5C35462CAF58D1C524C9F0AA4AD584E1355B3FC8D46ABB17961F02205750258D76E6544B5C178F0D8133F318E14B5D838F0E1CD36527F708B3FB78C4), data: (peerId: 16Uiu2HAmJRB2FPCyTaCNKoE6eojDjK5CdD8Et9GFfus4U8evD5Ca, seqNo: 1726214690, addresses: @[(address: /ip4/127.0.0.1/udp/8091)]))',
+              address: "101.234.152.12:8091",
+              seen: true,
+            },
+
           ],
         },
         codex: {
@@ -383,10 +402,10 @@ class CodexMarketplaceMock extends CodexMarketplace {
 const mock = {
   url: "http://localhost:8080",
   updateURL: () => Promise.resolve(""),
-  debug: new CodexDebugMock(""),
-  data: new CodexDataMock(""),
-  node: new CodexNodeMock(""),
-  marketplace: new CodexMarketplaceMock(""),
+  debug: () => new CodexDebugMock(""),
+  data: () => new CodexDataMock(""),
+  node: () => new CodexNodeMock(""),
+  marketplace: () => new CodexMarketplaceMock(""),
 };
 
 export const CodexSdk = {
