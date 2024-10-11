@@ -29,13 +29,6 @@ export function AvailabilityActionsCell(_: Props) {
   return (
     <Cell>
       <div className="availability-actions">
-        {/* <a
-        className="cell--action availability-action"
-        title="Edit"
-        onClick={onEditClick}>
-        <Pen width={"1.25rem"} />
-      </a> */}
-
         <a className="cell--action availability-action" title="Reservations">
           <Pencil width={"1.25rem"} />
         </a>

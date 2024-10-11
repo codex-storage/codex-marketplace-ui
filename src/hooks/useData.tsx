@@ -7,7 +7,9 @@ export function useData() {
   const { data = { content: [] } satisfies CodexDataResponse } =
     useQuery<CodexDataResponse>({
       queryFn: () =>
-        CodexSdk.data.cids().then((res) => Promises.rejectOnError(res)),
+        CodexSdk.data()
+          .cids()
+          .then((res) => Promises.rejectOnError(res)),
       queryKey: ["cids"],
 
       initialData: { content: [] } satisfies CodexDataResponse,

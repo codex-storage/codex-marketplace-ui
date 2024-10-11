@@ -20,7 +20,9 @@ import { ErrorBoundary } from "@sentry/react";
 const Purchases = () => {
   const { data, isPending } = useQuery({
     queryFn: () =>
-      CodexSdk.marketplace.purchases().then((s) => Promises.rejectOnError(s)),
+      CodexSdk.marketplace()
+        .purchases()
+        .then((s) => Promises.rejectOnError(s)),
     queryKey: ["purchases"],
 
     // No need to retry because if the connection to the node

@@ -6,7 +6,10 @@ import { CircleX } from "lucide-react";
 
 export function Debug() {
   const { data, isPending, isError, error } = useQuery({
-    queryFn: () => CodexSdk.debug.info().then((s) => Promises.rejectOnError(s)),
+    queryFn: () =>
+      CodexSdk.debug()
+        .info()
+        .then((s) => Promises.rejectOnError(s)),
     queryKey: ["debug"],
 
     // No need to retry because if the connection to the node
@@ -20,6 +23,9 @@ export function Debug() {
     // Refreshing when focus returns can be useful if a user comes back
     // to the UI after performing an operation in the terminal.
     refetchOnWindowFocus: true,
+
+    // Throw the error to the error boundary
+    throwOnError: true,
   });
 
   if (isPending) {

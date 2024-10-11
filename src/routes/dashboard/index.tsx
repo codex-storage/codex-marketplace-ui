@@ -29,7 +29,11 @@ function About() {
             />
           )}>
           <Card title="Upload a file">
-            <Upload multiple codexData={CodexSdk.data} onSuccess={onSuccess} />
+            <Upload
+              multiple
+              codexData={CodexSdk.data()}
+              onSuccess={onSuccess}
+            />
           </Card>
         </ErrorBoundary>
 

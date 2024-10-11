@@ -19,8 +19,11 @@ export function NodeIndicator() {
 
   const { data, isError } = useQuery({
     queryKey: ["spr"],
-    queryFn: async () =>
-      CodexSdk.node.spr().then((data) => Promises.rejectOnError(data, report)),
+    queryFn: async () => {
+      return CodexSdk.node()
+        .spr()
+        .then((data) => Promises.rejectOnError(data, report));
+    },
     refetchInterval: 5000,
 
     // No need to retry because we defined a refetch interval

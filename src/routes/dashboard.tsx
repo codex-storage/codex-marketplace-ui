@@ -12,6 +12,7 @@ import {
   Settings,
   HelpCircle,
   TriangleAlert,
+  Earth,
 } from "lucide-react";
 import { ICON_SIZE } from "../utils/constants";
 import { NodeIndicator } from "../components/NodeIndicator/NodeIndicator";
@@ -84,6 +85,15 @@ const Layout = () => {
         <Link to="/dashboard/settings" {...p}>
           <Settings size={ICON_SIZE} />
           Settings
+        </Link>
+      ),
+    },
+    {
+      type: "menu-item",
+      Component: (p: MenuItemComponentProps) => (
+        <Link to="/dashboard/peers" {...p}>
+          <Earth size={ICON_SIZE} />
+          Peers
         </Link>
       ),
     },

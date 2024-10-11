@@ -12,6 +12,7 @@ import { CodexSdk } from "../../sdk/codex";
 import { AvailabilityStorage } from "../../utils/availabilities-storage";
 import { CodexAvailabilityCreateResponse } from "@codex-storage/sdk-js";
 
+
 export function useAvailabilityMutation(
   dispatch: Dispatch<StepperAction>,
   state: StepperState
@@ -29,18 +30,17 @@ export function useAvailabilityMutation(
       name,
       ...input
     }: AvailabilityState) => {
-      const marketplace = CodexSdk.marketplace;
       const time = Times.toSeconds(duration, durationUnit);
 
       const fn: (
         input: Omit<AvailabilityState, "totalSizeUnit" | "durationUnit">
-      ) => Promise<CodexAvailabilityCreateResponse | ""> = input.id
+      ) => Promise<"" | CodexAvailabilityCreateResponse> = input.id
           ? (input) =>
-            marketplace
+            CodexSdk.marketplace()
               .updateAvailability({ ...input, id: input.id || "" })
               .then((s) => Promises.rejectOnError(s))
           : (input) =>
-            marketplace
+            CodexSdk.marketplace()
               .createAvailability(input)
               .then((s) => Promises.rejectOnError(s));
 

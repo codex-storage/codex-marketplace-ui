@@ -23,11 +23,19 @@ export const CodexSdk = {
     return WebStorage.set("codex-node-url", url);
   },
 
-  debug: client.debug,
+  debug() {
+    return client.debug
+  },
 
-  data: client.data,
+  data() {
+    return client.data
+  },
 
-  node: client.node,
+  node() {
+    return client.node
+  },
 
-  marketplace: client.marketplace,
+  marketplace() {
+    return client.marketplace
+  },
 };

@@ -33,14 +33,14 @@ export function Availabilities() {
       AvailabilityWithSlots[]
     >({
       queryFn: () =>
-        CodexSdk.marketplace
+        CodexSdk.marketplace()
           .availabilities()
           .then((s) => Promises.rejectOnError(s))
           .then((res) => res.sort((a, b) => b.totalSize - a.totalSize))
           .then((data) =>
             Promise.all(
               data.map((a) =>
-                CodexSdk.marketplace
+                CodexSdk.marketplace()
                   .reservations(a.id)
                   .then((res) => {
                     if (res.error) {
@@ -84,7 +84,9 @@ export function Availabilities() {
     // Error will be catched in ErrorBounday
     const { data: space = defaultSpace } = useQuery({
       queryFn: () =>
-        CodexSdk.data.space().then((s) => Promises.rejectOnError(s)),
+        CodexSdk.data()
+          .space()
+          .then((s) => Promises.rejectOnError(s)),
       queryKey: ["space"],
       initialData: defaultSpace,
 

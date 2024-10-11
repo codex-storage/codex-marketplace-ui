@@ -95,7 +95,7 @@ export function StorageRequestFileChooser({
         onSuccess={onSuccess}
         editable={false}
         onDeleteItem={onDelete}
-        codexData={CodexSdk.data}
+        codexData={CodexSdk.data()}
         successMessage={"Success, the CID has been copied to the field on top."}
       />
     </>

@@ -18,7 +18,7 @@ export function useStorageRequestMutation(
 
   const { mutateAsync } = useMutation({
     mutationFn: (input: CodexCreateStorageRequestInput) =>
-      CodexSdk.marketplace
+      CodexSdk.marketplace()
         .createStorageRequest(input)
         .then((s) => Promises.rejectOnError(s)),
     onSuccess: async () => {

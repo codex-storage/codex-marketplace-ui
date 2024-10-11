@@ -17,6 +17,7 @@ import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as DashboardSettingsImport } from './routes/dashboard/settings'
 import { Route as DashboardRequestsImport } from './routes/dashboard/requests'
 import { Route as DashboardPurchasesImport } from './routes/dashboard/purchases'
+import { Route as DashboardPeersImport } from './routes/dashboard/peers'
 import { Route as DashboardHelpImport } from './routes/dashboard/help'
 import { Route as DashboardFavoritesImport } from './routes/dashboard/favorites'
 import { Route as DashboardDisclaimerImport } from './routes/dashboard/disclaimer'
@@ -52,6 +53,11 @@ const DashboardRequestsRoute = DashboardRequestsImport.update({
 
 const DashboardPurchasesRoute = DashboardPurchasesImport.update({
   path: '/purchases',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardPeersRoute = DashboardPeersImport.update({
+  path: '/peers',
   getParentRoute: () => DashboardRoute,
 } as any)
 
@@ -133,6 +139,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardHelpImport
       parentRoute: typeof DashboardImport
     }
+    '/dashboard/peers': {
+      id: '/dashboard/peers'
+      path: '/peers'
+      fullPath: '/dashboard/peers'
+      preLoaderRoute: typeof DashboardPeersImport
+      parentRoute: typeof DashboardImport
+    }
     '/dashboard/purchases': {
       id: '/dashboard/purchases'
       path: '/purchases'
@@ -172,6 +185,7 @@ interface DashboardRouteChildren {
   DashboardDisclaimerRoute: typeof DashboardDisclaimerRoute
   DashboardFavoritesRoute: typeof DashboardFavoritesRoute
   DashboardHelpRoute: typeof DashboardHelpRoute
+  DashboardPeersRoute: typeof DashboardPeersRoute
   DashboardPurchasesRoute: typeof DashboardPurchasesRoute
   DashboardRequestsRoute: typeof DashboardRequestsRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
@@ -184,6 +198,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDisclaimerRoute: DashboardDisclaimerRoute,
   DashboardFavoritesRoute: DashboardFavoritesRoute,
   DashboardHelpRoute: DashboardHelpRoute,
+  DashboardPeersRoute: DashboardPeersRoute,
   DashboardPurchasesRoute: DashboardPurchasesRoute,
   DashboardRequestsRoute: DashboardRequestsRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
@@ -202,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/peers': typeof DashboardPeersRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
   '/dashboard/requests': typeof DashboardRequestsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
@@ -215,6 +231,7 @@ export interface FileRoutesByTo {
   '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/peers': typeof DashboardPeersRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
   '/dashboard/requests': typeof DashboardRequestsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
@@ -230,6 +247,7 @@ export interface FileRoutesById {
   '/dashboard/disclaimer': typeof DashboardDisclaimerRoute
   '/dashboard/favorites': typeof DashboardFavoritesRoute
   '/dashboard/help': typeof DashboardHelpRoute
+  '/dashboard/peers': typeof DashboardPeersRoute
   '/dashboard/purchases': typeof DashboardPurchasesRoute
   '/dashboard/requests': typeof DashboardRequestsRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
@@ -246,6 +264,7 @@ export interface FileRouteTypes {
     | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
+    | '/dashboard/peers'
     | '/dashboard/purchases'
     | '/dashboard/requests'
     | '/dashboard/settings'
@@ -258,6 +277,7 @@ export interface FileRouteTypes {
     | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
+    | '/dashboard/peers'
     | '/dashboard/purchases'
     | '/dashboard/requests'
     | '/dashboard/settings'
@@ -271,6 +291,7 @@ export interface FileRouteTypes {
     | '/dashboard/disclaimer'
     | '/dashboard/favorites'
     | '/dashboard/help'
+    | '/dashboard/peers'
     | '/dashboard/purchases'
     | '/dashboard/requests'
     | '/dashboard/settings'
@@ -315,6 +336,7 @@ export const routeTree = rootRoute
         "/dashboard/disclaimer",
         "/dashboard/favorites",
         "/dashboard/help",
+        "/dashboard/peers",
         "/dashboard/purchases",
         "/dashboard/requests",
         "/dashboard/settings",
@@ -339,6 +361,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/help": {
       "filePath": "dashboard/help.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/peers": {
+      "filePath": "dashboard/peers.tsx",
       "parent": "/dashboard"
     },
     "/dashboard/purchases": {

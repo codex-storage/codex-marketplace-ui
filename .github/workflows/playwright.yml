@@ -1,0 +1,131 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main, master, feat/tests/test-init, releases/*]
+  pull_request:
+    branches: [main, master, releases/*]
+  workflow_dispatch:
+
+env:
+  codex_version: v0.1.6
+  circuit_version: v0.1.6
+  marketplace_address: "0xfE822Df439d987849a90B64a4C0e26a297DBD47F"
+  eth_provider: "https://rpc.testnet.codex.storage"
+jobs:
+  tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install libgomp1
+
+      - name: Setup env variables
+        run: |
+          echo "platform=${RUNNER_OS,,}" >> $GITHUB_ENV
+          echo "architecture=$([[ $RUNNER_ARCH == 'X64' ]] && echo amd64 || echo ${RUNNER_ARCH,,})" >> $GITHUB_ENV
+
+      - name: Restore cached circuits
+        id: circuits-cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            datadir/circuits
+          key: ${{ env.circuit_version }}-circuits
+
+      - name: Download circuits
+        if: steps.circuits-cache-restore.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p datadir/circuits
+          chmod 700 datadir
+          chmod 700 datadir/circuits
+          curl -OL https://github.com/codex-storage/nim-codex/releases/download/${circuit_version}/cirdl-${circuit_version}-${platform}-${architecture}.tar.gz 
+          tar -xvf cirdl-${circuit_version}-${platform}-${architecture}.tar.gz
+          chmod +x cirdl-${circuit_version}-${platform}-${architecture}
+          ./cirdl-${circuit_version}-${platform}-${architecture} ./datadir/circuits ${eth_provider} ${marketplace_address}
+
+      - name: Cache circuits
+        id: circuits-cache
+        uses: actions/cache/save@v4
+        with:
+          path: datadir/circuits
+          key: ${{ steps.circuits-cache-restore.outputs.cache-primary-key }}
+
+      - name: Restore cached codex
+        id: codex-cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ./codex-${{ env.codex_version }}-${{ env.platform }}-${{ env.architecture }}
+          key: ${{ env.codex_version }}-codex
+
+      - name: Download codex
+        if: steps.codex-cache-restore.outputs.cache-hit != 'true'
+        run: |
+          curl -LO https://github.com/codex-storage/nim-codex/releases/download/${codex_version}/codex-${codex_version}-${platform}-${architecture}.tar.gz
+          curl -LO https://github.com/codex-storage/nim-codex/releases/download/${codex_version}/codex-${codex_version}-${platform}-${architecture}.tar.gz.sha256
+          sha256sum -c codex-${codex_version}-${platform}-${architecture}.tar.gz.sha256
+          [[ $? -eq 0 ]] && { echo "Checksum is OK"; } || { echo "Checksum failed"; exit 1; }
+          tar -zxvf codex-${codex_version}-${platform}-${architecture}.tar.gz
+
+      - name: Cache codex
+        id: codex-cache
+        uses: actions/cache/save@v4
+        with:
+          path: ./codex-${{ env.codex_version }}-${{ env.platform }}-${{ env.architecture }}
+          key: ${{ steps.codex-cache-restore.outputs.cache-primary-key }}
+
+      - name: Run Codex node
+        run: |
+          # Get an eth address
+          response=$(curl -s https://key.codex.storage)
+          awk -F ': ' '/private/ {print $2}' <<<"${response}" > eth.key
+          awk -F ': ' '/address/ {print $2}' <<<"${response}" > eth.address
+          chmod 600 eth.key
+
+          # Run
+          ./codex-${codex_version}-${platform}-${architecture} --data-dir=datadir --api-cors-origin="*" persistence --eth-provider=${eth_provider} --eth-private-key=./eth.key --marketplace-address=${marketplace_address} prover --circuit-dir=./datadir/circuits &
+
+          sleep 15
+
+      - name: Check Codex API
+        run: |
+          curl --max-time 5 --fail localhost:8080/api/codex/v1/debug/info -w "\n"
+          [[ $? -eq 0 ]] && { echo "Codex node is up"; } || { echo "Please check Codex node"; exit 1; }
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - uses: actions/cache@v4
+        id: playwright-browsers-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-node-${{ hashFiles('**/playwright.config.ts') }}
+
+      - if: steps.playwright-browsers-cache.outputs.cache-hit != 'true'
+        name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm run test
+
+      - uses: actions/upload-artifact@v4
+        # if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
