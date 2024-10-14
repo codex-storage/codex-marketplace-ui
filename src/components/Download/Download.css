@@ -1,0 +1,13 @@
+.download {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.download-inputContainer {
+  flex: 1;
+}
+
+.download-input {
+  width: 100%;
+}

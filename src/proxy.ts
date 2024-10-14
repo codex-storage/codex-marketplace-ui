@@ -3,7 +3,6 @@ import {
   CodexData,
   CodexDataResponse,
   CodexMarketplace,
-  CodexReservation,
   SafeValue,
   UploadResponse,
 } from "@codex-storage/sdk-js";
@@ -143,39 +142,39 @@ class CodexMarketplaceMock extends CodexMarketplace {
   //     },
   //   });
   // }
-  override reservations(): Promise<SafeValue<CodexReservation[]>> {
-    return Promise.resolve({
-      error: false,
-      data: [
-        {
-          id: "0x123456789",
-          availabilityId: "0x12345678910",
-          requestId: "0x1234567891011",
-          /**
-           * Size in bytes
-           */
-          size: 500_000_000 + "",
-          /**
-           * Slot Index as hexadecimal string
-           */
-          slotIndex: "2",
-        },
-        {
-          id: "0x987654321",
-          availabilityId: "0x9876543210",
-          requestId: "0x98765432100",
-          /**
-           * Size in bytes
-           */
-          size: 500_000_000 + "",
-          /**
-           * Slot Index as hexadecimal string
-           */
-          slotIndex: "1",
-        },
-      ],
-    });
-  }
+  // override reservations(): Promise<SafeValue<CodexReservation[]>> {
+  //   return Promise.resolve({
+  //     error: false,
+  //     data: [
+  //       {
+  //         id: "0x123456789",
+  //         availabilityId: "0x12345678910",
+  //         requestId: "0x1234567891011",
+  //         /**
+  //          * Size in bytes
+  //          */
+  //         size: 500_000_000 + "",
+  //         /**
+  //          * Slot Index as hexadecimal string
+  //          */
+  //         slotIndex: "2",
+  //       },
+  //       {
+  //         id: "0x987654321",
+  //         availabilityId: "0x9876543210",
+  //         requestId: "0x98765432100",
+  //         /**
+  //          * Size in bytes
+  //          */
+  //         size: 500_000_000 + "",
+  //         /**
+  //          * Slot Index as hexadecimal string
+  //          */
+  //         slotIndex: "1",
+  //       },
+  //     ],
+  //   });
+  // }
 }
 
 export const CodexSdk = {

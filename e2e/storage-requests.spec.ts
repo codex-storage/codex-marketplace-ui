@@ -63,3 +63,15 @@ test('storage request navigation buttons', async ({ page }) => {
     await page.getByRole('button', { name: 'Finish' }).click();
     await expect(page.locator('.modal--open')).not.toBeVisible();
 })
+
+test('remove the CID when the file is deleted', async ({ page }) => {
+    await page.goto('/dashboard');
+    await page.getByRole('link', { name: 'Purchases' }).click();
+    await page.getByRole('button', { name: 'Storage Request' }).click();
+    await page.locator('div').getByTestId("upload").setInputFiles([
+        path.join(__dirname, "assets", 'chatgpt.jpg'),
+    ]);
+    await expect(page.locator('#cid')).toHaveValue("zDvZRwzkvwapyNeL4mzw5gBsZvyn7x8F8Y9n4RYSC7ETBssDYpGe")
+    await page.locator('.uploadFile-infoRight .buttonIcon--small').click();
+    await expect(page.locator('#cid')).toHaveValue("")
+})
