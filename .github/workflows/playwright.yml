@@ -12,6 +12,8 @@ env:
   circuit_version: v0.1.6
   marketplace_address: "0xfE822Df439d987849a90B64a4C0e26a297DBD47F"
   eth_provider: "https://rpc.testnet.codex.storage"
+  VITE_CODEX_API_URL: ${{ secrets.VITE_CODEX_API_URL }}
+  VITE_GEO_IP_URL: ${{ secrets.VITE_GEO_IP_URL }}
 jobs:
   tests:
     timeout-minutes: 60
@@ -82,7 +84,7 @@ jobs:
           awk -F ': ' '/address/ {print $2}' <<<"${response}" > eth.address
           chmod 600 eth.key
 
-          # Run
+          # Run 
           ./codex-${codex_version}-${platform}-${architecture} --data-dir=datadir --api-cors-origin="*" persistence --eth-provider=${eth_provider} --eth-private-key=./eth.key --marketplace-address=${marketplace_address} prover --circuit-dir=./datadir/circuits &
 
           sleep 15
@@ -110,14 +112,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - uses: actions/cache@v4
-        id: playwright-browsers-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-node-${{ hashFiles('**/playwright.config.ts') }}
+      # - uses: actions/cache@v4
+      #   id: playwright-browsers-cache
+      #   with:
+      #     path: ~/.cache/ms-playwright
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/playwright.config.ts') }}
 
-      - if: steps.playwright-browsers-cache.outputs.cache-hit != 'true'
-        name: Install Playwright Browsers
+      # - if: steps.playwright-browsers-cache.outputs.cache-hit != 'true'
+      #   name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
+
+      - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests

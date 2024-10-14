@@ -932,6 +932,12 @@ export const countriesCoordinates = [
         "name": "Morocco"
     },
     {
+        "iso": "MD",
+        "lat": "46.9804",
+        "lng": "28.3897",
+        "name": "Moldova"
+    },
+    {
         "iso": "MZ",
         "lat": "-18.25",
         "lng": "35",
