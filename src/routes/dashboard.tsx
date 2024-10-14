@@ -106,6 +106,15 @@ const Layout = () => {
         </Link>
       ),
     },
+    {
+      type: "menu-item",
+      Component: (p: MenuItemComponentProps) => (
+        <Link to="/dashboard/device" {...p}>
+          <TriangleAlert size={ICON_SIZE} />
+          Device
+        </Link>
+      ),
+    },
   ] satisfies MenuItem[];
 
   return (
