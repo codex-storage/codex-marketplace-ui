@@ -49,14 +49,7 @@ export function FileDetails({ onClose, details }: Props) {
 
             {Files.isImage(details.manifest.mimetype) && (
               <div className="fileDetails-imageContainer">
-                <img
-                  className="fileDetails-image"
-                  src={
-                    import.meta.env.VITE_CODEX_API_URL +
-                    "/api/codex/v1/data/" +
-                    details.cid
-                  }
-                />
+                <img className="fileDetails-image" src={"/chatgpt.jpg"} />
               </div>
             )}
 

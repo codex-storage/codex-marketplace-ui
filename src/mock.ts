@@ -400,7 +400,7 @@ class CodexMarketplaceMock extends CodexMarketplace {
 }
 
 const mock = {
-  url: "http://localhost:8080",
+  url: () => "http://localhost:8080",
   updateURL: () => Promise.resolve(""),
   debug: () => new CodexDebugMock(""),
   data: () => new CodexDataMock(""),
