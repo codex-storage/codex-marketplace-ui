@@ -1,0 +1,36 @@
+# Variables
+ARG BUILDER=node:22-alpine
+ARG IMAGE=nginx:1.27-alpine-slim
+ARG APP_USER=root
+ARG BUILD_HOME=/app
+ARG BUILD_OUT=dist
+ARG APP_HOME=/usr/share/nginx/html
+ARG VITE_CODEX_API_URL=${VITE_CODEX_API_URL:-http://127.0.0.1:8080}
+ARG VITE_GEO_IP_URL=${VITE_GEO_IP_URL:-http://127.0.0.1:8080}
+
+
+# Build
+FROM ${BUILDER} AS builder
+
+ARG APP_USER
+ARG BUILD_HOME
+ARG VITE_CODEX_API_URL
+ARG VITE_GEO_IP_URL
+
+WORKDIR ${BUILD_HOME}
+COPY --chown=${APP_USER}:${APP_USER} . .
+
+RUN npm install
+RUN npm run build
+
+
+# Create
+FROM ${IMAGE}
+
+ARG APP_USER
+ARG BUILD_HOME
+ARG BUILD_OUT
+ARG APP_HOME
+
+WORKDIR ${APP_HOME}
+COPY --chown=${APP_USER}:${APP_USER} --from=builder ${BUILD_HOME}/${BUILD_OUT} .
