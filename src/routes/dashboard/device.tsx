@@ -1,7 +1,6 @@
 import { ErrorBoundary } from "@sentry/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
-import { useEffect } from "react";
 
 const Device = () => {
   return (
