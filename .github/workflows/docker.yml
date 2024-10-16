@@ -1,0 +1,26 @@
+name: Docker
+
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*.*.*'
+    paths-ignore:
+      - '**/*.md'
+      - '.gitignore'
+      - 'docker/**'
+      - '!docker/Dockerfile'
+      - '.github/**'
+      - '!.github/workflows/docker.yml'
+      - '!.github/workflows/docker-reusable.yml'
+      - 'LICENSE-*'
+  workflow_dispatch:
+
+
+jobs:
+  build-and-push:
+    name: Build and Push
+    uses: ./.github/workflows/docker-reusable.yml
+    secrets: inherit
