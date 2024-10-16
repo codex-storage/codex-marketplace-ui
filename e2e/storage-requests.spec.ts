@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-test('creates a storage request', async ({ page }) => {
+test('create a storage request', async ({ page }) => {
     await page.goto('/dashboard');
     await page.getByRole('link', { name: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();

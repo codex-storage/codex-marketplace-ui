@@ -1,0 +1,38 @@
+.folderButton {
+  position: relative;
+}
+
+.folderButton-options {
+  position: absolute;
+  transform: translateY(200px);
+  opacity: 0;
+  transition:
+    transform 0.25s,
+    opacity 0.15s;
+  background-color: var(--codex-background);
+  padding: 0.5rem;
+  border-radius: var(--codex-border-radius);
+  width: 150px;
+  right: -40px;
+  border: 1px solid var(--codex-border-color);
+}
+
+.folderButton-options[aria-expanded] {
+  z-index: 12;
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.folderButton-option {
+  padding: 0.75rem;
+  transition: background-color 0.35s;
+  cursor: pointer;
+  border-radius: var(--codex-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.folderButton-option:hover {
+  background-color: var(--codex-background-light);
+}

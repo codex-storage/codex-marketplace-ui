@@ -1,6 +1,6 @@
 import test, { expect } from "@playwright/test";
 
-test('creates an availability', async ({ page }) => {
+test('create an availability', async ({ page }) => {
     await page.goto('/dashboard');
     await page.getByRole('link', { name: 'Sales' }).click();
     await page.getByRole('button').first().click();

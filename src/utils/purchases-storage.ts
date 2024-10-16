@@ -1,4 +1,4 @@
-import { createStore, get, set } from "idb-keyval";
+import { createStore, entries, get, set } from "idb-keyval";
 
 const store = createStore("purchases", "purchases");
 const storeDates = createStore("purchases", "dates");
@@ -10,6 +10,10 @@ export const PurchaseStorage = {
 
   async set(key: string, cid: string) {
     return set(key, cid, store);
+  },
+
+  async entries() {
+    return entries(store);
   },
 };
 

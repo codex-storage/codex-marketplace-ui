@@ -10,22 +10,35 @@ import { Dates } from "../../utils/dates";
 import { CidCopyButton } from "./CidCopyButton";
 import "./FileDetails.css";
 import { DownloadIcon, X } from "lucide-react";
+import { CodexSdk } from "../../sdk/codex";
+import { Files } from "../../utils/files";
+import { useEffect, useState } from "react";
+import { PurchaseStorage } from "../../utils/purchases-storage";
 
 type Props = {
-  details: CodexDataContent | undefined;
+  details: CodexDataContent | null;
   onClose: () => void;
-  expanded: boolean;
 };
 
-export function FileDetails({ onClose, details, expanded }: Props) {
-  const url = import.meta.env.VITE_CODEX_API_URL + "/api/codex/v1/data/";
+export function FileDetails({ onClose, details }: Props) {
+  const [purchases, setPurchases] = useState(0);
+
+  useEffect(() => {
+    PurchaseStorage.entries().then((entries) =>
+      setPurchases(
+        entries.filter((e) => e[1] === details?.cid).reduce((acc) => acc + 1, 0)
+      )
+    );
+  }, [details?.cid]);
+
+  const url = CodexSdk.url() + "/api/codex/v1/data/";
 
   const Icon = () => <X size={ICON_SIZE} onClick={onClose} />;
 
   const onDownload = () => window.open(url + details?.cid, "_target");
 
   return (
-    <Sheets open={expanded} onClose={onClose}>
+    <Sheets open={!!details} onClose={onClose}>
       <>
         {details && (
           <>
@@ -33,6 +46,19 @@ export function FileDetails({ onClose, details, expanded }: Props) {
               <b className="fileDetails-headerTitle">File details</b>
               <ButtonIcon variant="small" Icon={Icon}></ButtonIcon>
             </div>
+
+            {Files.isImage(details.manifest.mimetype) && (
+              <div className="fileDetails-imageContainer">
+                <img
+                  className="fileDetails-image"
+                  src={
+                    import.meta.env.VITE_CODEX_API_URL +
+                    "/api/codex/v1/data/" +
+                    details.cid
+                  }
+                />
+              </div>
+            )}
 
             <div className="fileDetails-body">
               <div className="fileDetails-grid">
@@ -72,6 +98,13 @@ export function FileDetails({ onClose, details, expanded }: Props) {
                 <p className="text-secondary">Protected:</p>
                 <p className="fileDetails-gridColumn">
                   {details.manifest.protected ? "Yes" : "No"}
+                </p>
+              </div>
+
+              <div className="fileDetails-grid">
+                <p className="text-secondary">Used:</p>
+                <p className="fileDetails-gridColumn">
+                  {purchases + " purchase(s)"}
                 </p>
               </div>
 

@@ -2,7 +2,7 @@ import {
   Stepper,
   useStepperReducer,
   Button,
-  Sheets,
+  Modal,
 } from "@codex-storage/marketplace-ui-components";
 import { useEffect, useRef, useState } from "react";
 import { AvailabilityForm } from "./AvailabilityForm";
@@ -140,7 +140,7 @@ export function AvailabilitySheetCreate({
         className={className}
       />
 
-      <Sheets open={state.open} onClose={onClose}>
+      <Modal open={state.open} onClose={onClose}>
         <Stepper
           className="availabilityCreate"
           titles={steps.current}
@@ -159,7 +159,7 @@ export function AvailabilitySheetCreate({
             error={error}
           />
         </Stepper>
-      </Sheets>
+      </Modal>
     </>
   );
 }

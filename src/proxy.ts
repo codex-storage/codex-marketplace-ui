@@ -22,6 +22,11 @@ class CodexDataMock extends CodexData {
       abort,
       result: result.then((safe) => {
         if (!safe.error) {
+          FilesStorage.set(safe.data, {
+            mimetype: file.type,
+            uploadedAt: new Date().toJSON(),
+            name: file.name,
+          })
           return WebStorage.set(safe.data, {
             type: file.type,
             name: file.name,
