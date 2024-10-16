@@ -8,6 +8,7 @@ import { CodexLogo } from "../components/CodexLogo/CodexLogo";
 import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 import { useNetwork } from "../network/useNetwork";
 import { NetworkIcon } from "../components/NetworkIcon/NetworkIcon";
+import { Logotype } from "../components/Logotype/Logotype";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -28,8 +29,7 @@ function Index() {
       <div className="index-container">
         <div className="index-column">
           <div className="index-column-section">
-            <h1 className="index-title">Codex</h1>
-            <h2 className="index-subtitle">Vault</h2>
+            <Logotype />
           </div>
 
           <div className="index-column-section">
