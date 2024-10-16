@@ -34,3 +34,5 @@ ARG APP_HOME
 
 WORKDIR ${APP_HOME}
 COPY --chown=${APP_USER}:${APP_USER} --from=builder ${BUILD_HOME}/${BUILD_OUT} .
+
+EXPOSE 80
