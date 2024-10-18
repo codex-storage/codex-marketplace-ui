@@ -46,3 +46,14 @@
  ```
 
  Access UI on http://localhost:3000.
+
+ And we also can set Nginx custom port using `APP_PORT` variable. That is useful when use the `host` network mode for a container
+ ```shell
+ docker run \
+   --rm \
+   --name codex-marketplace-ui \
+   --net=host \
+   -e 'APP_PORT=3000' \
+   -p 3000:3000 \
+   codexstorage/codex-marketplace-ui:latest
+ ```
