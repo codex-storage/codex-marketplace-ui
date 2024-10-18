@@ -4,7 +4,8 @@ ARG IMAGE=nginx:1.27-alpine-slim
 ARG APP_USER=root
 ARG BUILD_HOME=/app
 ARG BUILD_OUT=dist
-ARG APP_HOME=/usr/share/nginx/html
+ARG APP_HOME=${BUILD_HOME}
+ARG NGINX_TEMPLATE=docker/default.conf.template
 ARG VITE_CODEX_API_URL=${VITE_CODEX_API_URL:-http://127.0.0.1:8080}
 ARG VITE_GEO_IP_URL=${VITE_GEO_IP_URL:-http://127.0.0.1:8080}
 
@@ -31,8 +32,13 @@ ARG APP_USER
 ARG BUILD_HOME
 ARG BUILD_OUT
 ARG APP_HOME
+ARG NGINX_TEMPLATE
 
 WORKDIR ${APP_HOME}
+RUN mkdir /etc/nginx/templates
+COPY ${NGINX_TEMPLATE} /etc/nginx/templates
 COPY --chown=${APP_USER}:${APP_USER} --from=builder ${BUILD_HOME}/${BUILD_OUT} .
+
+ENV APP_HOME=${APP_HOME}
 
 EXPOSE 80
