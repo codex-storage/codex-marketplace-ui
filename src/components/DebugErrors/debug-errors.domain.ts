@@ -11,6 +11,7 @@ export let DebugErrorsData: State = {
     availabilitiesApi: false,
     createAvailabilityApi: false,
     reservationsApi: false,
+    portForwarding: false,
 };
 
 export function UpdateErrorsData(state: State) {
