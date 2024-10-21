@@ -1,21 +1,9 @@
-import {
-  Check,
-  Copy,
-  Download,
-  FilesIcon,
-  Folder,
-  Plus,
-  ReceiptText,
-  X,
-} from "lucide-react";
+import { FilesIcon, Folder, Plus, X } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { PrettyBytes } from "../../utils/bytes";
 import { Dates } from "../../utils/dates";
 import "./Files.css";
-import { ICON_SIZE } from "../../utils/constants";
 import {
-  ButtonIcon,
-  WebFileIcon,
   Tabs,
   Input,
   Button,
@@ -23,15 +11,17 @@ import {
   Table,
   Row,
   Cell,
+  TabSortState,
 } from "@codex-storage/marketplace-ui-components";
 import { FileDetails } from "./FileDetails.tsx";
 import { useData } from "../../hooks/useData.tsx";
 import { WebStorage } from "../../utils/web-storage.ts";
-import { CodexSdk } from "../../sdk/codex.ts";
-import { FolderButton } from "./FolderButton.tsx";
 import { classnames } from "../../utils/classnames.ts";
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { Files as F } from "../../utils/files.ts";
+import { FilterFilters } from "./FileFilters.tsx";
+import { FileCell } from "./FileCell.tsx";
+import { FileActions } from "./FileActions.tsx";
 
 type SortFn = (a: CodexDataContent, b: CodexDataContent) => number;
 
@@ -43,15 +33,13 @@ export function Files() {
   const [error, setError] = useState("");
   const [details, setDetails] = useState<CodexDataContent | null>(null);
   const [sortFn, setSortFn] = useState<SortFn | null>(null);
-  const [filters, setFilters] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   useEffect(() => {
     WebStorage.folders.list().then((items) => setFolders(items));
   }, []);
 
-  const onClose = () => {
-    setDetails(null);
-  };
+  const onClose = () => setDetails(null);
 
   const onTabChange = async (i: number) => setIndex(i);
 
@@ -154,7 +142,25 @@ export function Files() {
           ),
   }));
 
-  const onSortBySize = (state: "" | "asc" | "desc") => {
+  const onSortByFilename = (state: TabSortState) => {
+    if (!state) {
+      setSortFn(null);
+      return;
+    }
+
+    setSortFn(
+      () => (a: CodexDataContent, b: CodexDataContent) =>
+        state === "desc"
+          ? b.manifest.filename
+              .toLocaleLowerCase()
+              .localeCompare(a.manifest.filename.toLocaleLowerCase())
+          : a.manifest.filename
+              .toLocaleLowerCase()
+              .localeCompare(b.manifest.filename.toLocaleLowerCase())
+    );
+  };
+
+  const onSortBySize = (state: TabSortState) => {
     if (!state) {
       setSortFn(null);
       return;
@@ -168,7 +174,7 @@ export function Files() {
     );
   };
 
-  const onSortByDate = (state: "" | "asc" | "desc") => {
+  const onSortByDate = (state: TabSortState) => {
     if (!state) {
       setSortFn(null);
       return;
@@ -185,11 +191,9 @@ export function Files() {
   };
 
   const onToggleFilter = (filter: string) =>
-    filters.includes(filter)
-      ? setFilters(filters.filter((f) => f !== filter))
-      : setFilters([...filters, filter]);
-
-  const onCopy = (cid: string) => navigator.clipboard.writeText(cid);
+    selectedFilters.includes(filter)
+      ? setSelectedFilters(selectedFilters.filter((f) => f !== filter))
+      : setSelectedFilters([...selectedFilters, filter]);
 
   tabs.unshift({
     label: "All files",
@@ -201,21 +205,19 @@ export function Files() {
       ? files
       : files.filter((file) => folders[index - 1][1].includes(file.cid));
 
-  const url = CodexSdk.url() + "/api/codex/v1/data/";
-
   const headers = [
-    ["file"],
+    ["file", onSortByFilename],
     ["size", onSortBySize],
     ["date", onSortByDate],
     ["actions"],
-  ];
+  ] satisfies [string, ((state: TabSortState) => void)?][];
 
-  const types = Array.from(
-    new Set(files.map((file) => F.type(file.manifest.mimetype)))
-  );
   const filtered = items.filter(
     (item) =>
-      filters.length === 0 || filters.includes(F.type(item.manifest.mimetype))
+      selectedFilters.length === 0 ||
+      selectedFilters.includes(F.type(item.manifest.mimetype)) ||
+      (selectedFilters.includes("archive") &&
+        F.isArchive(item.manifest.mimetype))
   );
 
   const sorted = sortFn ? [...filtered].sort(sortFn) : filtered;
@@ -223,52 +225,14 @@ export function Files() {
     sorted.map((c) => (
       <Row
         cells={[
-          <Cell>
-            <div className="files-cell-file">
-              <WebFileIcon type={c.manifest.mimetype} />
-
-              <div>
-                <b>{c.manifest.filename}</b>
-                <div>
-                  <small className="files-fileMeta">{c.cid}</small>
-                </div>
-              </div>
-            </div>
-          </Cell>,
+          <FileCell content={c}></FileCell>,
           <Cell>{PrettyBytes(c.manifest.datasetSize)}</Cell>,
           <Cell>{Dates.format(c.manifest.uploadedAt).toString()}</Cell>,
-          <Cell>
-            <div className="files-fileActions">
-              <ButtonIcon
-                variant="small"
-                animation="bounce"
-                onClick={() => window.open(url + c.cid, "_blank")}
-                Icon={(props) => (
-                  <Download size={ICON_SIZE} {...props} />
-                )}></ButtonIcon>
-
-              <FolderButton
-                folders={folders.map(([folder, files]) => [
-                  folder,
-                  files.includes(c.cid),
-                ])}
-                onFolderToggle={(folder) => onFolderToggle(c.cid, folder)}
-              />
-
-              <ButtonIcon
-                variant="small"
-                onClick={() => onCopy(c.cid)}
-                animation="buzz"
-                Icon={(props) => (
-                  <Copy size={ICON_SIZE} {...props} />
-                )}></ButtonIcon>
-
-              <ButtonIcon
-                variant="small"
-                onClick={() => onDetails(c.cid)}
-                Icon={() => <ReceiptText size={ICON_SIZE} />}></ButtonIcon>
-            </div>
-          </Cell>,
+          <FileActions
+            content={c}
+            folders={folders}
+            onDetails={onDetails}
+            onFolderToggle={onFolderToggle}></FileActions>,
         ]}></Row>
     )) || [];
 
@@ -303,21 +267,15 @@ export function Files() {
       <Tabs onTabChange={onTabChange} tabIndex={index} tabs={tabs}></Tabs>
 
       <div className="files-filters">
-        {types.map((type) => (
-          <span
-            key={type}
-            className={classnames(
-              ["files-filter"],
-              ["files-filter--active", filters.includes(type)]
-            )}
-            onClick={() => onToggleFilter(type)}>
-            <span>{type}</span> <Check size={"1rem"}></Check>
-          </span>
-        ))}
+        <FilterFilters
+          files={files}
+          onFilterToggle={onToggleFilter}
+          selected={selectedFilters}
+        />
       </div>
 
       <div className="files-fileBody">
-        <Table headers={headers as any} rows={rows} />
+        <Table headers={headers} rows={rows} defaultSortIndex={2} />
       </div>
 
       <FileDetails onClose={onClose} details={details} />
