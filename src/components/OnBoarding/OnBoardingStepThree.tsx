@@ -4,7 +4,6 @@ import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
 import {
-  Button,
   ButtonIcon,
   Input,
   SimpleText,
