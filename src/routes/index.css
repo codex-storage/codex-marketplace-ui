@@ -11,8 +11,10 @@
   display: flex;
   position: absolute;
   top: -19px;
-  left: -106px;
+  left: -161px;
   gap: 4px;
+  width: 200px;
+  justify-content: flex-end;
 }
 
 .index-network-text {

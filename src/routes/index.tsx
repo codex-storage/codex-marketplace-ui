@@ -88,7 +88,7 @@ function Index() {
           <div className="index-logo">
             <div className="index-network">
               <p className="index-network-text">{text}</p>
-              <NetworkIcon></NetworkIcon>
+              <NetworkIcon active={online}></NetworkIcon>
             </div>
             <CodexLogo></CodexLogo>
           </div>

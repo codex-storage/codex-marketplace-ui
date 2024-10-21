@@ -1,10 +1,17 @@
-import { CheckIcon, RefreshCcw, X } from "lucide-react";
+import { CheckIcon, RefreshCcw, Save, X } from "lucide-react";
 import { classnames } from "../../utils/classnames";
 import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
-import { SimpleText } from "@codex-storage/marketplace-ui-components";
-import { useEffect } from "react";
+import {
+  Button,
+  ButtonIcon,
+  Input,
+  SimpleText,
+} from "@codex-storage/marketplace-ui-components";
+import { useEffect, useState } from "react";
+import { CodexSdk } from "../../sdk/codex";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   online: boolean;
@@ -14,10 +21,24 @@ type Props = {
 export function OnBoardingStepThree({ online, onStepValid }: Props) {
   const portForwarding = usePortForwarding(online);
   const codex = useCodexConnection();
+  const [url, setUrl] = useState(CodexSdk.url);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     onStepValid(online && portForwarding.enabled && codex.enabled);
   }, [portForwarding.enabled, codex.enabled, onStepValid, online]);
+
+  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    if (value) {
+      setUrl(value);
+    }
+  };
+
+  const onSave = () =>
+    CodexSdk.updateURL(url)
+      .then(() => queryClient.invalidateQueries())
+      .then(() => codex.refetch());
 
   const InternetIcon = online ? CheckIcon : X;
   const PortForWarningIcon = portForwarding.enabled ? CheckIcon : X;
@@ -25,7 +46,20 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
 
   return (
     <div className="index-column-section">
+      <div className="onboarding-group">
+        <div>
+          <Input
+            id="url"
+            label="Codex client node URL"
+            onChange={onChange}
+            value={url}
+            inputClassName="settings-input"></Input>
+        </div>
+
+        <ButtonIcon Icon={Save} onClick={onSave}></ButtonIcon>
+      </div>
       <div
+        data-testid="network"
         className={classnames(
           ["onboarding-check"],
           ["onboarding-check--valid", online]

@@ -27,6 +27,13 @@
   animation: rotateAnimation 2s linear infinite;
 }
 
+.onboarding-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg); /* Start at 0 degrees */
