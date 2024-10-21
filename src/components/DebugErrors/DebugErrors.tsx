@@ -12,6 +12,7 @@ export type State = {
   availabilitiesApi: boolean;
   createAvailabilityApi: boolean;
   reservationsApi: boolean;
+  portForwarding: boolean;
 };
 
 export function DebugErrors() {
@@ -127,6 +128,17 @@ export function DebugErrors() {
           checked={data.reservationsApi || false}
         />
         <label htmlFor="reservations">Reservations API</label>
+      </div>
+
+      <div>
+        <input
+          id="portForwarding"
+          type="checkbox"
+          name="portForwarding"
+          onChange={onInputChange}
+          checked={data.portForwarding || false}
+        />
+        <label htmlFor="reservations">Port forwarding</label>
       </div>
     </div>
   );

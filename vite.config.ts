@@ -25,6 +25,7 @@ export default defineConfig({
     alias: {
       "../sdk/codex": "../mock",
       "../../sdk/codex": "../../mock",
+      "../utils/echo": "../mock"
     },
   },
 });

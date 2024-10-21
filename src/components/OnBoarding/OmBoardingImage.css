@@ -1,0 +1,7 @@
+.onboarding-image {
+  position: absolute;
+  right: -40px;
+  max-height: 90%;
+  width: auto;
+  z-index: -1;
+}

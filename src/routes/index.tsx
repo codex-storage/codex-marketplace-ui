@@ -1,14 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import "./index.css";
-import { AlphaIcon } from "../components/AlphaIcon/AlphaIcon";
-import { AlphaText } from "../components/AlphaText/AlphaText";
-import { SimpleText } from "@codex-storage/marketplace-ui-components";
-import { ArrowRight } from "lucide-react";
-import { CodexLogo } from "../components/CodexLogo/CodexLogo";
 import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 import { useNetwork } from "../network/useNetwork";
 import { NetworkIcon } from "../components/NetworkIcon/NetworkIcon";
 import { Logotype } from "../components/Logotype/Logotype";
+import { useState } from "react";
+import { OnBoardingStepOne } from "../components/OnBoarding/OnBoardingStepOne";
+import { OnBoardingStepTwo } from "../components/OnBoarding/OnBoardingStepTwo";
+import { classnames } from "../utils/classnames";
+import { OnBoardingStepThree } from "../components/OnBoarding/OnBoardingStepThree";
+import { attributes } from "../utils/attributes";
+import { CodexLogo } from "../components/CodexLogo/CodexLogo";
+import { OnBoardingImage } from "../components/OnBoarding/OnBoardingImage";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,7 +23,31 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isStepValid, setIsStepValid] = useState(true);
+  const [step, setStep] = useState(0);
   const online = useNetwork();
+  const navigate = useNavigate({ from: "/" });
+  const onStepValid = (valid: boolean) => setIsStepValid(valid);
+
+  const onNextStep = () => {
+    if (!isStepValid) {
+      return;
+    }
+
+    if (step === 2) {
+      navigate({ to: "/dashboard" });
+      return;
+    }
+
+    setStep(step + 1);
+    setIsStepValid(false);
+  };
+
+  const components = [
+    <OnBoardingStepOne onNextStep={onNextStep} />,
+    <OnBoardingStepTwo onStepValid={onStepValid} />,
+    <OnBoardingStepThree online={online} onStepValid={onStepValid} />,
+  ];
 
   const text = online ? "Network connected" : "Network disconnected";
 
@@ -32,53 +59,30 @@ function Index() {
             <Logotype />
           </div>
 
-          <div className="index-column-section">
-            <div>
-              <AlphaIcon />
-            </div>
-            <div className="index-alphaText">
-              <p>
-                <AlphaText></AlphaText>
-              </p>
-              <p>
-                <SimpleText className="index-version" variant="normal">
-                  {import.meta.env.PACKAGE_VERSION}
-                </SimpleText>
-              </p>
-              <p>
-                <SimpleText className="index-disclaimer" variant="error">
-                  <a className="index-link">Legal Disclaimer</a>
-                </SimpleText>
-              </p>
-            </div>
-          </div>
-          <div className="index-column-section">
-            <h3 className="index-mainTitle">
-              Hello,
-              <br /> Welcome to <span className="index-codex">Codex</span>{" "}
-              <span className="index-vault">Vault</span>
-            </h3>
-            <p className="index-description">
-              <SimpleText variant="light">
-                Codex is a durable, decentralised data storage protocol, created
-                so the world community can preserve its most important knowledge
-                without risk of censorship.
-              </SimpleText>
-            </p>
-          </div>
-          <div className="index-column-section ">
-            <SimpleText variant="primary">
-              <a href="/dashboard" className="index-link index-getStarted">
-                Let’s get started <ArrowRight></ArrowRight>
-              </a>
-            </SimpleText>
+          {components[step]}
 
+          <div className=" ">
             <div className="index-dots">
-              <span className="index-dot index-dot--active"></span>
-              <span className="index-dot"></span>
-              <span className="index-dot"></span>
+              <span
+                className={classnames(
+                  ["index-dot"],
+                  ["index-dot--active", step === 0]
+                )}></span>
+              <span
+                className={classnames(
+                  ["index-dot"],
+                  ["index-dot--active", step === 1]
+                )}></span>
+              <span
+                className={classnames(
+                  ["index-dot"],
+                  ["index-dot--active", step === 2]
+                )}></span>
             </div>
           </div>
+        </div>
+        <div className="index-column">
+          <OnBoardingImage />
         </div>
         <div className="index-columnRight">
           <div className="index-logo">
@@ -88,7 +92,10 @@ function Index() {
             </div>
             <CodexLogo></CodexLogo>
           </div>
-          <a href="/dashboard" className="index-link2">
+          <a
+            className="index-link2"
+            {...attributes({ "aria-disabled": !isStepValid })}
+            onClick={onNextStep}>
             <ArrowRightCircle></ArrowRightCircle>
           </a>
         </div>

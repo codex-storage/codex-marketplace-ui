@@ -52,7 +52,22 @@
   font-size: var(--codex-font-size);
   color-scheme: dark;
   color: var(--codex-color);
-  background: linear-gradient(246.02deg, #000000 30.36%, #222222 91.05%);
+  background: #000000; /* Fallback color */
+  background: -webkit-linear-gradient(
+    246.02deg,
+    #000000 30.36%,
+    #222222 91.05%
+  ); /* For Safari and older Chrome */
+  background: -moz-linear-gradient(
+    246.02deg,
+    #000000 30.36%,
+    #222222 91.05%
+  ); /* For older Firefox */
+  background: linear-gradient(
+    246.02deg,
+    #000000 30.36%,
+    #222222 91.05%
+  ); /* Standard syntax */
 }
 
 ::selection {
@@ -140,6 +155,12 @@ pre {
 a {
   text-decoration: inherit;
   color: var(--codex-color);
+  transition: opacity 0.35s;
+}
+
+a[aria-disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .root {

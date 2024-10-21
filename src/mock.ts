@@ -411,3 +411,9 @@ const mock = {
 export const CodexSdk = {
   ...mock,
 };
+
+
+export const Echo = {
+  portForwarding: () => Promise.resolve({ reachable: !DebugErrorsData.portForwarding })
+
+}
