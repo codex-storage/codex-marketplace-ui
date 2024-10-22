@@ -12,12 +12,14 @@ test('update the URL with wrong URL applies', async ({ page }) => {
     await page.goto('/dashboard');
     await page.getByRole('link', { name: 'Settings' }).click();
     await page.getByLabel('Codex client node URL').click();
-
+    await page.getByLabel('Codex client node URL').fill('hello');
+    await expect.soft(page.getByText("The URL is not valid")).toBeVisible()
+    await expect.soft(page.locator(".settings-url-button")).toBeDisabled()
     await page.getByLabel('Codex client node URL').fill('http://127.0.0.1:8079');
+    await expect.soft(page.getByText("The URL is not valid")).not.toBeVisible()
+    await expect.soft(page.locator(".settings-url-button")).not.toBeDisabled()
     await page.getByRole('button', { name: 'Save changes' }).nth(1).click();
-
     await expect.soft(page.getByText("Cannot retrieve the data")).toBeVisible()
-
     await page.getByLabel('Codex client node URL').fill('http://127.0.0.1:8080');
     await page.getByRole('button', { name: 'Save changes' }).nth(1).click();
 })

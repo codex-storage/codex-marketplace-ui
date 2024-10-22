@@ -30,7 +30,7 @@ test('select a uploaded cid when creating a storage request', async ({ page }) =
     await page.getByRole('link', { name: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();
     await page.getByPlaceholder('Select or type your CID').click();
-    await page.getByText('N/A0').click();
+    await page.locator('.dropdown-option').nth(1).click();
     await expect(page.getByText('button[disabled]')).not.toBeVisible();
 })
 

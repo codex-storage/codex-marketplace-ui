@@ -5,10 +5,9 @@ import { CodexSdk } from "../../sdk/codex";
 
 export function Download() {
   const [cid, setCid] = useState("");
-
   const onDownload = () => {
     const url = CodexSdk.url() + "/api/codex/v1/data/";
-    window.open(url + cid, "_target");
+    window.open(url + cid + "/network/stream", "_target");
   };
 
   const onCidChange = (e: ChangeEvent<HTMLInputElement>) =>

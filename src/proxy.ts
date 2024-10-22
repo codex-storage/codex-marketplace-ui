@@ -7,7 +7,6 @@ import {
   UploadResponse,
 } from "@codex-storage/sdk-js";
 import { CodexSdk as Sdk } from "./sdk/codex";
-import { WebStorage } from "./utils/web-storage";
 import { FilesStorage } from "./utils/file-storage";
 import { PurchaseStorage } from "./utils/purchases-storage";
 
@@ -16,20 +15,58 @@ class CodexDataMock extends CodexData {
     file: File,
     onProgress?: (loaded: number, total: number) => void
   ): UploadResponse {
+    // const url = CodexSdk.url() + "/api/codex/v1/data";
+
+    // const xhr = new XMLHttpRequest();
+
+    // const promise = new Promise<SafeValue<string>>((resolve) => {
+    //   xhr.upload.onprogress = (evt) => {
+    //     if (evt.lengthComputable) {
+    //       onProgress?.(evt.loaded, evt.total);
+    //     }
+    //   };
+
+    //   xhr.open("POST", url, true);
+    //   xhr.setRequestHeader("Content-Disposition", "attachment; filename=\"" + file.name + "\"")
+    //   xhr.send(file);
+
+    //   xhr.onload = function () {
+    //     if (xhr.status != 200) {
+    //       resolve({
+    //         error: true,
+    //         data: new CodexError(xhr.responseText, {
+    //           code: xhr.status,
+    //         }),
+    //       });
+    //     } else {
+    //       resolve({ error: false, data: xhr.response });
+    //     }
+    //   };
+
+    //   xhr.onerror = function () {
+    //     resolve({
+    //       error: true,
+    //       data: new CodexError("Something went wrong during the file upload."),
+    //     });
+    //   };
+    // });
+
+    // return {
+    //   result: promise,
+    //   abort: () => {
+    //     xhr.abort();
+    //   },
+    // };
     const { result, abort } = super.upload(file, onProgress);
 
     return {
       abort,
       result: result.then((safe) => {
         if (!safe.error) {
-          FilesStorage.set(safe.data, {
+          return FilesStorage.set(safe.data, {
             mimetype: file.type,
+            name: file.name,
             uploadedAt: new Date().toJSON(),
-            name: file.name,
-          })
-          return WebStorage.set(safe.data, {
-            type: file.type,
-            name: file.name,
           }).then(() => safe);
         }
 

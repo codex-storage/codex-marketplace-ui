@@ -9,6 +9,8 @@ import { useCallback, useState } from "react";
 import { PeerPin } from "../../components/Peers/types";
 import "./peers.css";
 import { CodexSdk } from "../../sdk/codex";
+import { ErrorBoundary } from "@sentry/react";
+import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
 
 // This function accepts the same arguments as DottedMap in the example above.
 const mapJsonString = getMapJSON({ height: 60, grid: "diagonal" });
@@ -102,5 +104,12 @@ const Peers = () => {
 };
 
 export const Route = createFileRoute("/dashboard/peers")({
-  component: Peers,
+  component: () => (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <ErrorPlaceholder error={error} subtitle="Cannot retrieve the data." />
+      )}>
+      <Peers />
+    </ErrorBoundary>
+  ),
 });

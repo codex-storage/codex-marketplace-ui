@@ -15,7 +15,7 @@
 }
 
 :root {
-  --codex-background: rgb(23 23 23);
+  --codex-background: #1c1c1c;
   --codex-color: white;
   --codex-color-contrast: #f8f8f8;
   --codex-color-error: 204, 108, 108;
@@ -24,14 +24,15 @@
   --codex-color-success: 20, 184, 166;
   --codex-color-blue: 30, 64, 175;
   --codex-color-grey: 170, 170, 170;
-  --codex-color-primary: #6ccc93;
+  --codex-color-primary: #6fcb94;
   --codex-color-primary-rgb: 193, 240, 164;
   --codex-color-primary-variant: #c1f0a4cc;
   --codex-color-on-primary: #333;
   --codex-color-disabled: #717171;
   --codex-color-light: rgb(150 150 150);
-  --codex-border-color: rgb(82 82 82);
+  --codex-border-color: #2b303b;
   --codex-background-secondary: rgb(38 38 38);
+  --codex-highlight-color: #2f2f2f;
   --codex-background-light: rgb(64 64 64);
   --codex-background-backdrop: rgba(70, 70, 70, 0.75);
   --codex-border-radius: 0.5rem;

@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { CodexSdk } from "../../sdk/codex";
-import { Placeholder, Spinner } from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
-import { CircleX } from "lucide-react";
+import { Spinner } from "@codex-storage/marketplace-ui-components";
 
 export function Debug() {
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending } = useQuery({
     queryFn: () =>
       CodexSdk.debug()
         .info()
         .then((s) => Promises.rejectOnError(s)),
+
     queryKey: ["debug"],
 
     // No need to retry because if the connection to the node
@@ -36,19 +36,10 @@ export function Debug() {
     );
   }
 
-  if (isError) {
-    return (
-      <Placeholder
-        Icon={<CircleX size={"4em"}></CircleX>}
-        title="Something went wrong"
-        message={error.message}></Placeholder>
-    );
-  }
-
   return (
     <>
       <h3>Debug</h3>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre key={Date.now()}>{JSON.stringify(data, null, 2)}</pre>
     </>
   );
 }

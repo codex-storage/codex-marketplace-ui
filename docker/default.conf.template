@@ -1,0 +1,15 @@
+server {
+    listen       ${APP_PORT};
+    server_name  localhost;
+
+    root  /usr/share/nginx/html;
+
+    error_page  500 502 503 504  /50x.html;
+
+    location / {
+        root   ${APP_HOME};
+        index  index.html;
+
+        try_files  $uri  $uri/  /index.html  =404;
+    }
+}

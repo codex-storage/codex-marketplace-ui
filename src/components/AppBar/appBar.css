@@ -1,0 +1,32 @@
+.appBar {
+  height: 40px;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--codex-border-color);
+  view-transition-name: main-header;
+  display: flex;
+  padding: 0.75rem 1.5rem;
+}
+
+.appBar-burger {
+  cursor: pointer;
+  color: var(--codex-color);
+  display: flex;
+}
+
+.appBar,
+.appBar-left,
+.appBar-right {
+  display: flex;
+  align-items: center;
+}
+
+.appBar-left,
+.appBar-right {
+  gap: 0.75rem;
+}
+
+@media (min-width: 1000px) {
+  .appBar-burger {
+    display: none;
+  }
+}
