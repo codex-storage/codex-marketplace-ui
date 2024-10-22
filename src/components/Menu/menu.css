@@ -168,6 +168,10 @@
   color: #c7c7c7;
 }
 
+.menu-item.active .menu-icon {
+  color: var(--codex-color-primary);
+}
+
 .menu-title {
   text-transform: uppercase;
   padding-top: 0.75rem;
@@ -215,6 +219,7 @@
   justify-content: center;
   width: 20px;
   height: 20px;
+  transition: color 1s;
 }
 
 @media (min-width: 1000px) {
