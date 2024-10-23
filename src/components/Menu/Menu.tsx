@@ -20,9 +20,6 @@ export type MenuItem =
       type: "space";
     }
   | {
-      type: "empty";
-    }
-  | {
       type: "item";
       Component: ComponentType<MenuItemComponentProps>;
     };
@@ -65,6 +62,12 @@ export function Menu({
     }
   }, [expanded, onOpen]);
 
+  const onLogoClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+    }
+  };
+
   const onExpandMenu = () => setIsExpanded(!isExpanded);
 
   const renderItem = (i: MenuItem, index: number) => {
@@ -73,8 +76,6 @@ export function Menu({
         return <hr className="menu-item-separator" key={index}></hr>;
       case "space":
         return <div className="menu-space" key={index}></div>;
-      case "empty":
-        return <div className="menu-empty" key={index}></div>;
       case "item":
         return (
           <i.Component onClick={onClose} className="menu-item" key={index} />
@@ -94,7 +95,7 @@ export function Menu({
         {...attributes({ "aria-expanded": expanded })}>
         <div className="menu-container">
           <div className="menu-header">
-            <Logo />
+            <Logo onClick={onLogoClick} />
             <Logotype height={34} className={"menu-logotype"} />
             <div className="menu-header-right">
               <ExpandIcon onClick={onExpandMenu}></ExpandIcon>

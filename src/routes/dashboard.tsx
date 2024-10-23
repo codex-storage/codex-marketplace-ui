@@ -52,22 +52,22 @@ const Layout = () => {
     {
       type: "item",
       Component: (p: MenuItemComponentProps) => (
-        <Link to="/dashboard/nodes" {...p}>
+        <Link to="/dashboard/files" {...p}>
           <span className="menu-icon">
-            <NodesIcon />
+            <FilesIcon />
           </span>
-          <span className="menu-text">Nodes</span>
+          <span className="menu-text">Files</span>
         </Link>
       ),
     },
     {
       type: "item",
       Component: (p: MenuItemComponentProps) => (
-        <Link to="/dashboard/files" {...p}>
+        <Link to="/dashboard/nodes" {...p}>
           <span className="menu-icon">
-            <FilesIcon />
+            <NodesIcon />
           </span>
-          <span className="menu-text">Files</span>
+          <span className="menu-text">Nodes</span>
         </Link>
       ),
     },
@@ -178,9 +178,6 @@ const Layout = () => {
           <span className="menu-text">Disclaimer</span>
         </Link>
       ),
-    },
-    {
-      type: "empty",
     },
   ] satisfies MenuItem[];
 

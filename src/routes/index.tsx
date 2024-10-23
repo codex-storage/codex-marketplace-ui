@@ -56,7 +56,7 @@ function Index() {
       <div className="index-container">
         <div className="index-column">
           <div className="index-column-section">
-            <Logotype />
+            <Logotype width={111} />
           </div>
 
           {components[step]}

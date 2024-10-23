@@ -1,6 +1,12 @@
-export function Logo() {
+type Props = {
+  onClick?: () => void;
+};
+
+export function Logo({ onClick }: Props) {
   return (
     <svg
+      onClick={onClick}
+      className="logo"
       width="30"
       height="34"
       viewBox="0 0 30 34"
