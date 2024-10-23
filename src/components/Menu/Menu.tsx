@@ -54,7 +54,7 @@ export function Menu({
   items,
   className = "",
 }: Props) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (expanded && onOpen) {
@@ -63,12 +63,12 @@ export function Menu({
   }, [expanded, onOpen]);
 
   const onLogoClick = () => {
-    if (!isExpanded) {
+    if (isExpanded === false) {
       setIsExpanded(true);
     }
   };
 
-  const onExpandMenu = () => setIsExpanded(!isExpanded);
+  const onExpandMenu = () => setIsExpanded(isExpanded === false ? true : false);
 
   const renderItem = (i: MenuItem, index: number) => {
     switch (i.type) {
@@ -90,7 +90,8 @@ export function Menu({
       <aside
         className={classnames(
           [`menu ${className}`],
-          ["menu--expanded", isExpanded]
+          ["menu--expanded", isExpanded === true],
+          ["menu--unexpanded", isExpanded === false]
         )}
         {...attributes({ "aria-expanded": expanded })}>
         <div className="menu-container">

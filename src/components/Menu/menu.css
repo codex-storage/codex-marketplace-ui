@@ -13,10 +13,12 @@
   width: 80px;
   transition: width 0.5s;
   min-width: 0;
+  width: 272px;
 }
 
 .logo {
   cursor: pointer;
+  min-width: 30px;
 }
 
 .menu--expanded .logo {
@@ -27,11 +29,49 @@
   width: 272px;
 }
 
-.menu:not(.menu--expanded) .menu-text,
-.menu:not(.menu--expanded) .menu-logotype,
-.menu:not(.menu--expanded) .menu-header-right {
-  display: none;
+.menu--unexpanded {
+  width: 80px;
 }
+
+/* @keyframes menu-in {
+  0% {
+    width: 0;
+    display: none;
+  }
+  100% {
+    width: auto;
+    display: inline-block;
+  }
+}
+*/
+.menu-logotype,
+.menu-header-right,
+.menu-text {
+  display: inline-block;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* .menu--expanded .menu-header-right svg,
+.menu--expanded .menu-logotype,
+.menu--expanded .menu-header-right {
+  animation-name: header-right-menu-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.menu--expanded .menu-header-right svg,
+.menu--expanded .menu-logotype { */
+/* display: none; */
+/* animation-name: logotype-menu-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+} */
+
+/* .menu--unexpanded .menu-logotype,
+.menu--unexpanded .menu-header-right {
+  display: none;
+} */
 
 .menu-container {
   display: flex;
