@@ -80,6 +80,7 @@
   position: sticky;
   top: 0;
   height: calc(100vh - 24px);
+  overflow: auto;
 }
 
 .menu-header-right {
@@ -184,15 +185,15 @@
 }
 
 .menu-items:has(.active:nth-child(14))::before {
-  top: calc(100vh - 246px);
+  top: calc(100% - 113px);
 }
 
 .menu-items:has(.active:nth-child(15))::before {
-  top: calc(100vh - 203px);
+  top: calc(100% - 70px);
 }
 
 .menu-items:has(.active:nth-child(16))::before {
-  top: calc(100vh - 160px);
+  top: calc(100% - 27px);
 }
 
 .menu-item:not(:first-child) {
