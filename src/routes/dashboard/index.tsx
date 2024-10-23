@@ -7,6 +7,7 @@ import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceho
 import { ErrorBoundary } from "@sentry/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Download } from "../../components/Download/Download.tsx";
+import { ManifestFetch } from "../../components/ManifestFetch/ManifestFetch.tsx";
 
 export const Route = createFileRoute("/dashboard/")({
   component: About,
@@ -48,6 +49,18 @@ function About() {
             )}>
             <Card title="Download a file" className="dashboard-download">
               <Download></Download>
+            </Card>
+          </ErrorBoundary>
+
+          <ErrorBoundary
+            fallback={({ error }) => (
+              <ErrorPlaceholder
+                error={error}
+                subtitle="Cannot retrieve the data."
+              />
+            )}>
+            <Card title="Fetch a manifest" className="dashboard-fetch">
+              <ManifestFetch></ManifestFetch>
             </Card>
           </ErrorBoundary>
         </div>

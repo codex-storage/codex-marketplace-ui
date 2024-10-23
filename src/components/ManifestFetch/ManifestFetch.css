@@ -1,0 +1,14 @@
+.fetch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.fetch-inputContainer {
+  flex: 1;
+}
+
+.fetch-input {
+  width: 100%;
+}

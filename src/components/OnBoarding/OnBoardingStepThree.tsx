@@ -1,4 +1,4 @@
-import { CheckIcon, RefreshCcw, Save, X } from "lucide-react";
+import { CheckIcon, RefreshCcw, Save, ShieldAlert, X } from "lucide-react";
 import { classnames } from "../../utils/classnames";
 import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { CodexSdk } from "../../sdk/codex";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePersistence } from "../../hooks/usePersistence";
 
 type Props = {
   online: boolean;
@@ -20,12 +21,19 @@ type Props = {
 export function OnBoardingStepThree({ online, onStepValid }: Props) {
   const portForwarding = usePortForwarding(online);
   const codex = useCodexConnection();
+  const persistence = usePersistence(codex.enabled);
   const [url, setUrl] = useState(CodexSdk.url);
   const queryClient = useQueryClient();
 
   useEffect(() => {
     onStepValid(online && portForwarding.enabled && codex.enabled);
   }, [portForwarding.enabled, codex.enabled, onStepValid, online]);
+
+  useEffect(() => {
+    if (codex.enabled) {
+      persistence.refetch();
+    }
+  }, [codex.enabled]);
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -42,6 +50,7 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
   const InternetIcon = online ? CheckIcon : X;
   const PortForWarningIcon = portForwarding.enabled ? CheckIcon : X;
   const CodexIcon = codex.enabled ? CheckIcon : X;
+  const PersistenceIcon = persistence.enabled ? CheckIcon : ShieldAlert;
 
   return (
     <div className="index-column-section">
@@ -127,19 +136,39 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
               Status indicator for the Codex network.
             </SimpleText>
           </div>
-          {!codex.enabled && (
+          {!persistence.enabled && (
             <a
               className="onboarding-check-refresh"
-              onClick={() => codex.refetch()}>
+              onClick={() => persistence.refetch()}>
               <RefreshCcw
                 size={"1.25rem"}
                 className={classnames([
                   "onboarding-check-refresh--fetching",
-                  codex.isFetching,
+                  persistence.isFetching,
                 ])}
               />
             </a>
           )}
+        </div>
+      </div>
+      <div
+        className={classnames(
+          ["onboarding-check"],
+          ["onboarding-check--valid", persistence.enabled]
+        )}>
+        <PersistenceIcon
+          className={classnames(
+            ["onboarding-check-icon--valid", persistence.enabled],
+            ["onboarding-check-icon--warning", !persistence.enabled]
+          )}
+        />
+        <div className="onboarding-check-line">
+          <div>
+            <p>Marketplace</p>
+            <SimpleText variant="light">
+              Status indicator for the marketplace on the Codex node.
+            </SimpleText>
+          </div>
         </div>
       </div>
     </div>

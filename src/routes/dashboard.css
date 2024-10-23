@@ -9,6 +9,10 @@
   margin-top: 1rem;
 }
 
+.dashboard-fetch {
+  margin-top: 1rem;
+}
+
 .dashboard-welcome {
   display: flex;
   flex-direction: column;

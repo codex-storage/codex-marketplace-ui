@@ -13,6 +13,10 @@
   color: rgb(var(--codex-color-error));
 }
 
+.onboarding-check-icon--warning {
+  color: rgb(var(--codex-color-warning));
+}
+
 .onboarding-check-line {
   display: flex;
   align-items: center;
