@@ -38,6 +38,11 @@
   margin-bottom: 0.5rem;
 }
 
+.onboarding-codex {
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg); /* Start at 0 degrees */

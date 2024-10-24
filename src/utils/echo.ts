@@ -1,5 +1,5 @@
 export const Echo = {
-    portForwarding: () => fetch(import.meta.env.VITE_GEO_IP_URL + "/port/8070")
+    portForwarding: (port: number) => fetch(import.meta.env.VITE_GEO_IP_URL + "/port/" + port)
         .then((res) => res.json())
 
 }

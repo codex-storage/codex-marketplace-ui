@@ -12,6 +12,7 @@ import { OnBoardingStepThree } from "../components/OnBoarding/OnBoardingStepThre
 import { attributes } from "../utils/attributes";
 import { CodexLogo } from "../components/CodexLogo/CodexLogo";
 import { OnBoardingImage } from "../components/OnBoarding/OnBoardingImage";
+import { OnBoardingUtils } from "../utils/onboarding";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -24,7 +25,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [isStepValid, setIsStepValid] = useState(true);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(OnBoardingUtils.getStep());
   const online = useNetwork();
   const navigate = useNavigate({ from: "/" });
   const onStepValid = (valid: boolean) => setIsStepValid(valid);
@@ -38,6 +39,8 @@ function Index() {
       navigate({ to: "/dashboard" });
       return;
     }
+
+    OnBoardingUtils.setStep(step + 1);
 
     setStep(step + 1);
     setIsStepValid(false);

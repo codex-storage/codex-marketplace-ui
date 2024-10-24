@@ -4,6 +4,7 @@ import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
 import {
+  Alert,
   ButtonIcon,
   Input,
   SimpleText,
@@ -12,28 +13,33 @@ import { useEffect, useState } from "react";
 import { CodexSdk } from "../../sdk/codex";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePersistence } from "../../hooks/usePersistence";
+import { useDebug } from "../../hooks/useDebug";
+import { DebugUtils } from "../../utils/debug";
 
 type Props = {
   online: boolean;
   onStepValid: (valid: boolean) => void;
 };
 
+const throwOnError = false;
+const defaultPort = 8070;
+
 export function OnBoardingStepThree({ online, onStepValid }: Props) {
-  const portForwarding = usePortForwarding(online);
-  const codex = useCodexConnection();
-  const persistence = usePersistence(codex.enabled);
+  const codex = useDebug(throwOnError);
+  const portForwarding = usePortForwarding(codex.data);
+  const persistence = usePersistence(codex.isSuccess);
   const [url, setUrl] = useState(CodexSdk.url);
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    onStepValid(online && portForwarding.enabled && codex.enabled);
-  }, [portForwarding.enabled, codex.enabled, onStepValid, online]);
+    onStepValid(online && portForwarding.enabled && codex.isSuccess);
+  }, [portForwarding.enabled, codex.isSuccess, onStepValid, online]);
 
   useEffect(() => {
-    if (codex.enabled) {
+    if (codex.isSuccess) {
       persistence.refetch();
     }
-  }, [codex.enabled]);
+  }, [codex.isSuccess]);
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
@@ -49,8 +55,21 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
 
   const InternetIcon = online ? CheckIcon : X;
   const PortForWarningIcon = portForwarding.enabled ? CheckIcon : X;
-  const CodexIcon = codex.enabled ? CheckIcon : X;
+  const CodexIcon = codex.isSuccess ? CheckIcon : X;
   const PersistenceIcon = persistence.enabled ? CheckIcon : ShieldAlert;
+
+  let hasPortForwarningWarning = false;
+  let portValue = 0;
+
+  if (codex.isSuccess && codex.data) {
+    const port = DebugUtils.getTcpPort(codex.data);
+    if (port.error === false && port.data !== defaultPort) {
+      hasPortForwarningWarning = true;
+    }
+    if (!port.error) {
+      portValue = port.data;
+    }
+  }
 
   return (
     <div className="index-column-section">
@@ -102,6 +121,14 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
             <SimpleText variant="light">
               Status indicator for port forwarding activation.
             </SimpleText>
+            {portValue && (
+              <>
+                <br />
+                <SimpleText variant="light">
+                  TCP Port detected: {portValue}.
+                </SimpleText>
+              </>
+            )}
           </div>
           {!portForwarding.enabled && (
             <a
@@ -118,59 +145,72 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
           )}
         </div>
       </div>
-      <div
-        className={classnames(
-          ["onboarding-check"],
-          ["onboarding-check--valid", codex.enabled]
-        )}>
-        <CodexIcon
+      <p>Codex</p>
+      <div className="onboarding-codex">
+        <div
           className={classnames(
-            ["onboarding-check-icon--valid", codex.enabled],
-            ["onboarding-check-icon--invalid", !codex.enabled]
-          )}
-        />
-        <div className="onboarding-check-line">
-          <div>
-            <p>Codex connection</p>
-            <SimpleText variant="light">
-              Status indicator for the Codex network.
-            </SimpleText>
-          </div>
-          {!persistence.enabled && (
-            <a
-              className="onboarding-check-refresh"
-              onClick={() => persistence.refetch()}>
-              <RefreshCcw
-                size={"1.25rem"}
-                className={classnames([
-                  "onboarding-check-refresh--fetching",
-                  persistence.isFetching,
-                ])}
-              />
-            </a>
-          )}
-        </div>
-      </div>
-      <div
-        className={classnames(
-          ["onboarding-check"],
-          ["onboarding-check--valid", persistence.enabled]
-        )}>
-        <PersistenceIcon
-          className={classnames(
-            ["onboarding-check-icon--valid", persistence.enabled],
-            ["onboarding-check-icon--warning", !persistence.enabled]
-          )}
-        />
-        <div className="onboarding-check-line">
-          <div>
-            <p>Marketplace</p>
-            <SimpleText variant="light">
-              Status indicator for the marketplace on the Codex node.
-            </SimpleText>
+            ["onboarding-check"],
+            ["onboarding-check--valid", codex.isSuccess]
+          )}>
+          <CodexIcon
+            className={classnames(
+              ["onboarding-check-icon--valid", codex.isSuccess],
+              ["onboarding-check-icon--invalid", !codex.isSuccess]
+            )}
+          />
+          <div className="onboarding-check-line">
+            <div>
+              <p>Codex connection</p>
+              <SimpleText variant="light">
+                Status indicator for the Codex network.
+              </SimpleText>
+            </div>
+            {!persistence.enabled && (
+              <a
+                className="onboarding-check-refresh"
+                onClick={() => persistence.refetch()}>
+                <RefreshCcw
+                  size={"1.25rem"}
+                  className={classnames([
+                    "onboarding-check-refresh--fetching",
+                    persistence.isFetching,
+                  ])}
+                />
+              </a>
+            )}
           </div>
         </div>
+        <div
+          className={classnames(
+            ["onboarding-check"],
+            ["onboarding-check--valid", persistence.enabled]
+          )}>
+          <PersistenceIcon
+            className={classnames(
+              ["onboarding-check-icon--valid", persistence.enabled],
+              ["onboarding-check-icon--warning", !persistence.enabled]
+            )}
+          />
+          <div className="onboarding-check-line">
+            <div>
+              <p>Marketplace</p>
+              <SimpleText variant="light">
+                Status indicator for the marketplace on the Codex node.
+              </SimpleText>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {hasPortForwarningWarning && (
+        <Alert variant="warning" title="Warning">
+          <span>
+            It seems like you are using a different port than the default one (
+            {defaultPort}). Be sure the port forwarning is enabled for the port
+            you are running.
+          </span>
+        </Alert>
+      )}
     </div>
   );
 }

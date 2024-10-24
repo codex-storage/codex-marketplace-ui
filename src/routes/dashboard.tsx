@@ -63,7 +63,12 @@ const Layout = () => {
     {
       type: "item",
       Component: (p: MenuItemComponentProps) => (
-        <Link to="/dashboard/nodes" {...p}>
+        <Link
+          to="/dashboard/nodes"
+          {...p}
+          disabled={true}
+          aria-disabled={true}
+          data-title="Coming soon">
           <span className="menu-icon">
             <NodesIcon />
           </span>
@@ -74,7 +79,13 @@ const Layout = () => {
     {
       type: "item",
       Component: (p: MenuItemComponentProps) => (
-        <Link to="/dashboard/analytics" {...p}>
+        <Link
+          to="/dashboard/analytics"
+          {...p}
+          disabled={true}
+          aria-disabled={true}
+          title="Coming soon"
+          data-title="Coming soon">
           <span className="menu-icon">
             <AnalyticsIcon />
           </span>
@@ -85,7 +96,13 @@ const Layout = () => {
     {
       type: "item",
       Component: (p: MenuItemComponentProps) => (
-        <Link to="/dashboard/device" {...p}>
+        <Link
+          to="/dashboard/device"
+          {...p}
+          disabled={true}
+          aria-disabled={true}
+          title="Coming soon"
+          data-title="Coming soon">
           <span className="menu-icon">
             <DeviceIcon />
           </span>
