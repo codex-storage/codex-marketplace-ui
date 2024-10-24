@@ -2,7 +2,6 @@ import { CheckIcon, RefreshCcw, Save, ShieldAlert, X } from "lucide-react";
 import { classnames } from "../../utils/classnames";
 import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
-import { useCodexConnection } from "../../hooks/useCodexConnection";
 import {
   Alert,
   ButtonIcon,
@@ -39,7 +38,7 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
     if (codex.isSuccess) {
       persistence.refetch();
     }
-  }, [codex.isSuccess]);
+  }, [persistence, codex.isSuccess]);
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
