@@ -1,17 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import {
-  NetworkIndicator,
-  Toast,
-} from "@codex-storage/marketplace-ui-components";
+import { useEffect } from "react";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
+import "./NodeIndicator.css";
+import { NodesIcon } from "../Menu/NodesIcon";
 
 export function NodeIndicator() {
   const queryClient = useQueryClient();
-  const [toast] = useState({
-    time: 0,
-    message: "",
-  });
   const codex = useCodexConnection();
 
   useEffect(() => {
@@ -23,8 +17,12 @@ export function NodeIndicator() {
 
   return (
     <>
-      <Toast message={toast.message} time={toast.time} variant="success" />
-      <NetworkIndicator online={codex.enabled} text="Codex node" />
+      <div className="network-indicator">
+        <div className="network-indicator-icon">
+          <NodesIcon variant={codex.enabled ? "success" : "failure"} />
+        </div>
+        <span className="network-indicator-text">Node</span>
+      </div>
     </>
   );
 }

@@ -52,7 +52,7 @@ export function PeerCountryCell({ address, onPinAdd }: Props) {
         lng: data.longitude,
       });
     }
-  }, [data]);
+  }, [data, onPinAdd]);
 
   return (
     <Cell>

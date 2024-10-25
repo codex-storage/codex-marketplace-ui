@@ -1,0 +1,44 @@
+.onboarding-personalization {
+  margin-top: 1rem;
+  font-family: Azeret Mono;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.34px;
+  display: inline-block;
+}
+
+.onboarding--personalization-block {
+  flex: 0.3;
+}
+
+.onboarding-addressAndPort {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.onboarding-port {
+  width: 150px;
+}
+
+.onboarding-port::-webkit-outer-spin-button,
+.onboarding-port::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.onboarding-port[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.onboarding-portForwardingHelp {
+  font-family: Azeret Mono;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  color: #828282;
+  padding-left: 1.25rem;
+  margin-top: 1.75rem;
+  margin-bottom: 3rem;
+}

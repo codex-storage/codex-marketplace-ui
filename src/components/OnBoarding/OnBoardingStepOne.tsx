@@ -19,11 +19,11 @@ export function OnBoardingStepOne({ onNextStep }: Props) {
     <>
       <div className="index-column-section">
         <div>
-          <AlphaIcon />
+          <AlphaIcon variant="error" />
         </div>
         <div className="index-alphaText">
           <p>
-            <AlphaText></AlphaText>
+            <AlphaText variant="default"></AlphaText>
           </p>
           <p>
             <SimpleText className="index-version" variant="normal">

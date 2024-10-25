@@ -3,9 +3,7 @@ type Props = {
 };
 
 export function NetworkIcon({ active }: Props) {
-  const stroke = active
-    ? "var(--codex-color-primary)"
-    : "rgb(var(--codex-color-error))";
+  const stroke = active ? "#3EE089" : "rgb(var(--codex-color-error))";
   return (
     <svg
       width="12"

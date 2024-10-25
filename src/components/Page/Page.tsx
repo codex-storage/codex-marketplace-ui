@@ -6,14 +6,12 @@ import "./page.css";
 type Props = {
   children: ReactNode;
 
-  Right: ReactNode;
-
   items: MenuItem[];
 
   version?: string;
 };
 
-export function Page({ children, Right, items, version = "" }: Props) {
+export function Page({ children, items, version = "" }: Props) {
   const [open, setOpen] = useState(false);
 
   const onClose = () => setOpen(false);
@@ -29,7 +27,7 @@ export function Page({ children, Right, items, version = "" }: Props) {
         version={version}></Menu>
 
       <main className="page-main">
-        <AppBar onExpand={onExpand} Right={Right} />
+        <AppBar onExpand={onExpand} />
         {children}
       </main>
     </div>

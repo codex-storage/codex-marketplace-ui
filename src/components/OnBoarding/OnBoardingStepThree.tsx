@@ -1,19 +1,21 @@
-import { CheckIcon, RefreshCcw, Save, ShieldAlert, X } from "lucide-react";
 import { classnames } from "../../utils/classnames";
 import "./OnBoardingStepThree.css";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
-import {
-  Alert,
-  ButtonIcon,
-  Input,
-  SimpleText,
-} from "@codex-storage/marketplace-ui-components";
-import { useEffect, useState } from "react";
+import { Input, SimpleText } from "@codex-storage/marketplace-ui-components";
+import { ClipboardEvent, useEffect, useState } from "react";
 import { CodexSdk } from "../../sdk/codex";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePersistence } from "../../hooks/usePersistence";
 import { useDebug } from "../../hooks/useDebug";
 import { DebugUtils } from "../../utils/debug";
+import { AlphaIcon } from "./AlphaIcon";
+import { OnBoardingUtils } from "../../utils/onboarding";
+import { RefreshIcon } from "../RefreshIcon/RefreshIcon";
+import { HealthCheckIcon } from "./HealthCheckIcon";
+import { HealthCheckItem } from "./HealthCheckItem";
+import { Strings } from "../../utils/strings";
+import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
+import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
 
 type Props = {
   online: boolean;
@@ -29,6 +31,7 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
   const persistence = usePersistence(codex.isSuccess);
   const [url, setUrl] = useState(CodexSdk.url);
   const queryClient = useQueryClient();
+  const [isInvalid, setIsInvalid] = useState(false);
 
   useEffect(() => {
     onStepValid(online && portForwarding.enabled && codex.isSuccess);
@@ -37,179 +40,180 @@ export function OnBoardingStepThree({ online, onStepValid }: Props) {
   useEffect(() => {
     if (codex.isSuccess) {
       persistence.refetch();
+      portForwarding.refetch();
     }
-  }, [persistence, codex.isSuccess]);
+  }, [persistence, portForwarding, codex.isSuccess]);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const onAddressChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const [, port] = Strings.splitURLAndPort(url);
+    const element = e.currentTarget;
     const value = e.currentTarget.value;
-    if (value) {
-      setUrl(value);
+
+    if (
+      value.startsWith("http://") === false &&
+      value.startsWith("https://") === false
+    ) {
+      setIsInvalid(true);
+      return;
+    }
+
+    console.info("isInvalid", isInvalid);
+
+    setIsInvalid(!element.checkValidity());
+    setUrl(value + ":" + port);
+  };
+
+  const onPaste = (e: ClipboardEvent) => {
+    const text = e.clipboardData.getData("text");
+
+    try {
+      new URL(text);
+      setUrl(text);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      // Nothing to do here
     }
   };
 
-  const onSave = () =>
+  const onPortChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const [address] = Strings.splitURLAndPort(url);
+    const element = e.currentTarget;
+    const value = element.value;
+
+    setUrl(address + ":" + value);
+  };
+
+  const onSave = () => {
+    if (isInvalid === true) {
+      return;
+    }
+
     CodexSdk.updateURL(url)
       .then(() => queryClient.invalidateQueries())
       .then(() => codex.refetch());
+  };
 
-  const InternetIcon = online ? CheckIcon : X;
-  const PortForWarningIcon = portForwarding.enabled ? CheckIcon : X;
-  const CodexIcon = codex.isSuccess ? CheckIcon : X;
-  const PersistenceIcon = persistence.enabled ? CheckIcon : ShieldAlert;
-
-  let hasPortForwarningWarning = false;
-  let portValue = 0;
+  let forwardingPortValue = defaultPort;
 
   if (codex.isSuccess && codex.data) {
     const port = DebugUtils.getTcpPort(codex.data);
-    if (port.error === false && port.data !== defaultPort) {
-      hasPortForwarningWarning = true;
-    }
     if (!port.error) {
-      portValue = port.data;
+      forwardingPortValue = port.data;
     }
   }
 
+  const displayName = OnBoardingUtils.getDisplayName();
+  const [address, port] = Strings.splitURLAndPort(url);
+
   return (
-    <div className="index-column-section">
-      <div className="onboarding-group">
+    <>
+      <div className="index-column-section onboarding--deviceCheck-block">
         <div>
-          <Input
-            id="url"
-            label="Codex client node URL"
-            onChange={onChange}
-            value={url}
-            inputClassName="settings-input"></Input>
+          <AlphaIcon variant="primary" />
         </div>
-
-        <ButtonIcon Icon={Save} onClick={onSave}></ButtonIcon>
-      </div>
-      <div
-        data-testid="network"
-        className={classnames(
-          ["onboarding-check"],
-          ["onboarding-check--valid", online]
-        )}>
-        <InternetIcon
-          className={classnames(
-            ["onboarding-check-icon--valid", online],
-            ["onboarding-check-icon--invalid", !online]
-          )}
-        />
-        <div>
-          <p>Internet connection</p>
-          <SimpleText variant="light">
-            Status indicator for the Internet.
-          </SimpleText>
-        </div>
-      </div>
-      <div
-        className={classnames(
-          ["onboarding-check"],
-          ["onboarding-check--valid", portForwarding.enabled]
-        )}>
-        <PortForWarningIcon
-          className={classnames(
-            ["onboarding-check-icon--valid", portForwarding.enabled],
-            ["onboarding-check-icon--invalid", !portForwarding.enabled]
-          )}
-        />
-        <div className="onboarding-check-line">
-          <div>
-            <p>Port forwarding</p>
-            <SimpleText variant="light">
-              Status indicator for port forwarding activation.
-            </SimpleText>
-            {portValue && (
-              <>
-                <br />
-                <SimpleText variant="light">
-                  TCP Port detected: {portValue}.
-                </SimpleText>
-              </>
-            )}
-          </div>
-          {!portForwarding.enabled && (
-            <a
-              className="onboarding-check-refresh"
-              onClick={() => portForwarding.refetch()}>
-              <RefreshCcw
-                size={"1.25rem"}
-                className={classnames([
-                  "onboarding-check-refresh--fetching",
-                  portForwarding.isFetching,
-                ])}
-              />
-            </a>
-          )}
-        </div>
-      </div>
-      <p>Codex</p>
-      <div className="onboarding-codex">
-        <div
-          className={classnames(
-            ["onboarding-check"],
-            ["onboarding-check--valid", codex.isSuccess]
-          )}>
-          <CodexIcon
-            className={classnames(
-              ["onboarding-check-icon--valid", codex.isSuccess],
-              ["onboarding-check-icon--invalid", !codex.isSuccess]
-            )}
-          />
-          <div className="onboarding-check-line">
-            <div>
-              <p>Codex connection</p>
-              <SimpleText variant="light">
-                Status indicator for the Codex network.
-              </SimpleText>
-            </div>
-            {!persistence.enabled && (
-              <a
-                className="onboarding-check-refresh"
-                onClick={() => persistence.refetch()}>
-                <RefreshCcw
-                  size={"1.25rem"}
-                  className={classnames([
-                    "onboarding-check-refresh--fetching",
-                    persistence.isFetching,
-                  ])}
-                />
-              </a>
-            )}
-          </div>
-        </div>
-        <div
-          className={classnames(
-            ["onboarding-check"],
-            ["onboarding-check--valid", persistence.enabled]
-          )}>
-          <PersistenceIcon
-            className={classnames(
-              ["onboarding-check-icon--valid", persistence.enabled],
-              ["onboarding-check-icon--warning", !persistence.enabled]
-            )}
-          />
-          <div className="onboarding-check-line">
-            <div>
-              <p>Marketplace</p>
-              <SimpleText variant="light">
-                Status indicator for the marketplace on the Codex node.
-              </SimpleText>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {hasPortForwarningWarning && (
-        <Alert variant="warning" title="Warning">
+        <SimpleText variant="primary" className="onboarding-deviceCheck">
           <span>
-            It seems like you are using a different port than the default one (
-            {defaultPort}). Be sure the port forwarning is enabled for the port
-            you are running.
+            Connection /<br />
+            Device Health Check
           </span>
-        </Alert>
-      )}
-    </div>
+        </SimpleText>
+      </div>
+      <div className="index-column-section">
+        <h3 className="index-mainTitle onboarding-displayName">
+          Nice to meet {displayName},<br />
+          Let’s establish our connection.
+        </h3>
+        <div className="onboarding-group">
+          <div className="onboarding-addressAndPort">
+            <div className="onboarding-addressContainer">
+              <Input
+                onPaste={onPaste}
+                id="url"
+                type="url"
+                label="Address"
+                isInvalid={isInvalid}
+                onChange={onAddressChange}
+                value={address}
+                placeholder="127.0.0.1"></Input>
+              {isInvalid ? (
+                <ErrorCircleIcon className="onboarding--addressSuccessIcon" />
+              ) : (
+                <SuccessCheckIcon
+                  className="onboarding--addressSuccessIcon"
+                  variant="default"
+                />
+              )}
+            </div>
+            <div className="onboarding-portContainer">
+              <Input
+                inputClassName="onboarding-port"
+                id="port"
+                label="Port"
+                type="number"
+                onChange={onPortChange}
+                value={port}
+                placeholder="8080"></Input>
+              <SuccessCheckIcon
+                className="onboarding--addressSuccessIcon"
+                variant="default"></SuccessCheckIcon>
+            </div>
+
+            <RefreshIcon
+              onClick={onSave}
+              className={classnames(
+                ["onboarding-refresh"],
+                [
+                  "onboarding-refresh--fetching",
+                  portForwarding.isFetching || codex.isPending,
+                ]
+              )}></RefreshIcon>
+          </div>
+        </div>
+
+        <ul className="onboarding-portForwardingHelp">
+          <li>Port forwarding should be default {forwardingPortValue}.</li>
+        </ul>
+
+        <div className="onboarding-healthChecks">
+          <div className="onboarding-healthCheck-item">
+            <span className="onboarding-healthCheck-icon">
+              <HealthCheckIcon />
+            </span>
+
+            <span className="onboarding-healthCheck-itemText">
+              Health Check
+            </span>
+          </div>
+
+          <div className="onboarding-healthCheck-item">
+            <HealthCheckItem
+              value={online ? "success" : "failure"}
+              text="Internet connection"
+            />
+          </div>
+
+          <div className="onboarding-healthCheck-item">
+            <HealthCheckItem
+              value={portForwarding.enabled ? "success" : "failure"}
+              text="Port forwarding"
+            />
+          </div>
+
+          <div className="onboarding-healthCheck-item">
+            <HealthCheckItem
+              value={codex.isSuccess ? "success" : "failure"}
+              text="Codex connection"
+            />
+          </div>
+
+          <div className="onboarding-healthCheck-item">
+            <HealthCheckItem
+              value={codex.isSuccess ? "success" : "warning"}
+              text="Marketplace"
+            />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

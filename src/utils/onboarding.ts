@@ -5,5 +5,13 @@ export const OnBoardingUtils = {
 
     setStep(step: number) {
         localStorage.setItem("onboarding-step", step.toString())
+    },
+
+    setDisplayName(displayName: string) {
+        localStorage.setItem("display-name", displayName)
+    },
+
+    getDisplayName() {
+        return localStorage.getItem("display-name") || ""
     }
 }

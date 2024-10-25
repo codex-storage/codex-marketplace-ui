@@ -1,6 +1,7 @@
-import { Menu } from "lucide-react";
 import "./appBar.css";
-import { ReactNode } from "react";
+import { DashboardIcon } from "../DashboardIcon/DashboardIcon";
+import { NodeIndicator } from "../NodeIndicator/NodeIndicator";
+import { HttpNetworkIndicator } from "../HttpNetworkIndicator/HttpNetworkIndicator";
 
 type Props = {
   /**
@@ -8,23 +9,31 @@ type Props = {
    * menu button.
    */
   onExpand: () => void;
-
-  /**
-   * React node to add to the right part of the application bar
-   */
-  Right: ReactNode;
 };
 
-export function AppBar({ onExpand, Right }: Props) {
+export function AppBar(props: Props) {
+  console.info(props);
   return (
     <div className="appBar">
       <div className="appBar-left">
-        <a className="appBar-burger" onClick={onExpand}>
+        {/* <a className="appBar-burger" onClick={onExpand}>
           <Menu size={"1.25rem"} />
-        </a>
-        <span>Home</span>
+        </a> */}
+
+        <div className="appBar-icon">
+          <DashboardIcon />
+        </div>
+        <div className="appBar-textContainer">
+          <div className="appBar-title">Dashboard</div>
+          <div className="appBar-subtitle">
+            Get Overview of your Codex Vault
+          </div>
+        </div>
       </div>
-      <div className="appBar-right">{Right}</div>
+      <div className="appBar-right">
+        <HttpNetworkIndicator />
+        <NodeIndicator />
+      </div>
     </div>
   );
 }

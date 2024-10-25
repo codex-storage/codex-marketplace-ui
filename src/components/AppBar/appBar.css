@@ -1,10 +1,13 @@
 .appBar {
-  height: 40px;
+  height: 80px;
   justify-content: space-between;
   border-bottom: 1px solid var(--codex-border-color);
   view-transition-name: main-header;
   display: flex;
-  padding: 0.75rem 1.5rem;
+  padding: 20px 40px 20px 40px;
+  border-bottom: 1px solid #2b303b;
+  box-sizing: border-box;
+  background-color: #1c1c1c;
 }
 
 .appBar-burger {
@@ -18,11 +21,36 @@
 .appBar-right {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
-.appBar-left,
-.appBar-right {
-  gap: 0.75rem;
+.appBar-icon {
+  background: #141414;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #353639;
+  border-radius: 50%;
+}
+
+.appBar-title {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+  color: white;
+}
+
+.appBar-subtitle {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.006em;
+  color: #969696cc;
 }
 
 @media (min-width: 1000px) {

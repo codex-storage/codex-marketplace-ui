@@ -31,6 +31,7 @@
   --codex-color-disabled: #717171;
   --codex-color-light: rgb(150 150 150);
   --codex-border-color: #2b303b;
+  --codex-input-border-color: #494949;
   --codex-background-secondary: rgb(38 38 38);
   --codex-highlight-color: #2f2f2f;
   --codex-background-light: rgb(64 64 64);
@@ -41,6 +42,10 @@
     BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
     sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
     Noto Color Emoji;
+  --codex-input-label-color: #7b7b7b;
+  --codex-input-border-color: #494949;
+  --codex-input-background: #232323;
+  --codex-input-color-error: #fb3748;
 
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
@@ -172,4 +177,12 @@ a[aria-disabled] {
 
 .page {
   max-width: 100%;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition-delay: 9999s;
+  transition-delay: 9999s;
 }

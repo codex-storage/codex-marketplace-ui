@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import "./index.css";
 import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 import { useNetwork } from "../network/useNetwork";
-import { NetworkIcon } from "../components/NetworkIcon/NetworkIcon";
 import { Logotype } from "../components/Logotype/Logotype";
 import { useState } from "react";
 import { OnBoardingStepOne } from "../components/OnBoarding/OnBoardingStepOne";
@@ -10,7 +9,6 @@ import { OnBoardingStepTwo } from "../components/OnBoarding/OnBoardingStepTwo";
 import { classnames } from "../utils/classnames";
 import { OnBoardingStepThree } from "../components/OnBoarding/OnBoardingStepThree";
 import { attributes } from "../utils/attributes";
-import { CodexLogo } from "../components/CodexLogo/CodexLogo";
 import { OnBoardingImage } from "../components/OnBoarding/OnBoardingImage";
 import { OnBoardingUtils } from "../utils/onboarding";
 
@@ -25,7 +23,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [isStepValid, setIsStepValid] = useState(true);
-  const [step, setStep] = useState(OnBoardingUtils.getStep());
+  // const [step, setStep] = useState(OnBoardingUtils.getStep());
+  const [step, setStep] = useState(0);
   const online = useNetwork();
   const navigate = useNavigate({ from: "/" });
   const onStepValid = (valid: boolean) => setIsStepValid(valid);
@@ -52,7 +51,7 @@ function Index() {
     <OnBoardingStepThree online={online} onStepValid={onStepValid} />,
   ];
 
-  const text = online ? "Network connected" : "Network disconnected";
+  // const text = online ? "Network connected" : "Network disconnected";
 
   return (
     <div className="index">
@@ -88,13 +87,14 @@ function Index() {
           <OnBoardingImage />
         </div>
         <div className="index-columnRight">
-          <div className="index-logo">
+          <div></div>
+          {/* <div className="index-logo">
             <div className="index-network">
               <p className="index-network-text">{text}</p>
               <NetworkIcon active={online}></NetworkIcon>
             </div>
             <CodexLogo></CodexLogo>
-          </div>
+          </div> */}
           <a
             className="index-link2"
             {...attributes({ "aria-disabled": !isStepValid })}

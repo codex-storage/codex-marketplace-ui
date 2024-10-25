@@ -1,7 +1,5 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import "./dashboard.css";
-import { NodeIndicator } from "../components/NodeIndicator/NodeIndicator";
-import { HttpNetworkIndicator } from "../components/HttpNetworkIndicator/HttpNetworkIndicator";
 import { Page } from "../components/Page/Page";
 import { HomeIcon } from "../components/Menu/HomeIcon";
 import { WalletIcon } from "../components/Menu/WalletIcon";
@@ -19,13 +17,6 @@ import { HostIcon } from "../components/Menu/HostIcon";
 import { DeviceIcon } from "../components/Menu/DeviceIcon";
 
 const Layout = () => {
-  const Right = (
-    <>
-      <NodeIndicator />
-      <HttpNetworkIndicator />
-    </>
-  );
-
   const items = [
     {
       type: "item",
@@ -70,7 +61,7 @@ const Layout = () => {
           aria-disabled={true}
           data-title="Coming soon">
           <span className="menu-icon">
-            <NodesIcon />
+            <NodesIcon variant="default" />
           </span>
           <span className="menu-text">Nodes</span>
         </Link>
@@ -202,7 +193,6 @@ const Layout = () => {
     <Page
       children={<Outlet />}
       items={items}
-      Right={Right}
       version={import.meta.env.PACKAGE_VERSION}
     />
   );

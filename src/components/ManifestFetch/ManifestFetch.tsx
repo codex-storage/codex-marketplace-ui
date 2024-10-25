@@ -2,23 +2,26 @@ import { Button, Input } from "@codex-storage/marketplace-ui-components";
 import "./ManifestFetch.css";
 import { ChangeEvent, useState } from "react";
 import { CodexSdk } from "../../sdk/codex";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Promises } from "../../utils/promises";
 
 export function ManifestFetch() {
   const [cid, setCid] = useState("");
+  const queryClient = useQueryClient();
 
   const { refetch } = useQuery({
-    queryFn: () =>
-      CodexSdk.data()
+    queryFn: () => {
+      return CodexSdk.data()
         .fetchManifest(cid)
         .then((s) => {
           if (s.error === false) {
             setCid("");
+            queryClient.invalidateQueries({ queryKey: ["cids"] });
           }
           return Promises.rejectOnError(s);
-        }),
-    queryKey: ["cids"],
+        });
+    },
+    queryKey: ["manifest"],
 
     // Disable the fetch to make it available on refetch only
     enabled: false,
@@ -44,6 +47,7 @@ export function ManifestFetch() {
       <div className="fetch-inputContainer">
         <Input
           id="cid"
+          value={cid}
           placeholder="CID"
           inputClassName="fetch-input"
           onChange={onCidChange}></Input>
