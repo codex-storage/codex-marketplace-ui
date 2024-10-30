@@ -47,13 +47,7 @@ export function FolderButton({ folders, onFolderToggle }: Props) {
             className="folderButton-option"
             onClick={() => onFolderToggle(folder)}>
             <div>{folder}</div>
-            <div>
-              {isActive && (
-                <SimpleText variant="primary">
-                  <CheckCircle size={"1rem"}></CheckCircle>
-                </SimpleText>
-              )}
-            </div>
+            <div>{isActive && <CheckCircle size={"1rem"}></CheckCircle>}</div>
           </div>
         ))}
       </div>
