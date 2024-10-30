@@ -1,11 +1,49 @@
 .settings {
-  border-radius: var(--codex-border-radius);
-  border: 1px solid var(--codex-border-color);
-  background-color: var(--codex-background-secondary);
-  padding: 1rem 1.5rem;
-  margin: 1rem 1.5rem;
-}
+  padding: 24px 48px;
 
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  main {
+    margin-top: 16px;
+    padding: 16px;
+    max-width: 800px;
+    z-index: 1;
+    position: relative;
+
+    h3 {
+      font-family: Inter;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+    }
+
+    .user-info {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #96969633;
+    }
+  }
+
+  .background-img {
+    top: 200px;
+    right: -400px;
+  }
+
+  .refresh {
+    top: 17px;
+  }
+
+  .address svg {
+    top: 55px;
+  }
+}
+/*
 .settings-title {
   font-weight: bold;
   font-size: 1.125rem;
@@ -19,4 +57,4 @@
 
 .settings-debug-loader {
   margin: auto;
-}
+} */

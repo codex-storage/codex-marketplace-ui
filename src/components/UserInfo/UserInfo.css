@@ -1,0 +1,22 @@
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  .emoji {
+    position: relative;
+
+    aside {
+      position: absolute;
+      top: -140px;
+      left: 116px;
+      z-index: 1;
+    }
+
+    .input input {
+      width: 64px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

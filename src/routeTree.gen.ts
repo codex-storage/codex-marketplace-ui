@@ -11,6 +11,8 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as OnboardingNameImport } from './routes/onboarding-name'
+import { Route as OnboardingChecksImport } from './routes/onboarding-checks'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
@@ -31,6 +33,18 @@ import { Route as DashboardAnalyticsImport } from './routes/dashboard/analytics'
 import { Route as DashboardAboutImport } from './routes/dashboard/about'
 
 // Create/Update Routes
+
+const OnboardingNameRoute = OnboardingNameImport.update({
+  id: '/onboarding-name',
+  path: '/onboarding-name',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OnboardingChecksRoute = OnboardingChecksImport.update({
+  id: '/onboarding-checks',
+  path: '/onboarding-checks',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const DashboardRoute = DashboardImport.update({
   id: '/dashboard',
@@ -156,6 +170,20 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/onboarding-checks': {
+      id: '/onboarding-checks'
+      path: '/onboarding-checks'
+      fullPath: '/onboarding-checks'
+      preLoaderRoute: typeof OnboardingChecksImport
+      parentRoute: typeof rootRoute
+    }
+    '/onboarding-name': {
+      id: '/onboarding-name'
+      path: '/onboarding-name'
+      fullPath: '/onboarding-name'
+      preLoaderRoute: typeof OnboardingNameImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/about': {
@@ -320,6 +348,8 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/onboarding-checks': typeof OnboardingChecksRoute
+  '/onboarding-name': typeof OnboardingNameRoute
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
@@ -340,6 +370,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/onboarding-checks': typeof OnboardingChecksRoute
+  '/onboarding-name': typeof OnboardingNameRoute
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
@@ -362,6 +394,8 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/onboarding-checks': typeof OnboardingChecksRoute
+  '/onboarding-name': typeof OnboardingNameRoute
   '/dashboard/about': typeof DashboardAboutRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/availabilities': typeof DashboardAvailabilitiesRoute
@@ -385,6 +419,8 @@ export interface FileRouteTypes {
   fullPaths:
   | '/'
   | '/dashboard'
+  | '/onboarding-checks'
+  | '/onboarding-name'
   | '/dashboard/about'
   | '/dashboard/analytics'
   | '/dashboard/availabilities'
@@ -404,6 +440,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
   | '/'
+  | '/onboarding-checks'
+  | '/onboarding-name'
   | '/dashboard/about'
   | '/dashboard/analytics'
   | '/dashboard/availabilities'
@@ -446,11 +484,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  OnboardingChecksRoute: typeof OnboardingChecksRoute
+  OnboardingNameRoute: typeof OnboardingNameRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  OnboardingChecksRoute: OnboardingChecksRoute,
+  OnboardingNameRoute: OnboardingNameRoute,
 }
 
 export const routeTree = rootRoute
@@ -466,7 +508,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard"
+        "/dashboard",
+        "/onboarding-checks",
+        "/onboarding-name"
       ]
     },
     "/": {
@@ -492,6 +536,12 @@ export const routeTree = rootRoute
         "/dashboard/wallet",
         "/dashboard/"
       ]
+    },
+    "/onboarding-checks": {
+      "filePath": "onboarding-checks.tsx"
+    },
+    "/onboarding-name": {
+      "filePath": "onboarding-name.tsx"
     },
     "/dashboard/about": {
       "filePath": "dashboard/about.tsx",

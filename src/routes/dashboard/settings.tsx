@@ -1,17 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "./settings.css";
-import { LogLevel } from "../../components/LogLevel/LogLevel";
-import { Debug } from "../../components/Debug/Debug";
-import { CodexUrlSettings } from "../../components/CodexUrllSettings/CodexUrlSettings";
 import { ErrorBoundary } from "@sentry/react";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
-import { useEffect } from "react";
-import { DebugErrors } from "../../components/DebugErrors/DebugErrors";
+import { UserInfo } from "../../components/UserInfo/UserInfo";
+import { HealthChecks } from "../../components/HealthChecks/HealthChecks";
+import { Logotype } from "../../components/Logotype/Logotype";
+import { Versions } from "../../components/Versions/Versions";
+import { Logo } from "../../components/Logo/Logo";
+import { BackgroundImage } from "../../components/BackgroundImage/BackgroundImage";
 
 export const Route = createFileRoute("/dashboard/settings")({
   component: () => (
-    <>
-      <div className="settings">
+    <div className="settings">
+      <header>
+        <div className="row gap">
+          <Logo height={48}></Logo>
+          <Logotype height={46}></Logotype>
+        </div>
+        <Versions></Versions>
+      </header>
+      <main>
+        <h3>Personalization</h3>
         <ErrorBoundary
           fallback={({ error }) => (
             <ErrorPlaceholder
@@ -19,11 +28,25 @@ export const Route = createFileRoute("/dashboard/settings")({
               subtitle="Cannot retrieve the data."
             />
           )}>
-          <LogLevel />
+          <UserInfo />
         </ErrorBoundary>
-      </div>
 
-      <div className="settings">
+        <h3>Connection</h3>
+
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
+          <HealthChecks online={true} onStepValid={() => {}} />
+        </ErrorBoundary>
+      </main>
+
+      <BackgroundImage />
+
+      {/* <div className="settings">
         <ErrorBoundary
           fallback={({ error }) => (
             <ErrorPlaceholder
@@ -58,7 +81,7 @@ export const Route = createFileRoute("/dashboard/settings")({
           }}>
           <Debug />
         </ErrorBoundary>
-      </div>
+      </div> */}
 
       <div className="settings">
         <ErrorBoundary
@@ -78,8 +101,6 @@ export const Route = createFileRoute("/dashboard/settings")({
           </p>
 
           <br />
-
-          <DebugErrors />
         </ErrorBoundary>
       </div>
 
@@ -107,6 +128,6 @@ export const Route = createFileRoute("/dashboard/settings")({
                 Floating
               </label>
             </div> */}
-    </>
+    </div>
   ),
 });

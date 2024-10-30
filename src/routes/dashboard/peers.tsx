@@ -11,9 +11,16 @@ import "./peers.css";
 import { CodexSdk } from "../../sdk/codex";
 import { ErrorBoundary } from "@sentry/react";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
+import { PeersIcon } from "../../components/Menu/PeersIcon";
+import { SuccessCheckIcon } from "../../components/SuccessCheckIcon/SuccessCheckIcon";
+import { ErrorCircleIcon } from "../../components/ErrorCircleIcon/ErrorCircleIcon";
 
 // This function accepts the same arguments as DottedMap in the example above.
 const mapJsonString = getMapJSON({ height: 60, grid: "diagonal" });
+
+type CustomCSSProperties = React.CSSProperties & {
+  "--codex-peers-percent": number;
+};
 
 const Peers = () => {
   const [pins, setPins] = useState<[PeerPin, number][]>([]);
@@ -61,10 +68,10 @@ const Peers = () => {
   );
 
   const svgMap = map.getSVG({
-    radius: 0.42,
-    color: "#423B38",
+    radius: 0.32,
+    color: "#969696",
     shape: "circle",
-    backgroundColor: "#020300",
+    backgroundColor: "#141414",
   });
 
   const headers = ["Country", "PeerId", "Active"];
@@ -79,26 +86,55 @@ const Peers = () => {
           <Cell>{node.peerId}</Cell>,
           <Cell>
             {node.seen ? (
-              <div className="networkIndicator-point networkIndicator-point--online"></div>
+              <div className="status--active">
+                <SuccessCheckIcon variant="primary"></SuccessCheckIcon> Active
+              </div>
             ) : (
-              <div className="networkIndicator-point networkIndicator-point--offline"></div>
+              <div className="status--inactive">
+                <ErrorCircleIcon></ErrorCircleIcon> Inactive
+              </div>
             )}
           </Cell>,
         ]}></Row>
     )) || [];
 
+  const actives =
+    data?.table.nodes.reduce((acc, cur) => acc + (cur.seen ? 1 : 0), 0) || 0;
+  const total = data?.table.nodes.length || 1;
+
+  const styles: CustomCSSProperties = {
+    "--codex-peers-percent": (actives / total) * 180,
+  };
+
   return (
     <div className="peers">
-      {/* <img
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        className="peers-map"
-      /> */}
+      <div>
+        <ul>
+          <li>Legend</li>
+          <li>1-3</li>
+          <li>3-5</li>
+          <li>5 +</li>
+        </ul>
+        <div className="connections">
+          <header>
+            <PeersIcon></PeersIcon>
+            <span>Connections</span>
+          </header>
+          <main style={styles}>
+            <div>
+              <div></div>
+              <span>{actives}</span>
+            </div>
+          </main>
+          <footer>
+            <SuccessCheckIcon variant="primary"></SuccessCheckIcon>{" "}
+            <span>Peer connections in Good standing. </span>
+          </footer>
+        </div>
+        <div dangerouslySetInnerHTML={{ __html: svgMap }}></div>
+      </div>
 
-      <div
-        className="peers-map"
-        dangerouslySetInnerHTML={{ __html: svgMap }}></div>
-
-      <Table headers={headers} rows={rows} className="peers-table" />
+      <Table headers={headers} rows={rows} />
     </div>
   );
 };

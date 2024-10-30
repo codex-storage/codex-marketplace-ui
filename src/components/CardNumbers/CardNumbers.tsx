@@ -1,7 +1,4 @@
-import {
-  ButtonIcon,
-  SimpleText,
-} from "@codex-storage/marketplace-ui-components";
+import { ButtonIcon } from "@codex-storage/marketplace-ui-components";
 import "./CardNumbers.css";
 import { Check, CircleX, Pencil } from "lucide-react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -165,12 +162,7 @@ export function CardNumbers({
       {error ? (
         <small className="cardNumber-errorText">{error}</small>
       ) : (
-        <SimpleText
-          size="small"
-          variant="light"
-          className="cardNumber-helperText">
-          {helper}
-        </SimpleText>
+        <small className="cardNumber-helperText">{helper}</small>
       )}
     </div>
   );

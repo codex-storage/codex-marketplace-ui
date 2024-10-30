@@ -56,7 +56,7 @@ export function PeerCountryCell({ address, onPinAdd }: Props) {
 
   return (
     <Cell>
-      <div className="peerCountry">
+      <div className="peer-country">
         {data ? (
           <>
             <span> {!!data && getFlagEmoji(data.country_iso)}</span>

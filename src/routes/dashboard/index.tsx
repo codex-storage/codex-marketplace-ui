@@ -10,19 +10,14 @@ import { Download } from "../../components/Download/Download.tsx";
 import { ManifestFetch } from "../../components/ManifestFetch/ManifestFetch.tsx";
 import { OnBoardingUtils } from "../../utils/onboarding.ts";
 import "./index.css";
-import { AlphaIcon } from "../../components/OnBoarding/AlphaIcon.tsx";
-import { AlphaText } from "../../components/AlphaText/AlphaText.tsx";
-import { useDebug } from "../../hooks/useDebug.ts";
+import { Versions } from "../../components/Versions/Versions.tsx";
 
 export const Route = createFileRoute("/dashboard/")({
   component: Dashboard,
 });
 
-const throwOnError = false;
-
 function Dashboard() {
   const queryClient = useQueryClient();
-  const debug = useDebug(throwOnError);
 
   const onSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["cids"] });
@@ -30,62 +25,21 @@ function Dashboard() {
 
   const username = OnBoardingUtils.getDisplayName();
 
-  const parts = debug.data?.codex.version.split("\n") || [""];
-  const version = parts[parts.length - 1];
+  const emoji = OnBoardingUtils.getEmoji();
 
   return (
     <>
-      <div className="dashboard-welcomeContainer">
-        <div className="dashboard-welcome-avatarContainer">
-          <picture>
-            <source
-              srcSet="/img/avatar@4x.webp 4x, 
-                /img/avatar@3x.webp 3x, 
-                /img/avatar@2x.webp 2x, 
-                /img/avatar@1.5x.webp 1.5x, 
-                /img/avatar.webp 1x"
-              sizes="(max-width: 600px) 100vw, 
-               (max-width: 1200px) 50vw, 
-               33vw"
-              type="image/webp"
-            />
-            <source
-              srcSet="/img/avatar@4x.png 4x, 
-                /img/avatar@3x.png 3x, 
-                /img/avatar@2x.png 2x, 
-                /img/avatar@1.5x.png 1.5x, 
-                /img/avatar.png 1x"
-              sizes="(max-width: 600px) 100vw, 
-               (max-width: 1200px) 50vw, 
-               33vw"
-              type="image/png"
-            />
-            <img src="/img/avatar.png" height={52} width={52} alt="Avatar" />
-          </picture>
-          <div>
-            <div className="dashboard-welcome-avatarTitle">Welcome back,</div>
-            <div className="dashboard-welcome-avatarSubtitle">{username}</div>
-          </div>
-        </div>
-        <div className="dashboard-welcome-versions">
-          <AlphaIcon variant="error" className="dashboard-welcome-alpha" />
-          <div className="dashboard-welcome-versionContainer">
-            <p className="dashboard-welcome-versionTitle">Client</p>
-            <p className="dashboard-welcome-versionValue">VER. {version}</p>
-          </div>
-          <div className="dashboard-welcome-versionContainer">
-            <p className="dashboard-welcome-versionTitle">Vault</p>
-            <p className="dashboard-welcome-versionValue">
-              VER. {import.meta.env.PACKAGE_VERSION}
-            </p>
-            <AlphaText
-              variant="failure"
-              className="dashboard-welcome-alphaText"
-              width={37}></AlphaText>
-          </div>
-        </div>
-      </div>
       <div className="dashboard">
+        <div className="row gap">
+          <div className="emoji">{emoji}</div>
+          <div>
+            <h3>Welcome back,</h3>
+            <h4>{username}</h4>
+          </div>
+        </div>
+        <Versions />
+      </div>
+      <div>
         <div>
           <ErrorBoundary
             fallback={({ error }) => (

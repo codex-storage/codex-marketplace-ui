@@ -1,8 +1,4 @@
-import {
-  Cell,
-  Row,
-  SimpleText,
-} from "@codex-storage/marketplace-ui-components";
+import { Cell, Row } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import "./AvailabilityDiskRow.css";
 import { classnames } from "../../utils/classnames";
@@ -26,9 +22,9 @@ export function AvailabilityDiskRow({ bytes }: Props) {
               <div>
                 <b>Node</b>
               </div>
-              <SimpleText size="small" variant="light">
+              <small className="text--light">
                 {PrettyBytes(bytes)} allocated for the node
-              </SimpleText>
+              </small>
             </div>
           </div>
         </Cell>,

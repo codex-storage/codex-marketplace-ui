@@ -19,7 +19,13 @@ export default defineConfig({
 
         defaultHandler(warning);
       },
+      output: {
+        manualChunks: {
+          "emoji-picker-react": ["emoji-picker-react"]
+        }
+      }
     },
+
   },
   resolve: {
     alias: {

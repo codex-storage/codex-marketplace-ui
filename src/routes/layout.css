@@ -1,8 +1,12 @@
-.dashboard {
-  padding: 1.5rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+.layout {
+  display: flex;
+  flex: 1;
+  max-width: 100%;
+
+  > main {
+    flex: 1;
+    background-color: #141414;
+  }
 }
 
 .dashboard-download {
@@ -50,10 +54,4 @@
   color: white;
   text-transform: uppercase;
   white-space: nowrap;
-}
-
-@media (min-width: 1000px) {
-  .dashboard {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }

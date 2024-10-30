@@ -1,6 +1,6 @@
 import "./AvailabilityIdCell.css";
 import { Strings } from "../../utils/strings";
-import { Cell, SimpleText } from "@codex-storage/marketplace-ui-components";
+import { Cell } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import { availabilityColors } from "./availability.colors";
 import { AvailabilityWithSlots } from "./types";
@@ -19,18 +19,13 @@ export function AvailabilityIdCell({ value, index }: Props) {
           <div>
             <b>{value.name || Strings.shortId(value.id)}</b>
           </div>
-          <SimpleText size="small" variant="light">
+          <small className="text--light">
             {PrettyBytes(value.totalSize)} allocated for the availability
-          </SimpleText>
+          </small>
           <div>
-            {/* <div>
-                                <SimpleText size="small" variant="light">
-                                  {a.id}
-                                </SimpleText>
-                              </div> */}
-            <SimpleText size="small" variant="light">
+            <small className="text--light">
               Max collateral {value.maxCollateral} | Min price {value.minPrice}
-            </SimpleText>
+            </small>
           </div>
         </div>
       </div>

@@ -1,0 +1,85 @@
+.address {
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 16px;
+
+  > div {
+    position: relative;
+  }
+
+  svg {
+    position: absolute;
+    top: 68px;
+    bottom: 0;
+    right: 18px;
+  }
+
+  .refresh {
+    position: relative;
+    top: 24px;
+    cursor: pointer;
+
+    svg {
+      position: initial;
+    }
+
+    &.address--fetching .refresh svg {
+      animation: rotate 2s linear infinite;
+    }
+  }
+
+  input[type="number"] {
+    width: 150px;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.helper {
+  font-family: Azeret Mono;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  color: #828282;
+  padding-left: 1.25rem;
+  margin-top: 1.75rem;
+  margin-bottom: 3rem;
+}
+
+.health-checks {
+  margin-bottom: 32px;
+
+  li {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    gap: 16px;
+    border-top: 1px solid #96969633;
+    border-bottom: 1px solid #96969633;
+
+    &:first-child {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.011em;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+      width: 20px;
+      height: 20px;
+      justify-content: center;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+
 export const OnBoardingUtils = {
     getStep() {
         return parseInt(localStorage.getItem("onboarding-step") || "0", 10)
@@ -13,5 +14,13 @@ export const OnBoardingUtils = {
 
     getDisplayName() {
         return localStorage.getItem("display-name") || ""
-    }
+    },
+
+    setEmoji(emoji: string) {
+        localStorage.setItem("emoji", emoji)
+    },
+
+    getEmoji() {
+        return localStorage.getItem("emoji") || "🤖"
+    },
 }

@@ -1,10 +1,9 @@
-import { SimpleText } from "@codex-storage/marketplace-ui-components";
 import { CircleCheck } from "lucide-react";
 
 export function SuccessIcon() {
   return (
-    <SimpleText variant="primary">
+    <span className="text--primary">
       <CircleCheck size="4rem" className="successIcon" />
-    </SimpleText>
+    </span>
   );
 }

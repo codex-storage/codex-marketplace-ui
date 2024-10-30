@@ -1,5 +1,11 @@
-.peerCountry {
+.peer-country {
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  span:first-child {
+    background-color: #141414;
+    border-radius: 50%;
+    padding: 12px;
+  }
 }

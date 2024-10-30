@@ -1,8 +1,4 @@
-import {
-  Cell,
-  Row,
-  SimpleText,
-} from "@codex-storage/marketplace-ui-components";
+import { Cell, Row } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import "./AvailabilitySlotRow.css";
 import { classnames } from "../../utils/classnames";
@@ -52,9 +48,9 @@ export function AvailabilitySlotRow({ bytes, active, id }: Props) {
               <div>
                 <b>Slot {id}</b>
               </div>
-              <SimpleText size="small" variant="light">
+              <small className="text--light">
                 {PrettyBytes(bytes)} allocated for the slot
-              </SimpleText>
+              </small>
             </div>
           </div>
         </Cell>,

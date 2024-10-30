@@ -1,16 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import "./index.css";
-import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
-import { useNetwork } from "../network/useNetwork";
-import { Logotype } from "../components/Logotype/Logotype";
 import { useState } from "react";
-import { OnBoardingStepOne } from "../components/OnBoarding/OnBoardingStepOne";
-import { OnBoardingStepTwo } from "../components/OnBoarding/OnBoardingStepTwo";
-import { classnames } from "../utils/classnames";
-import { OnBoardingStepThree } from "../components/OnBoarding/OnBoardingStepThree";
-import { attributes } from "../utils/attributes";
-import { OnBoardingImage } from "../components/OnBoarding/OnBoardingImage";
-import { OnBoardingUtils } from "../utils/onboarding";
+import { Modal } from "@codex-storage/marketplace-ui-components";
+import { ArrowRight } from "lucide-react";
+import { AlphaText } from "../components/AlphaText/AlphaText";
+import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
+import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
+import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -22,87 +17,80 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [isStepValid, setIsStepValid] = useState(true);
-  // const [step, setStep] = useState(OnBoardingUtils.getStep());
-  const [step, setStep] = useState(0);
-  const online = useNetwork();
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate({ from: "/" });
-  const onStepValid = (valid: boolean) => setIsStepValid(valid);
 
-  const onNextStep = () => {
-    if (!isStepValid) {
-      return;
-    }
+  const onLegalDisclaimerOpen = () => setModal(true);
 
-    if (step === 2) {
-      navigate({ to: "/dashboard" });
-      return;
-    }
+  const onLegalDisclaimerClose = () => setModal(false);
 
-    OnBoardingUtils.setStep(step + 1);
-
-    setStep(step + 1);
-    setIsStepValid(false);
-  };
-
-  const components = [
-    <OnBoardingStepOne onNextStep={onNextStep} />,
-    <OnBoardingStepTwo onStepValid={onStepValid} />,
-    <OnBoardingStepThree online={online} onStepValid={onStepValid} />,
-  ];
-
-  // const text = online ? "Network connected" : "Network disconnected";
+  const onNextStep = () => navigate({ to: "/onboarding-name" });
 
   return (
-    <div className="index">
-      <div className="index-container">
-        <div className="index-column">
-          <div className="index-column-section">
-            <Logotype width={111} />
-          </div>
-
-          {components[step]}
-
-          <div className=" ">
-            <div className="index-dots">
-              <span
-                className={classnames(
-                  ["index-dot"],
-                  ["index-dot--active", step === 0]
-                )}></span>
-              <span
-                className={classnames(
-                  ["index-dot"],
-                  ["index-dot--active", step === 1]
-                )}></span>
-              <span
-                className={classnames(
-                  ["index-dot"],
-                  ["index-dot--active", step === 2]
-                )}></span>
+    <>
+      <OnBoardingLayout defaultIsStepValid={false} step={0}>
+        <>
+          <section className="alpha">
+            <AlphaIcon variant="error" />
+            <div>
+              <AlphaText variant="default"></AlphaText>
+              <b>{import.meta.env.PACKAGE_VERSION}</b>
+              <a onClick={onLegalDisclaimerOpen}>Legal Disclaimer</a>
             </div>
-          </div>
-        </div>
-        <div className="index-column">
-          <OnBoardingImage />
-        </div>
-        <div className="index-columnRight">
-          <div></div>
-          {/* <div className="index-logo">
-            <div className="index-network">
-              <p className="index-network-text">{text}</p>
-              <NetworkIcon active={online}></NetworkIcon>
-            </div>
-            <CodexLogo></CodexLogo>
-          </div> */}
-          <a
-            className="index-link2"
-            {...attributes({ "aria-disabled": !isStepValid })}
-            onClick={onNextStep}>
+          </section>
+          <section className="main">
+            <h1>
+              Hello,
+              <br /> Welcome to <b>Codex</b> <b>Vault</b>
+            </h1>
+            <p>
+              Codex is a durable, decentralised data storage protocol, created
+              so the world community can preserve its most important knowledge
+              without risk of censorship.
+            </p>
+          </section>
+          <section className="get-started">
+            <a onClick={onNextStep}>
+              Let’s get started <ArrowRight></ArrowRight>
+            </a>
+
+            <Modal onClose={onLegalDisclaimerClose} open={modal}>
+              <h1>Disclaimer</h1>
+
+              <p>
+                The website and the content herein is not intended for public
+                use and is for informational and demonstration purposes only.
+              </p>
+
+              <br />
+
+              <p>
+                The website and any associated functionalities are provided on
+                an “as is” basis without any guarantees, warranties, or
+                representations of any kind, either express or implied. The
+                website and any associated functionalities may not reflect the
+                final version of the project and is subject to changes, updates,
+                or removal at any time and without notice.
+              </p>
+
+              <br />
+
+              <p>
+                By accessing and using this website, you agree that we, Logos
+                Collective Association and its affiliates, will not be liable
+                for any direct, indirect, incidental, or consequential damages
+                arising from the use of, or inability to use, this website. Any
+                data, content, or interactions on this site are non-binding and
+                should not be considered final or actionable. Your use of this
+                website is at your sole risk.
+              </p>
+            </Modal>
+          </section>
+          <a className="navigation" onClick={onNextStep}>
             <ArrowRightCircle></ArrowRightCircle>
           </a>
-        </div>
-      </div>
-    </div>
+        </>
+      </OnBoardingLayout>
+    </>
   );
 }

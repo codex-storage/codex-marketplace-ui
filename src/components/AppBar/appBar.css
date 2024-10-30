@@ -1,60 +1,80 @@
-.appBar {
+.app-bar {
   height: 80px;
   justify-content: space-between;
   border-bottom: 1px solid var(--codex-border-color);
-  view-transition-name: main-header;
   display: flex;
-  padding: 20px 40px 20px 40px;
-  border-bottom: 1px solid #2b303b;
+  padding-right: 48px;
+  padding-left: 48px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #96969633;
   box-sizing: border-box;
   background-color: #1c1c1c;
+  border-right: 12px solid transparent;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  &:not(.app-bar--offline):not(.app-bar--no-persistence) {
+    border-right-color: #6ccc93;
+  }
+
+  &.app-bar--offline {
+    border-right-color: var(--codex-input-color-error);
+  }
+
+  &.app-bar--no-persistence {
+    border-right-color: rgb(var(--codex-color-warning));
+  }
+
+  h1 {
+    font:
+      500 18px/24px "Inter",
+      sans-serif;
+    letter-spacing: -0.015em;
+    color: white;
+  }
+
+  h2 {
+    font:
+      400 14px/20px "Inter",
+      sans-serif;
+    letter-spacing: -0.006em;
+    color: #969696cc;
+  }
+
+  > div {
+    span {
+      background: #141414;
+      height: 48px;
+      width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #353639;
+      border-radius: 50%;
+    }
+  }
+
+  aside {
+    svg {
+      padding: 10px;
+      background-color: #141414;
+      border-radius: var(--codex-border-radius);
+    }
+
+    span {
+      font:
+        500 14px/20px "Inter",
+        sans-serif;
+      letter-spacing: -0.006em;
+      color: #8d8d8d;
+    }
+  }
 }
 
-.appBar-burger {
-  cursor: pointer;
-  color: var(--codex-color);
-  display: flex;
-}
-
-.appBar,
-.appBar-left,
-.appBar-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.appBar-icon {
-  background: #141414;
-  height: 48px;
-  width: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #353639;
-  border-radius: 50%;
-}
-
-.appBar-title {
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.015em;
-  color: white;
-}
-
-.appBar-subtitle {
-  font-family: Inter;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: -0.006em;
-  color: #969696cc;
-}
-
-@media (min-width: 1000px) {
+/* @media (min-width: 1000px) {
   .appBar-burger {
     display: none;
   }
-}
+} */

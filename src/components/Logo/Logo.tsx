@@ -1,14 +1,20 @@
+import { attributes } from "../../utils/attributes";
+
 type Props = {
   onClick?: () => void;
+  width?: number;
+  height?: number;
 };
 
-export function Logo({ onClick }: Props) {
+export function Logo({ onClick, width, height }: Props) {
   return (
     <svg
       onClick={onClick}
       className="logo"
-      width="30"
-      height="34"
+      {...attributes({
+        width: width?.toString() || false,
+        height: height?.toString() || false,
+      })}
       viewBox="0 0 30 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
