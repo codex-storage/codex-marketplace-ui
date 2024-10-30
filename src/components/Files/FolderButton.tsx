@@ -1,8 +1,4 @@
-import {
-  Backdrop,
-  ButtonIcon,
-  SimpleText,
-} from "@codex-storage/marketplace-ui-components";
+import { Backdrop, ButtonIcon } from "@codex-storage/marketplace-ui-components";
 import { CheckCircle, Folder } from "lucide-react";
 import "./FolderButton.css";
 import { useState } from "react";
