@@ -39,7 +39,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
   useEffect(() => {
     if (codex.isSuccess) {
       persistence.refetch();
-      portForwarding.refetch().then(({ isError }) => onStepValid(isError));
+      portForwarding.refetch().then(({ data }) => {
+        onStepValid(data?.reachable || false);
+      });
     } else {
       onStepValid(false);
     }
