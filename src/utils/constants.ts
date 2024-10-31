@@ -13,3 +13,5 @@ export const EXPLORER_URL = "https://explorer.testnet.codex.storage/tx";
 export const GB = 1_073_741_824;
 
 export const TB = 1_099_511_627_776;
+
+export const MOBILE_MAX_WIDTH = 999

@@ -1,16 +1,25 @@
 .onboarding {
   width: 100%;
-  padding: 3rem 6rem;
+  padding: 16px;
   display: flex;
+
+  @media (min-width: 1000px) {
+    & {
+      padding: 3rem 6rem;
+    }
+  }
 
   > section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    z-index: 1;
   }
 
-  > section:first-child {
-    max-width: 500px;
+  @media (min-width: 1000px) {
+    > section:first-child {
+      max-width: 500px;
+    }
   }
 
   section {
@@ -177,11 +186,18 @@
   .navigation {
     cursor: pointer;
     position: absolute;
-    right: 6rem;
-    bottom: 3rem;
+    right: 16px;
+    bottom: 16px;
     border-bottom: none;
     text-decoration: none;
     z-index: 1;
+
+    @media (min-width: 1000px) {
+      & {
+        right: 6rem;
+        bottom: 3rem;
+      }
+    }
 
     &:hover {
       animation-name: example;

@@ -3,25 +3,34 @@
   flex-direction: column;
   background-color: #1c1c1c;
   border-radius: var(--codex-border-radius);
-  transform: translatex(-500px);
-  transition: transform 0.25s;
+  transition: left 0.25s;
   position: sticky;
   z-index: 10;
   view-transition-name: main-menu;
   height: 100%;
   top: 0;
-  width: 80px;
-  transition: width 0.5s;
+  transition:
+    width 0.5s,
+    font-size 0.5s,
+    left 0.05s;
   min-width: 0;
   width: 272px;
-  transform: translatex(0px);
 
-  &[aria-expanded] {
-    transform: translatex(0);
-    min-width: 200px;
+  @media (max-width: 999px) {
+    &,
+    &[aria-hidden] {
+      width: 272px;
+      position: fixed;
+      z-index: 12;
+      left: -300px;
+    }
+
+    &[aria-hidden="false"] {
+      left: 0px;
+    }
   }
 
-  &:not(.menu--unexpanded) a[data-title]:hover::after {
+  &:not([aria-expanded="false"]) a[data-title]:hover::after {
     content: attr(data-title);
     background-color: #2f2f2f;
     color: #fff;
@@ -36,11 +45,11 @@
     overflow: visible;
   }
 
-  &.menu--expanded {
+  &[aria-expanded="true"] {
     width: 272px;
   }
 
-  &.menu--unexpanded {
+  &[aria-expanded="false"] {
     width: 80px;
 
     .items {

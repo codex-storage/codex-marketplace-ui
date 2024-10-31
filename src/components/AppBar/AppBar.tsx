@@ -4,25 +4,37 @@ import { classnames } from "../../utils/classnames";
 import { useNetwork } from "../../network/useNetwork";
 import { NetworkFlashIcon } from "../NetworkFlashIcon/NetworkFlashIcon";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
 import { NodesIcon } from "../Menu/NodesIcon";
 import { usePersistence } from "../../hooks/usePersistence";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { PeersIcon } from "../Menu/PeersIcon";
+import { SettingsIcon } from "../Menu/SettingsIcon";
 
 type Props = {
-  /**
-   * Event triggered when the menu is expanding, after a click on the
-   * menu button.
-   */
-  onExpand: () => void;
+  onIconClick: () => void;
 };
 
-export function AppBar(_: Props) {
-  console.debug(_);
+const icons: Record<string, ReactElement> = {
+  dashboard: <DashboardIcon />,
+  peers: <PeersIcon />,
+  settings: <SettingsIcon />,
+};
+
+const descriptions: Record<string, string> = {
+  dashboard: "Get Overview of your Codex Vault",
+  peers: "Monitor your Codex peer connections",
+  settings: "Manage your Codex Vault",
+};
+
+export function AppBar({ onIconClick }: Props) {
   const online = useNetwork();
   const queryClient = useQueryClient();
   const codex = useCodexConnection();
   const persistence = usePersistence(codex.enabled);
+  const router = useRouterState();
+  const navigate = useNavigate({ from: router.location.pathname });
 
   useEffect(() => {
     queryClient.invalidateQueries({
@@ -31,39 +43,45 @@ export function AppBar(_: Props) {
     });
   }, [queryClient, codex.enabled]);
 
+  const onNodeClick = () => navigate({ to: "/dashboard/settings" });
+
   const offline = !online || !codex.enabled;
 
+  const title =
+    router.location.pathname.split("/")[2] ||
+    router.location.pathname.split("/")[1];
+
   return (
-    <div
-      className={classnames(
-        ["app-bar"],
-        ["app-bar--offline", offline],
-        ["app-bar--no-persistence", !persistence.enabled]
-      )}>
-      <div className="row gap">
-        {/* <a className="appBar-burger" onClick={onExpand}>
+    <>
+      <div
+        className={classnames(
+          ["app-bar"],
+          ["app-bar--offline", offline],
+          ["app-bar--no-persistence", !persistence.enabled]
+        )}>
+        <div className="row gap">
+          {/* <a className="appBar-burger" onClick={onExpand}>
           <Menu size={"1.25rem"} />
         </a> */}
 
-        <span>
-          <DashboardIcon />
-        </span>
+          <span onClick={onIconClick}>{icons[title]}</span>
 
-        <div>
-          <h1>Dashboard</h1>
-          <h2>Get Overview of your Codex Vault</h2>
+          <div>
+            <h1>{title}</h1>
+            <h2>{descriptions[title]}</h2>
+          </div>
         </div>
+        <aside className="row gap">
+          <div className="row gap">
+            <NetworkFlashIcon />
+            <span>Network</span>
+          </div>
+          <div className="row gap" onClick={onNodeClick}>
+            <NodesIcon variant={codex.enabled ? "success" : "failure"} />
+            <span>Node</span>
+          </div>
+        </aside>
       </div>
-      <aside className="row gap">
-        <div className="row gap">
-          <NetworkFlashIcon />
-          <span>Network</span>
-        </div>
-        <div className="row gap">
-          <NodesIcon variant={codex.enabled ? "success" : "failure"} />
-          <span>Node</span>
-        </div>
-      </aside>
-    </div>
+    </>
   );
 }

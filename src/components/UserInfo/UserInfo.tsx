@@ -39,6 +39,7 @@ export function UserInfo({ onNameChange }: Props) {
       <div className="emoji">
         {areEmojiVisible && (
           <EmojiPicker
+            width={"auto"}
             emojiStyle={EmojiStyle.NATIVE}
             theme={Theme.DARK}
             lazyLoadEmojis={true}

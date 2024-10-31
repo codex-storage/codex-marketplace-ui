@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export type Props = {
   address: string;
-  onPinAdd: (pin: PeerPin) => void;
+  onPinAdd: (pin: PeerPin & { countryIso: string; ip: string }) => void;
 };
 
 const getFlagEmoji = (countryCode: string) => {
@@ -50,6 +50,8 @@ export function PeerCountryCell({ address, onPinAdd }: Props) {
       onPinAdd({
         lat: data.latitude,
         lng: data.longitude,
+        countryIso: data.country_iso,
+        ip: data.ip,
       });
     }
   }, [data, onPinAdd]);

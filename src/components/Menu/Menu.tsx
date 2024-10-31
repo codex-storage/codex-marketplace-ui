@@ -1,7 +1,6 @@
-import { Backdrop } from "@codex-storage/marketplace-ui-components";
 import { attributes } from "../../utils/attributes";
 import "./menu.css";
-import { ComponentType, useEffect, useState } from "react";
+import { ComponentType, useState } from "react";
 import { Logo } from "../Logo/Logo";
 import { Logotype } from "../Logotype/Logotype";
 import { ExpandIcon } from "./ExpandIcon";
@@ -38,24 +37,11 @@ export type MenuItem =
     };
 
 type Props = {
-  /**
-   * If true, the menu will be displayed
-   */
-  expanded: boolean;
-
-  onClose: () => void;
-
-  onOpen?: () => void;
+  isMobileMenuDisplayed: boolean;
 };
 
-export function Menu({ expanded, onClose, onOpen }: Props) {
+export function Menu({ isMobileMenuDisplayed }: Props) {
   const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (expanded && onOpen) {
-      onOpen();
-    }
-  }, [expanded, onOpen]);
 
   const onLogoClick = () => {
     if (isExpanded === false) {
@@ -67,15 +53,18 @@ export function Menu({ expanded, onClose, onOpen }: Props) {
 
   return (
     <>
-      <Backdrop onClose={onClose} open={expanded} />
-
       <aside
-        className={classnames(
-          [`menu`],
-          ["menu--expanded", isExpanded === true],
-          ["menu--unexpanded", isExpanded === false]
-        )}
-        {...attributes({ "aria-expanded": expanded })}>
+        className={classnames([`menu`])}
+        {...attributes(
+          isExpanded === null
+            ? {
+                "aria-hidden": (!isMobileMenuDisplayed).toString(),
+              }
+            : {
+                "aria-expanded": isExpanded.toString(),
+                "aria-hidden": (!isMobileMenuDisplayed).toString(),
+              }
+        )}>
         <div>
           <header>
             <Logo onClick={onLogoClick} width={30} />

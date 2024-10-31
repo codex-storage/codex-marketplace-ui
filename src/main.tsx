@@ -41,6 +41,7 @@ if (import.meta.env.PROD && !import.meta.env.CI) {
 // Create a new router instance
 const router = createRouter({
   routeTree,
+  defaultPreload: "viewport",
   defaultNotFoundComponent: () => {
     return (
       <Failure

@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState, ClipboardEvent } from "react";
+import { useEffect, useState } from "react";
 import { useDebug } from "../../hooks/useDebug";
 import { usePersistence } from "../../hooks/usePersistence";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
@@ -11,7 +11,6 @@ import { HealthCheckIcon } from "./HealthCheckIcon";
 import { Input } from "@codex-storage/marketplace-ui-components";
 import { classnames } from "../../utils/classnames";
 import { DebugUtils } from "../../utils/debug";
-import { Strings } from "../../utils/strings";
 import { RefreshIcon } from "../RefreshIcon/RefreshIcon";
 import "./HealthChecks.css";
 
@@ -27,8 +26,14 @@ export function HealthChecks({ online, onStepValid }: Props) {
   const codex = useDebug(throwOnError);
   const portForwarding = usePortForwarding(codex.data);
   const persistence = usePersistence(codex.isSuccess);
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [url, setUrl] = useState(CodexSdk.url);
+  const [isAddressInvalid, setIsAddressInvalid] = useState(false);
+  const [isPortInvalid, setIsPortInvalid] = useState(false);
+  const [address, setAddress] = useState(
+    CodexSdk.url().split(":")[0] + ":" + CodexSdk.url().split(":")[1]
+  );
+  const [port, setPort] = useState(
+    parseInt(CodexSdk.url().split(":")[2] || "80", 10)
+  );
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -46,48 +51,38 @@ export function HealthChecks({ online, onStepValid }: Props) {
   ]);
 
   const onAddressChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const [, port] = Strings.splitURLAndPort(url);
     const element = e.currentTarget;
-    const value = e.currentTarget.value;
+    const parts = e.currentTarget.value.split(":");
 
-    if (
-      value.startsWith("http://") === false &&
-      value.startsWith("https://") === false
-    ) {
-      setIsInvalid(true);
-      return;
-    }
+    setIsAddressInvalid(!element.checkValidity());
 
-    setIsInvalid(!element.checkValidity());
-    setUrl(value + ":" + port);
-  };
+    if (parts.length > 2) {
+      const [protocol, addr, port] = parts;
+      setAddress(protocol + ":" + addr);
 
-  const onPaste = (e: ClipboardEvent) => {
-    const text = e.clipboardData?.getData("text") || "";
-
-    try {
-      new URL(text);
-      setUrl(text);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
-      // Nothing to do here
+      const p = parseInt(port, 10);
+      if (!isNaN(p)) {
+        setPort(p);
+      }
+    } else {
+      setAddress(parts.join(":"));
     }
   };
 
   const onPortChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const [address] = Strings.splitURLAndPort(url);
     const element = e.currentTarget;
     const value = element.value;
 
-    setUrl(address + ":" + value);
+    setIsPortInvalid(!element.checkValidity());
+    setPort(parseInt(value, 10));
   };
 
   const onSave = () => {
-    if (isInvalid === true) {
+    if (isAddressInvalid || isPortInvalid) {
       return;
     }
 
-    CodexSdk.updateURL(url)
+    CodexSdk.updateURL(address + ":" + port)
       .then(() => queryClient.invalidateQueries())
       .then(() => codex.refetch());
   };
@@ -100,10 +95,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
       forwardingPortValue = port.data;
     }
   }
-  const [address, port] = Strings.splitURLAndPort(url);
 
   return (
-    <>
+    <div className="health-checks">
       <div
         className={classnames(
           ["address"],
@@ -111,15 +105,15 @@ export function HealthChecks({ online, onStepValid }: Props) {
         )}>
         <div>
           <Input
-            onPaste={onPaste}
             id="url"
             type="url"
             label="Address"
-            isInvalid={isInvalid}
+            required
+            isInvalid={isAddressInvalid}
             onChange={onAddressChange}
             value={address}
             placeholder="127.0.0.1"></Input>
-          {isInvalid ? (
+          {isAddressInvalid ? (
             <ErrorCircleIcon />
           ) : (
             <SuccessCheckIcon variant="default" />
@@ -133,6 +127,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             type="number"
             onChange={onPortChange}
             value={port}
+            isInvalid={isPortInvalid}
             placeholder="8080"></Input>
           <SuccessCheckIcon variant="default"></SuccessCheckIcon>
         </div>
@@ -142,11 +137,14 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </div>
       </div>
 
-      <ul className="helper">
-        <li>Port forwarding should be default {forwardingPortValue}.</li>
-      </ul>
+      <p>
+        <li>
+          Port forwarding should be {forwardingPortValue} for TCP and 8090 by
+          default for UDP.
+        </li>
+      </p>
 
-      <ul className="health-checks">
+      <ul>
         <li>
           <span>
             <HealthCheckIcon />
@@ -194,6 +192,6 @@ export function HealthChecks({ online, onStepValid }: Props) {
           Marketplace
         </li>
       </ul>
-    </>
+    </div>
   );
 }

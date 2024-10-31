@@ -3,6 +3,7 @@ import test, { expect } from "@playwright/test";
 test('create an availability', async ({ page }) => {
     await page.goto('/dashboard');
     await page.getByRole('link', { name: 'Sales' }).click();
+    await page.waitForTimeout(500);
     await page.getByRole('button').first().click();
     await page.getByLabel('Total size').click();
     await page.getByLabel('Total size').fill('0.50');
@@ -26,6 +27,7 @@ test('create an availability', async ({ page }) => {
 
 test('availability navigation buttons', async ({ page }) => {
     await page.goto('/dashboard/availabilities');
+    await page.waitForTimeout(500);
     await page.getByRole('button').first().click();
     await expect(page.locator('.stepper-number-done')).not.toBeVisible()
     await expect(page.locator('.stepper-number-active')).toBeVisible()

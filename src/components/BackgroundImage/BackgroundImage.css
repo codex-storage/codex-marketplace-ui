@@ -1,5 +1,5 @@
 .background-img {
-  position: absolute;
+  position: fixed;
   right: -40px;
   max-height: 90%;
   width: auto;
@@ -7,7 +7,7 @@
   transition: opacity 0.35s;
   opacity: 0.3;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1580px) {
     & {
       opacity: 1;
     }
