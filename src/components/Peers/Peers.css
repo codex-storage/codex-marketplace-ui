@@ -2,6 +2,7 @@
   max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 32px;
 
   > div {
     max-width: 1320px;
@@ -194,7 +195,7 @@
 
           div:nth-child(1) {
             border-color: var(--codex-color-primary);
-            transform: rotate(calc(var(--codex-peers-percent) * 1deg));
+            transform: rotate(calc(var(--codex-peers-degrees) * 1deg));
             background-color: transparent;
           }
         }

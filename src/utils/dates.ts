@@ -1,12 +1,12 @@
 export const Dates = {
-  format(date: string | Date) {
+  format(date: number) {
     if (!date) {
-      return "N/A";
+      return "-";
     }
 
     return new Intl.DateTimeFormat("en-GB", {
       dateStyle: "medium",
       timeStyle: "short",
-    }).format(new Date(date));
+    }).format(new Date(date * 1000));
   },
 };

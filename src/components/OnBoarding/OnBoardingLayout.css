@@ -149,6 +149,14 @@
     label {
       margin-top: 1rem;
     }
+
+    .health-checks {
+      .address {
+        .refresh {
+          top: 22px;
+        }
+      }
+    }
   }
 
   .get-started {

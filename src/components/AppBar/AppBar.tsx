@@ -8,7 +8,7 @@ import { ReactElement, useEffect } from "react";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
 import { NodesIcon } from "../Menu/NodesIcon";
 import { usePersistence } from "../../hooks/usePersistence";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { PeersIcon } from "../Menu/PeersIcon";
 import { SettingsIcon } from "../Menu/SettingsIcon";
 
@@ -33,8 +33,8 @@ export function AppBar({ onIconClick }: Props) {
   const queryClient = useQueryClient();
   const codex = useCodexConnection();
   const persistence = usePersistence(codex.enabled);
-  const router = useRouterState();
-  const navigate = useNavigate({ from: router.location.pathname });
+  const location = useLocation();
+  const navigate = useNavigate({ from: location.pathname });
 
   useEffect(() => {
     queryClient.invalidateQueries({
@@ -43,13 +43,12 @@ export function AppBar({ onIconClick }: Props) {
     });
   }, [queryClient, codex.enabled]);
 
-  const onNodeClick = () => navigate({ to: "/dashboard/settings" });
-
   const offline = !online || !codex.enabled;
 
+  const onNodeClick = () => navigate({ to: "/dashboard/settings" });
+
   const title =
-    router.location.pathname.split("/")[2] ||
-    router.location.pathname.split("/")[1];
+    location.pathname.split("/")[2] || location.pathname.split("/")[1];
 
   return (
     <>

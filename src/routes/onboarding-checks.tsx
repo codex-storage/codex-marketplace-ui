@@ -1,16 +1,16 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
-import { OnBoardingUtils } from "../utils/onboarding";
 import { attributes } from "../utils/attributes";
 import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
 import { HealthChecks } from "../components/HealthChecks/HealthChecks";
 import { useNetwork } from "../network/useNetwork";
+import { WebStorage } from "../utils/web-storage";
 
 const OnBoardingChecks = () => {
   const online = useNetwork();
-  const displayName = OnBoardingUtils.getDisplayName();
+  const displayName = WebStorage.onBoarding.getDisplayName();
   const [isStepValid, setIsStepValid] = useState(false);
   const navigate = useNavigate({ from: "/onboarding-checks" });
 

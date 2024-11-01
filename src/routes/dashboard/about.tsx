@@ -33,7 +33,7 @@ const About = () => {
       <div className="container manifest-main-content">
         <div className="manifest" key={c.cid}>
           <div className="row">
-            <WebFileIcon type={c.manifest.mimetype} />
+            <WebFileIcon type={c.manifest.mimetype || ""} />
             <div className="manifest-data grow">
               <div>
                 <b>{c.manifest.filename}</b>

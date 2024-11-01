@@ -24,7 +24,7 @@ export function FileCell({ content }: Props) {
     <>
       <Cell>
         <div className="files-cell-file">
-          <WebFileIcon type={content.manifest.mimetype} />
+          <WebFileIcon type={content.manifest.mimetype || ""} />
 
           <div>
             <b>{content.manifest.filename}</b>

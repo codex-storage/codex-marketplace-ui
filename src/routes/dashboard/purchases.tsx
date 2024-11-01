@@ -16,8 +16,10 @@ import { TruncateCell } from "../../components/TruncateCell/TruncateCell";
 import { Times } from "../../utils/times";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
 import { ErrorBoundary } from "@sentry/react";
+import { useData } from "../../hooks/useData";
 
 const Purchases = () => {
+  const content = useData();
   const { data, isPending } = useQuery({
     queryFn: () =>
       CodexSdk.marketplace()
@@ -74,6 +76,7 @@ const Purchases = () => {
             requestId={r.id}
             purchaseCid={r.content.cid}
             index={index}
+            data={content}
           />,
           <TruncateCell value={r.id} />,
           <Cell>{Times.pretty(duration)}</Cell>,

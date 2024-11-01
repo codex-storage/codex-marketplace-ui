@@ -1,6 +1,9 @@
-import { CodexDebugInfo, CodexError, SafeValue } from "@codex-storage/sdk-js";
+import { CodexDebugInfo, SafeValue, CodexError } from "@codex-storage/sdk-js"
 
-export const DebugUtils = {
+export const PortForwardingUtil = {
+    check: (port: number) => fetch(import.meta.env.VITE_GEO_IP_URL + "/port/" + port)
+        .then((res) => res.json()),
+
     getTcpPort(info: CodexDebugInfo): SafeValue<number> {
         if (info.addrs.length === 0) {
             return { error: true, data: new CodexError("Not existing address") }
@@ -20,4 +23,5 @@ export const DebugUtils = {
 
         return { error: false, data: port }
     }
+
 }

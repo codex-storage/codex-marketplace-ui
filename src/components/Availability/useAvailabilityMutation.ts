@@ -9,7 +9,6 @@ import {
 } from "@codex-storage/marketplace-ui-components";
 import { Times } from "../../utils/times";
 import { CodexSdk } from "../../sdk/codex";
-import { AvailabilityStorage } from "../../utils/availabilities-storage";
 import { CodexAvailabilityCreateResponse } from "@codex-storage/sdk-js";
 
 
@@ -58,7 +57,7 @@ export function useAvailabilityMutation(
       WebStorage.delete("availability-step");
 
       if (typeof res === "object" && body.name) {
-        AvailabilityStorage.add(res.id, body.name)
+        WebStorage.availabilities.add(res.id, body.name)
       }
 
       setError(null);

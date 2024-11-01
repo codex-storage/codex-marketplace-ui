@@ -15,7 +15,9 @@ export default defineConfig({
       output: {
         manualChunks: {
           "@sentry/react": ["@sentry/react"],
-          "emoji-picker-react": ["emoji-picker-react"]
+          "emoji-picker-react": ["emoji-picker-react"],
+          "dotted-map": ["dotted-map"],
+          "echarts": ["echarts"],
         }
       },
       onwarn(warning, defaultHandler) {
@@ -32,7 +34,8 @@ export default defineConfig({
     alias: {
       "../sdk/codex": "../mock",
       "../../sdk/codex": "../../mock",
-      "../utils/echo": "../mock"
+      "../utils/echo": "../mock",
+      "./port-forwarding.util": "../proxy",
     },
   },
 });

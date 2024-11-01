@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import "./UserInfo.css";
-import { OnBoardingUtils } from "../../utils/onboarding";
 import { Input } from "@codex-storage/marketplace-ui-components";
 import EmojiPicker, {
   EmojiClickData,
   EmojiStyle,
   Theme,
 } from "emoji-picker-react";
+import { WebStorage } from "../../utils/web-storage";
 
 type Props = {
   onNameChange?: (value: string) => void;
@@ -14,14 +14,14 @@ type Props = {
 
 export function UserInfo({ onNameChange }: Props) {
   const [displayName, setDisplayName] = useState(
-    OnBoardingUtils.getDisplayName()
+    WebStorage.onBoarding.getDisplayName()
   );
-  const [emoji, setEmoji] = useState(OnBoardingUtils.getEmoji());
+  const [emoji, setEmoji] = useState(WebStorage.onBoarding.getEmoji());
   const [areEmojiVisible, setAreEmojiVisible] = useState(false);
 
   const onDisplayNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
-    OnBoardingUtils.setDisplayName(value);
+    WebStorage.onBoarding.setDisplayName(value);
     setDisplayName(value);
     onNameChange?.(value);
   };
@@ -30,7 +30,7 @@ export function UserInfo({ onNameChange }: Props) {
 
   const onEmojiClick = (emojiData: EmojiClickData) => {
     setEmoji(emojiData.emoji);
-    OnBoardingUtils.setEmoji(emojiData.emoji);
+    WebStorage.onBoarding.setEmoji(emojiData.emoji);
     setAreEmojiVisible(false);
   };
 
@@ -54,6 +54,8 @@ export function UserInfo({ onNameChange }: Props) {
                 "objects",
                 "symbols",
                 "flags",
+                // The type does not allow a string array but the api yes
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
               ] as any
             }
           />

@@ -2,14 +2,14 @@ import { useDebug } from "../../hooks/useDebug";
 import { AlphaText } from "../AlphaText/AlphaText";
 import { AlphaIcon } from "../OnBoarding/AlphaIcon";
 import "./Versions.css";
+import { VersionsUtil } from "./versions.util";
 
-const throwOnError = true;
+const throwOnError = false;
 
 export function Versions() {
   const debug = useDebug(throwOnError);
 
-  const parts = debug.data?.codex.version.split("\n") || [""];
-  const version = parts[parts.length - 1];
+  const version = VersionsUtil.clientVersion(debug.data?.codex.version);
 
   return (
     <div className="versions">
@@ -20,7 +20,7 @@ export function Versions() {
       </div>
       <div>
         <p>Vault</p>
-        <small>VER. {import.meta.env.PACKAGE_VERSION}</small>
+        <small>VER. {VersionsUtil.codexVersion()}</small>
         <AlphaText variant="failure" width={37}></AlphaText>
       </div>
     </div>

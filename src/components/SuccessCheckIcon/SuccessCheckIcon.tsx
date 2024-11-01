@@ -7,6 +7,7 @@ export function SuccessCheckIcon({ variant }: Props) {
 
   return (
     <svg
+      data-testid="icon-success"
       width="16"
       height="16"
       viewBox="0 0 16 16"

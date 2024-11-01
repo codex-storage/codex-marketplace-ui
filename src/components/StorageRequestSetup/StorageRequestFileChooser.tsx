@@ -48,8 +48,8 @@ export function StorageRequestFileChooser({
   const options =
     files.map((f) => {
       return {
-        Icon: () => <WebFileIcon type={f.manifest.mimetype} size={24} />,
-        title: f.manifest.filename,
+        Icon: () => <WebFileIcon type={f.manifest.mimetype || ""} size={24} />,
+        title: f.manifest.filename || "",
         subtitle: f.cid,
       };
     }) || [];

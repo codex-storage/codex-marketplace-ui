@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { ErrorBoundary } from '@sentry/react'
 import { ErrorPlaceholder } from '../../components/ErrorPlaceholder/ErrorPlaceholder'
 import {
@@ -16,8 +16,8 @@ import { PrettyBytes } from '../../utils/bytes'
 import { AvailabilitySunburst } from '../../components/Availability/AvailabilitySunburst'
 import { Errors } from '../../utils/errors'
 import { availabilityColors } from '../../components/Availability/availability.colors'
-import { AvailabilityStorage } from '../../utils/availabilities-storage'
 import { AvailabilityWithSlots } from '../../components/Availability/types'
+import { WebStorage } from '../../utils/web-storage'
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -51,7 +51,7 @@ export function Availabilities() {
                     return { ...a, slots: res.data }
                   })
                   .then((data) =>
-                    AvailabilityStorage.get(data.id).then((n) => ({
+                    WebStorage.availabilities.get(data.id).then((n) => ({
                       ...data,
                       name: n || '',
                     })),
@@ -160,7 +160,7 @@ export function Availabilities() {
   }
 }
 
-export const Route = createLazyFileRoute('/dashboard/availabilities')({
+export const Route = createFileRoute('/dashboard/availabilities')({
   component: () => (
     <ErrorBoundary
       fallback={({ error }) => (

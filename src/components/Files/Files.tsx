@@ -149,14 +149,18 @@ export function Files() {
     }
 
     setSortFn(
-      () => (a: CodexDataContent, b: CodexDataContent) =>
-        state === "desc"
-          ? b.manifest.filename
-              .toLocaleLowerCase()
-              .localeCompare(a.manifest.filename.toLocaleLowerCase())
-          : a.manifest.filename
-              .toLocaleLowerCase()
-              .localeCompare(b.manifest.filename.toLocaleLowerCase())
+      () =>
+        (
+          { manifest: { filename: afilename } }: CodexDataContent,
+          { manifest: { filename: bfilename } }: CodexDataContent
+        ) =>
+          state === "desc"
+            ? (bfilename || "")
+                .toLocaleLowerCase()
+                .localeCompare((afilename || "").toLocaleLowerCase())
+            : (afilename || "")
+                .toLocaleLowerCase()
+                .localeCompare((bfilename || "").toLocaleLowerCase())
     );
   };
 

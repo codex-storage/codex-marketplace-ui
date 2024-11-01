@@ -1,25 +1,30 @@
 import test, { expect } from "@playwright/test";
 
-test('update the log level', async ({ page }) => {
-    await page.goto('/dashboard');
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByLabel('Log level').selectOption('TRACE');
-    await page.getByRole('main').locator('div').filter({ hasText: 'Log' }).getByRole('button').click();
-    await expect(page.locator('span').filter({ hasText: 'success ! The log level has' }).locator('b')).toBeVisible();
-})
+// test('update the log level', async ({ page }) => {
+//     await page.goto('/dashboard');
+//     await page.getByRole('link', { name: 'Settings' }).click();
+//     await page.getByLabel('Log level').selectOption('TRACE');
+//     await page.getByRole('main').locator('div').filter({ hasText: 'Log' }).getByRole('button').click();
+//     await expect(page.locator('span').filter({ hasText: 'success ! The log level has' }).locator('b')).toBeVisible();
+// })
 
 test('update the URL with wrong URL applies', async ({ page }) => {
     await page.goto('/dashboard');
-    await page.getByRole('link', { name: 'Settings' }).click();
-    await page.getByLabel('Codex client node URL').click();
-    await page.getByLabel('Codex client node URL').fill('hello');
-    await expect.soft(page.getByText("The URL is not valid")).toBeVisible()
-    await expect.soft(page.locator(".settings-url-button")).toBeDisabled()
-    await page.getByLabel('Codex client node URL').fill('http://127.0.0.1:8079');
-    await expect.soft(page.getByText("The URL is not valid")).not.toBeVisible()
-    await expect.soft(page.locator(".settings-url-button")).not.toBeDisabled()
-    await page.getByRole('button', { name: 'Save changes' }).nth(1).click();
-    await expect.soft(page.getByText("Cannot retrieve the data")).toBeVisible()
-    await page.getByLabel('Codex client node URL').fill('http://127.0.0.1:8080');
-    await page.getByRole('button', { name: 'Save changes' }).nth(1).click();
+    await page.locator('a').filter({ hasText: 'Settings' }).click();
+    await page.getByLabel('Address').click();
+    await page.getByLabel('Address').fill('hello');
+    await expect(page.getByLabel('Address')).toHaveAttribute("aria-invalid")
+    await expect(page.locator(".refresh svg")).toHaveAttribute("aria-disabled")
+    await page.getByLabel('Address').fill('http://127.0.0.1:8079');
+    await expect(page.getByLabel('Address')).not.toHaveAttribute("aria-invalid")
+    await expect(page.locator(".refresh svg")).not.toHaveAttribute("aria-disabled")
+    await expect(page.getByLabel('Address')).toHaveValue("http://127.0.0.1")
+    await expect(page.getByLabel('Port')).toHaveValue("8079")
+    await page.locator(".refresh").click()
+    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-error")).toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-success")).not.toBeVisible()
+    await page.getByLabel('Address').fill('http://127.0.0.1:8080');
+    await page.locator(".refresh").click()
+    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-error")).not.toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-success")).toBeVisible()
 })

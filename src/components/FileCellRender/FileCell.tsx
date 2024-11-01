@@ -5,43 +5,57 @@ import {
   WebFileIcon,
 } from "@codex-storage/marketplace-ui-components";
 import "./FileCell.css";
-import { FileMetadata, FilesStorage } from "../../utils/file-storage";
-import { PurchaseStorage } from "../../utils/purchases-storage";
+import { WebStorage } from "../../utils/web-storage";
+import { CodexDataContent } from "@codex-storage/sdk-js";
+
+type FileMetadata = {
+  mimetype: string | null;
+  uploadedAt: number;
+  filename: string | null;
+};
 
 type Props = {
   requestId: string;
   purchaseCid: string;
   index: number;
+  data: CodexDataContent[];
 };
 
-export function FileCell({ requestId, purchaseCid }: Props) {
+export function FileCell({ requestId, purchaseCid, data }: Props) {
   const [cid, setCid] = useState(purchaseCid);
   const [metadata, setMetadata] = useState<FileMetadata>({
-    name: "N/A.jpg",
-    mimetype: "N/A",
-    uploadedAt: new Date(0, 0, 0, 0, 0, 0).toJSON(),
+    filename: "-",
+    mimetype: "-",
+    uploadedAt: 0,
   });
 
   useEffect(() => {
-    PurchaseStorage.get(requestId).then((cid) => {
+    WebStorage.purchases.get(requestId).then((cid) => {
       if (cid) {
         setCid(cid);
 
-        FilesStorage.get<FileMetadata>(cid).then((data) => {
-          if (data) {
-            setMetadata(data);
-          }
-        });
+        const content = data.find((m) => m.cid === cid);
+        if (content) {
+          const {
+            filename = "-",
+            mimetype = "application/octet-stream",
+            uploadedAt = 0,
+          } = content.manifest;
+          setMetadata({
+            filename,
+            mimetype,
+            uploadedAt,
+          });
+        }
       }
     });
-  }, [requestId]);
+  }, [requestId, data]);
 
-  let name = metadata.name.slice(0, 10);
+  let filename = metadata.filename || "-";
 
-  if (metadata.name.length > 10) {
-    // const [filename, ext] = metadata.name.split(".");
-    // name = filename.slice(0, 10) + "..." + ext;
-    name += "...";
+  if (filename.length > 10) {
+    const [name, ext] = filename.split(".");
+    filename = name.slice(0, 10) + "..." + ext;
   }
 
   // const cidTruncated = cid.slice(0, 5) + ".".repeat(5) + cid.slice(-5);
@@ -50,10 +64,10 @@ export function FileCell({ requestId, purchaseCid }: Props) {
   return (
     <Cell>
       <div className="fileCell">
-        <WebFileIcon type={metadata.mimetype} />
+        <WebFileIcon type={metadata.mimetype || "-"} />
         <div>
           <span className="fileCell-title">
-            <Tooltip message={metadata.name}>{name}</Tooltip>
+            <Tooltip message={filename}>{filename}</Tooltip>
           </span>
           <span className="fileCell-subtitle">
             <Tooltip message={cid}>

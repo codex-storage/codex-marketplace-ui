@@ -26,8 +26,8 @@ test('multiple files upload', async ({ page }) => {
   await expect(page.getByText('File uploaded successfully').nth(1)).toBeVisible();
 
 
-  await page.locator('.uploadFile-infoRight > .buttonIcon').first().click();
-  await page.locator('.uploadFile-infoRight > .buttonIcon').click();
+  await page.locator('.upload-file .button-icon--small').first().click();
+  await page.locator('.upload-file .button-icon--small').click();
 
   await expect(page.getByText('File uploaded successfully').first()).not.toBeVisible();
   await expect(page.getByText('File uploaded successfully').nth(1)).not.toBeVisible();
@@ -42,7 +42,7 @@ test('drag and drop file', async ({ page }) => {
   const dataTransfer = await page.evaluateHandle((data) => {
     const dt = new DataTransfer();
     // Convert the buffer to a hex array
-    const file = new File([data.toString('hex')], 'chat.jpg', { type: 'image/jpg' });
+    const file = new File([data.toString('hex')], 'chat.jpg', { type: 'image/jpeg' });
     dt.items.add(file);
     return dt;
   }, buffer);
@@ -63,7 +63,7 @@ test('drag and drop file', async ({ page }) => {
 //     mimeType: 'text/plain'
 //   });
 
-//   await page.locator('.uploadFile-infoRight > .buttonIcon--small').click();
+//   await page.locator('.uploadFile-infoRight > .button-icon--small').click();
 
 //   await expect(page.getByText('The upload has been cancelled')).toBeVisible();
 // });

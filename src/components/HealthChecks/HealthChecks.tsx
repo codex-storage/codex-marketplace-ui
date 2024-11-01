@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { useDebug } from "../../hooks/useDebug";
 import { usePersistence } from "../../hooks/usePersistence";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
-import { CodexSdk } from "../../proxy";
 import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
 import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
 import { WarningIcon } from "../WarningIcon/WarningIcon";
 import { HealthCheckIcon } from "./HealthCheckIcon";
 import { Input } from "@codex-storage/marketplace-ui-components";
 import { classnames } from "../../utils/classnames";
-import { DebugUtils } from "../../utils/debug";
 import { RefreshIcon } from "../RefreshIcon/RefreshIcon";
 import "./HealthChecks.css";
+import { CodexSdk } from "../../sdk/codex";
+import { HealthCheckUtil } from "./health-check.util";
+import { PortForwardingUtil } from "../../hooks/port-forwarding.util";
 
 type Props = {
   online: boolean;
@@ -29,45 +30,40 @@ export function HealthChecks({ online, onStepValid }: Props) {
   const [isAddressInvalid, setIsAddressInvalid] = useState(false);
   const [isPortInvalid, setIsPortInvalid] = useState(false);
   const [address, setAddress] = useState(
-    CodexSdk.url().split(":")[0] + ":" + CodexSdk.url().split(":")[1]
+    HealthCheckUtil.removePort(CodexSdk.url())
   );
-  const [port, setPort] = useState(
-    parseInt(CodexSdk.url().split(":")[2] || "80", 10)
-  );
+  const [port, setPort] = useState(HealthCheckUtil.getPort(CodexSdk.url()));
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (codex.isSuccess) {
-      persistence.refetch();
-      portForwarding.refetch().then(({ data }) => {
-        onStepValid(data?.reachable || false);
-      });
-    } else {
-      onStepValid(false);
-    }
-  }, [
-    persistence.refetch,
-    onStepValid,
-    portForwarding.refetch,
-    codex.isSuccess,
-  ]);
+  useEffect(
+    () => {
+      if (codex.isSuccess) {
+        persistence.refetch();
+        portForwarding.refetch().then(({ data }) => {
+          onStepValid(data?.reachable || false);
+        });
+      } else {
+        onStepValid(false);
+      }
+    },
+    // We really do not want to add persistence and portForwarding as
+    // dependencies because it will cause a re-render every time.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [persistence.refetch, onStepValid, portForwarding.refetch, codex.isSuccess]
+  );
 
   const onAddressChange = (e: React.FormEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
-    const parts = e.currentTarget.value.split(":");
+    const value = e.currentTarget.value;
 
     setIsAddressInvalid(!element.checkValidity());
 
-    if (parts.length > 2) {
-      const [protocol, addr, port] = parts;
-      setAddress(protocol + ":" + addr);
+    const address = HealthCheckUtil.removePort(value);
+    setAddress(address);
 
-      const p = parseInt(port, 10);
-      if (!isNaN(p)) {
-        setPort(p);
-      }
-    } else {
-      setAddress(parts.join(":"));
+    if (HealthCheckUtil.containsPort(value)) {
+      const p = HealthCheckUtil.getPort(value);
+      setPort(p);
     }
   };
 
@@ -80,11 +76,13 @@ export function HealthChecks({ online, onStepValid }: Props) {
   };
 
   const onSave = () => {
-    if (isAddressInvalid || isPortInvalid) {
+    const url = address + ":" + port;
+
+    if (HealthCheckUtil.isUrlInvalid(url)) {
       return;
     }
 
-    CodexSdk.updateURL(address + ":" + port)
+    CodexSdk.updateURL(url)
       .then(() => queryClient.invalidateQueries())
       .then(() => codex.refetch());
   };
@@ -92,7 +90,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
   let forwardingPortValue = defaultPort;
 
   if (codex.isSuccess && codex.data) {
-    const port = DebugUtils.getTcpPort(codex.data);
+    const port = PortForwardingUtil.getTcpPort(codex.data);
     if (!port.error) {
       forwardingPortValue = port.data;
     }
@@ -135,7 +133,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </div>
 
         <div className="refresh">
-          <RefreshIcon onClick={onSave}></RefreshIcon>
+          <RefreshIcon
+            onClick={onSave}
+            disabled={isAddressInvalid || isPortInvalid}></RefreshIcon>
         </div>
       </div>
 

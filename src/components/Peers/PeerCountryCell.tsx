@@ -1,20 +1,12 @@
 import { Cell } from "@codex-storage/marketplace-ui-components";
-import { PeerPin } from "./types";
 import { useQuery } from "@tanstack/react-query";
 import "./PeerCountryCell.css";
 import { useEffect } from "react";
+import { PeerPin, PeerUtils } from "./peers.util";
 
 export type Props = {
   address: string;
   onPinAdd: (pin: PeerPin & { countryIso: string; ip: string }) => void;
-};
-
-const getFlagEmoji = (countryCode: string) => {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt(0));
-  return String.fromCodePoint(...codePoints);
 };
 
 export function PeerCountryCell({ address, onPinAdd }: Props) {
@@ -61,7 +53,7 @@ export function PeerCountryCell({ address, onPinAdd }: Props) {
       <div className="peer-country">
         {data ? (
           <>
-            <span> {!!data && getFlagEmoji(data.country_iso)}</span>
+            <span> {!!data && PeerUtils.geCountryEmoji(data.country_iso)}</span>
             <span>{data?.country}</span>
           </>
         ) : (

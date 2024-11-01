@@ -2,14 +2,14 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
-import { OnBoardingUtils } from "../utils/onboarding";
 import { attributes } from "../utils/attributes";
 import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
 import { UserInfo } from "../components/UserInfo/UserInfo";
+import { WebStorage } from "../utils/web-storage";
 
 const OnBoardingName = () => {
   const [isStepValid, setIsStepValid] = useState(
-    !!OnBoardingUtils.getDisplayName()
+    !!WebStorage.onBoarding.getDisplayName()
   );
   const navigate = useNavigate({ from: "/onboarding-name" });
 

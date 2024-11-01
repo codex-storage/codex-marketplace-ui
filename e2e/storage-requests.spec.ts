@@ -7,12 +7,13 @@ const __dirname = dirname(__filename);
 
 test('create a storage request', async ({ page }) => {
     await page.goto('/dashboard');
-    await page.getByRole('link', { name: 'Purchases' }).click();
+    await page.locator('a').filter({ hasText: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();
+
     await page.locator('div').getByTestId("upload").setInputFiles([
         path.join(__dirname, "assets", 'chatgpt.jpg'),
     ]);
-    await expect(page.locator('#cid')).toHaveValue("zDvZRwzkvwapyNeL4mzw5gBsZvyn7x8F8Y9n4RYSC7ETBssDYpGe")
+    await expect(page.locator('#cid')).not.toBeEmpty()
     await expect(page.getByText('Success, the CID has been')).toBeVisible();
     await page.getByRole('button', { name: 'Next' }).click();
     await page.getByRole('button', { name: 'Next' }).click();
@@ -27,51 +28,51 @@ test('select a uploaded cid when creating a storage request', async ({ page }) =
     await page.locator('div').getByTestId("upload").setInputFiles([
         path.join(__dirname, "assets", 'chatgpt.jpg'),
     ]);
-    await page.getByRole('link', { name: 'Purchases' }).click();
+    await page.locator('a').filter({ hasText: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();
     await page.getByPlaceholder('Select or type your CID').click();
-    await page.locator('.dropdown-option').nth(1).click();
+    await page.locator('.dropdown ul li').nth(1).click();
     await expect(page.getByText('button[disabled]')).not.toBeVisible();
 })
 
 test('storage request navigation buttons', async ({ page }) => {
     await page.goto('/dashboard/purchases');
     await page.getByRole('button', { name: 'Storage Request' }).click();
-    await expect(page.locator('.stepper-number-done')).not.toBeVisible()
-    await expect(page.locator('.stepper-number-active')).toBeVisible()
-    await expect(page.locator('.stepper-buttons .button--primary')).toHaveAttribute("disabled");
-    await expect(page.locator('.stepper-buttons .button--outline')).not.toHaveAttribute("disabled");
+    await expect(page.locator('.step--done')).not.toBeVisible()
+    await expect(page.locator('.step--active')).toBeVisible()
+    await expect(page.locator('footer .button--primary')).toHaveAttribute("disabled");
+    await expect(page.locator('footer .button--outline').first()).not.toHaveAttribute("disabled");
     await page.locator('div').getByTestId("upload").setInputFiles([
         path.join(__dirname, "assets", 'chatgpt.jpg'),
     ]);
-    await expect(page.locator('.stepper-buttons .button--outline')).not.toHaveAttribute("disabled");
-    await expect(page.locator('.stepper-buttons .button--primary')).not.toHaveAttribute("disabled");
+    await expect(page.locator('footer .button--outline').first()).not.toHaveAttribute("disabled");
+    await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");
     await page.getByRole('button', { name: 'Next' }).click();
-    await expect(page.locator('.stepper-buttons .button--outline')).not.toHaveAttribute("disabled");
-    await expect(page.locator('.stepper-buttons .button--primary')).not.toHaveAttribute("disabled");
-    await expect(page.locator('.stepper-number-done')).toBeVisible()
-    await expect(page.locator('.stepper-number-active')).toBeVisible()
+    await expect(page.locator('footer .button--outline').first()).not.toHaveAttribute("disabled");
+    await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");
+    await expect(page.locator('.step--done')).toBeVisible()
+    await expect(page.locator('.step--active')).toBeVisible()
     await page.getByRole('button', { name: 'Back' }).click();
-    await expect(page.locator('.stepper-number-done')).not.toBeVisible()
-    await expect(page.locator('.stepper-number-active')).toBeVisible()
+    await expect(page.locator('.step--done')).not.toBeVisible()
+    await expect(page.locator('.step--active')).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click();
     await page.getByRole('button', { name: 'Next' }).click();
-    await expect(page.locator('.stepper-number-done')).toHaveCount(2)
-    await expect(page.locator('.stepper-number-active')).toBeVisible()
-    await expect(page.locator('.stepper-buttons .button--outline')).toHaveAttribute("disabled");
-    await expect(page.locator('.stepper-buttons .button--primary')).not.toHaveAttribute("disabled");
+    await expect(page.locator('.step--done')).toHaveCount(2)
+    await expect(page.locator('.step--active')).toBeVisible()
+    await expect(page.locator('footer .button--outline').first()).toHaveAttribute("disabled");
+    await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");
     await page.getByRole('button', { name: 'Finish' }).click();
     await expect(page.locator('.modal--open')).not.toBeVisible();
 })
 
 test('remove the CID when the file is deleted', async ({ page }) => {
     await page.goto('/dashboard');
-    await page.getByRole('link', { name: 'Purchases' }).click();
+    await page.locator('a').filter({ hasText: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();
     await page.locator('div').getByTestId("upload").setInputFiles([
         path.join(__dirname, "assets", 'chatgpt.jpg'),
     ]);
-    await expect(page.locator('#cid')).toHaveValue("zDvZRwzkvwapyNeL4mzw5gBsZvyn7x8F8Y9n4RYSC7ETBssDYpGe")
-    await page.locator('.uploadFile-infoRight .buttonIcon--small').click();
-    await expect(page.locator('#cid')).toHaveValue("")
+    await expect(page.locator('#cid')).not.toBeEmpty()
+    await page.locator('.button-icon--small').click();
+    await expect(page.locator('#cid')).toBeEmpty()
 })

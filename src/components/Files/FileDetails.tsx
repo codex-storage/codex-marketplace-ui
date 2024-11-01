@@ -13,7 +13,7 @@ import { DownloadIcon, X } from "lucide-react";
 import { CodexSdk } from "../../sdk/codex";
 import { Files } from "../../utils/files";
 import { useEffect, useState } from "react";
-import { PurchaseStorage } from "../../utils/purchases-storage";
+import { WebStorage } from "../../utils/web-storage";
 
 type Props = {
   details: CodexDataContent | null;
@@ -24,11 +24,15 @@ export function FileDetails({ onClose, details }: Props) {
   const [purchases, setPurchases] = useState(0);
 
   useEffect(() => {
-    PurchaseStorage.entries().then((entries) =>
-      setPurchases(
-        entries.filter((e) => e[1] === details?.cid).reduce((acc) => acc + 1, 0)
-      )
-    );
+    WebStorage.purchases
+      .entries()
+      .then((entries) =>
+        setPurchases(
+          entries
+            .filter((e) => e[1] === details?.cid)
+            .reduce((acc) => acc + 1, 0)
+        )
+      );
   }, [details?.cid]);
 
   const url = CodexSdk.url() + "/api/codex/v1/data/";
@@ -49,7 +53,7 @@ export function FileDetails({ onClose, details }: Props) {
 
             {Files.isImage(details.manifest.mimetype) && (
               <div className="fileDetails-imageContainer">
-                <img className="fileDetails-image" src={"/chatgpt.jpg"} />
+                <img className="fileDetails-image" src={url + details.cid} />
               </div>
             )}
 

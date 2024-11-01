@@ -10,15 +10,15 @@ const archiveMimetypes = [
 ];
 
 export const Files = {
-  isImage(type: string) {
-    return type.startsWith("image");
+  isImage(type: string | null) {
+    return type && type.startsWith("image");
   },
-  type(mimetype: string) {
-    const [type] = mimetype.split("/")
+  type(mimetype: string | null) {
+    const [type] = mimetype?.split("/") || []
     return type
   },
-  isArchive(mimetype: string) {
-    return archiveMimetypes.includes(mimetype)
+  isArchive(mimetype: string | null) {
+    return mimetype && archiveMimetypes.includes(mimetype)
   }
 };
 

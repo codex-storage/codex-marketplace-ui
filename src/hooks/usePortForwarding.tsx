@@ -1,20 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { Echo } from "../utils/echo";
 import { Errors } from "../utils/errors";
 import { CodexDebugInfo } from "@codex-storage/sdk-js";
-import { DebugUtils } from "../utils/debug";
+import { PortForwardingUtil } from "./port-forwarding.util";
 
 type PortForwardingResponse = { reachable: boolean };
 
 export function usePortForwarding(info: CodexDebugInfo | undefined) {
   const { data, isFetching, refetch } = useQuery({
     queryFn: (): Promise<PortForwardingResponse> => {
-      const port = DebugUtils.getTcpPort(info!);
+      const port = PortForwardingUtil.getTcpPort(info!);
       if (port.error) {
         Errors.report(port);
         return Promise.resolve({ reachable: false });
       } else {
-        return Echo.portForwarding(port.data).catch((e) => Errors.report(e));
+        return PortForwardingUtil.check(port.data).catch((e) =>
+          Errors.report(e)
+        );
       }
     },
     queryKey: ["port-forwarding"],
@@ -33,6 +34,8 @@ export function usePortForwarding(info: CodexDebugInfo | undefined) {
     // The user may try to change the port forwarding and go back
     // to the tab
     refetchOnWindowFocus: true,
+
+    throwOnError: false,
   });
 
   return { enabled: data.reachable, isFetching, refetch };

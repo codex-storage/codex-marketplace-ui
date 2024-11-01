@@ -1,78 +1,36 @@
 import {
-  Cell,
-  Row,
-  Table,
   TabSortState,
+  Row,
+  Cell,
+  Table,
 } from "@codex-storage/marketplace-ui-components";
-import { getMapJSON } from "dotted-map";
 import DottedMap from "dotted-map/without-countries";
-import { Promises } from "../../utils/promises";
-import { useQuery } from "@tanstack/react-query";
-import { PeerCountryCell } from "../../components/Peers/PeerCountryCell";
-import { useCallback, useRef, useState } from "react";
-import { PeerPin } from "../../components/Peers/types";
-import "./peers.css";
-import { CodexSdk } from "../../sdk/codex";
-import { ErrorBoundary } from "@sentry/react";
-import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
-import { PeersIcon } from "../../components/Menu/PeersIcon";
-import { SuccessCheckIcon } from "../../components/SuccessCheckIcon/SuccessCheckIcon";
-import { ErrorCircleIcon } from "../../components/ErrorCircleIcon/ErrorCircleIcon";
-import { createLazyFileRoute } from "@tanstack/react-router";
-import { Network } from "../../utils/network";
+import { useRef, useState, useCallback } from "react";
+import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
+import { PeersIcon } from "../Menu/PeersIcon";
+import { PeerCountryCell } from "./PeerCountryCell";
+import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
+import { useDebug } from "../../hooks/useDebug";
+import { getMapJSON } from "dotted-map";
+import "./Peers.css";
+import { PeerPin, PeerSortFn, PeerUtils } from "./peers.util";
 
 // This function accepts the same arguments as DottedMap in the example above.
 const mapJsonString = getMapJSON({ height: 60, grid: "diagonal" });
 
 type CustomCSSProperties = React.CSSProperties & {
-  "--codex-peers-percent": number;
+  "--codex-peers-degrees": number;
 };
 
-type Node = {
-  nodeId: string;
-  peerId: string;
-  record: string;
-  address: string;
-  seen: boolean;
-};
+const throwOnError = true;
 
-type SortFn = (a: Node, b: Node) => number;
-
-const sortByBooleanValue = (state: TabSortState) => {
-  return (a: Node, b: Node) => {
-    const order = state === "desc" ? 1 : -1;
-    return a?.seen === b?.seen ? 0 : b?.seen ? order : -order;
-  };
-};
-
-const Peers = () => {
+export const Peers = () => {
   const ips = useRef<Record<string, string>>({});
   const [pins, setPins] = useState<[PeerPin, number][]>([]);
-  const [sortFn, setSortFn] = useState<SortFn | null>(() =>
-    sortByBooleanValue("desc")
+  const [sortFn, setSortFn] = useState<PeerSortFn | null>(() =>
+    PeerUtils.sortByBoolean("desc")
   );
-  const { data } = useQuery({
-    queryFn: () =>
-      CodexSdk.debug()
-        .info()
-        .then((s) => Promises.rejectOnError(s)),
-    queryKey: ["debug"],
-
-    // No need to retry because if the connection to the node
-    // is back again, all the queries will be invalidated.
-    retry: false,
-
-    // The client node should be local, so display the cache value while
-    // making a background request looks good.
-    staleTime: 0,
-
-    // Refreshing when focus returns can be useful if a user comes back
-    // to the UI after performing an operation in the terminal.
-    refetchOnWindowFocus: true,
-
-    // Throw the error to the error boundary
-    throwOnError: true,
-  });
+  const { data } = useDebug(throwOnError);
 
   const onPinAdd = useCallback(
     ({
@@ -80,11 +38,7 @@ const Peers = () => {
       ip,
       ...pin
     }: PeerPin & { countryIso: string; ip: string }) => {
-      setPins((val) => {
-        const [, quantity = 0] =
-          val.find(([p]) => p.lat === pin.lat && p.lng == pin.lng) || [];
-        return [...val, [pin, quantity + 1]];
-      });
+      setPins((val) => PeerUtils.incPin(val, pin));
       ips.current[ip] = countryIso;
     },
     []
@@ -115,24 +69,16 @@ const Peers = () => {
       return;
     }
 
-    setSortFn(() => (a: Node, b: Node) => {
-      const countryA = ips.current[Network.getIp(a.address)] || "";
-      const countryB = ips.current[Network.getIp(b.address)] || "";
-
-      return state === "desc"
-        ? countryA.localeCompare(countryB)
-        : countryB.localeCompare(countryA);
-    });
+    setSortFn(() => PeerUtils.sortByCountry(state, ips.current));
   };
 
   const onSortActive = (state: TabSortState) => {
-    console.info("fdf");
     if (!state) {
       setSortFn(null);
       return;
     }
 
-    setSortFn(() => sortByBooleanValue(state));
+    setSortFn(() => PeerUtils.sortByBoolean(state));
   };
 
   const headers = [
@@ -165,14 +111,13 @@ const Peers = () => {
       ]}></Row>
   ));
 
-  const actives = sorted.reduce((acc, cur) => acc + (cur.seen ? 1 : 0), 0) || 0;
-  const total = data?.table.nodes.length || 1;
+  const actives = PeerUtils.countActives(sorted);
+  const degrees = PeerUtils.calculareDegrees(sorted);
+  const good = actives > 0;
 
   const styles: CustomCSSProperties = {
-    "--codex-peers-percent": (actives / total) * 180,
+    "--codex-peers-degrees": degrees,
   };
-
-  const good = actives > 0;
 
   return (
     <div className="peers">
@@ -217,14 +162,3 @@ const Peers = () => {
     </div>
   );
 };
-
-export const Route = createLazyFileRoute("/dashboard/peers")({
-  component: () => (
-    <ErrorBoundary
-      fallback={({ error }) => (
-        <ErrorPlaceholder error={error} subtitle="Cannot retrieve the data." />
-      )}>
-      <Peers />
-    </ErrorBoundary>
-  ),
-});

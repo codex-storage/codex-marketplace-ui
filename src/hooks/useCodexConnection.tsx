@@ -27,6 +27,8 @@ export function useCodexConnection() {
 
     // Cache is not useful for the spr endpoint
     gcTime: 0,
+
+    throwOnError: false,
   });
 
   return { enabled: !isError && !!data, isFetching, refetch };

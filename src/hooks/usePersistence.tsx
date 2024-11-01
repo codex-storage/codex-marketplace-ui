@@ -6,12 +6,13 @@ const report = false;
 
 export function usePersistence(isCodexOnline: boolean) {
   const { data, isError, isFetching, refetch } = useQuery({
-    queryKey: ["availabilities"],
+    queryKey: [],
     queryFn: async () => {
       return CodexSdk.marketplace()
         .purchases()
         .then((data) => Promises.rejectOnError(data, report));
     },
+
     refetchInterval: 5000,
 
     // Enable only when the use has an internet connection
@@ -27,6 +28,8 @@ export function usePersistence(isCodexOnline: boolean) {
     // Refreshing when focus returns can be useful if a user comes back
     // to the UI after performing an operation in the terminal.
     refetchOnWindowFocus: true,
+
+    throwOnError: false,
   });
 
   return { enabled: !isError && !!data, isFetching, refetch };

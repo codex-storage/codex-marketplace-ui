@@ -8,9 +8,9 @@ import { ErrorBoundary } from "@sentry/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Download } from "../../components/Download/Download.tsx";
 import { ManifestFetch } from "../../components/ManifestFetch/ManifestFetch.tsx";
-import { OnBoardingUtils } from "../../utils/onboarding.ts";
 import "./index.css";
 import { Versions } from "../../components/Versions/Versions.tsx";
+import { WebStorage } from "../../utils/web-storage.ts";
 
 export const Route = createFileRoute("/dashboard/")({
   component: Dashboard,
@@ -23,9 +23,9 @@ function Dashboard() {
     queryClient.invalidateQueries({ queryKey: ["cids"] });
   };
 
-  const username = OnBoardingUtils.getDisplayName();
+  const username = WebStorage.onBoarding.getDisplayName();
 
-  const emoji = OnBoardingUtils.getEmoji();
+  const emoji = WebStorage.onBoarding.getEmoji();
 
   return (
     <>
