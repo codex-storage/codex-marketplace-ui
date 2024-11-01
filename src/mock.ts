@@ -17,10 +17,9 @@ import {
   CodexNodeSpace,
   CodexReservation,
 } from "@codex-storage/sdk-js";
-import { FilesStorage } from "./utils/file-storage";
-import { PurchaseStorage } from "./utils/purchases-storage";
 import { GB } from "./utils/constants";
 import { DebugErrorsData } from "./components/DebugErrors/debug-errors.domain";
+import { WebStorage } from "./utils/web-storage";
 
 class CodexDataMock extends CodexData {
   override upload(
@@ -103,7 +102,7 @@ class CodexDataMock extends CodexData {
               verifiable: true,
               filename: "codex.jpg",
               mimetype: "image/jpg",
-              uploadedAt: new Date().toJSON(),
+              uploadedAt: new Date().getUTCSeconds(),
             },
           },
           {
@@ -115,7 +114,7 @@ class CodexDataMock extends CodexData {
               protected: false,
               filename: "codex.mp4",
               mimetype: "video/mp4",
-              uploadedAt: new Date().toJSON(),
+              uploadedAt: new Date().getUTCSeconds(),
             },
           },
         ],
@@ -215,32 +214,14 @@ class CodexMarketplaceMock extends CodexMarketplace {
       })
     }
 
-    await PurchaseStorage.set(
+    await WebStorage.purchases.set(
       "0x1aad5b0495097f98010b87079e07f4f1bf283f533670057123e493b452e601a3",
       "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqY"
     );
 
-    await FilesStorage.set(
-      "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqY",
-      {
-        name: "codex.jpg",
-        mimetype: "image/jpg",
-        uploadedAt: new Date().toJSON(),
-      }
-    );
-
-    await PurchaseStorage.set(
+    await WebStorage.purchases.set(
       "0xb6da73cef67948fb99ed60385e6392e2f195a07e03e7eff53e2718f70eef3082",
       "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqZ"
-    );
-
-    await FilesStorage.set(
-      "zDvZRwzkz7BL9YhAs9cxjT3ohfywKmdpUmgGB8JZAye4BnJu8NqZ",
-      {
-        name: "codex.mp4",
-        mimetype: "video/mp4",
-        uploadedAt: new Date().toJSON(),
-      }
     );
 
     return Promise.resolve({
