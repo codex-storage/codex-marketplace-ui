@@ -3,16 +3,17 @@
   background-repeat: no-repeat;
   background-size: cover;
   border: 1px solid #96969633;
-  height: 286px;
   border-radius: 16px;
   padding: 16px;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   &::before {
     content: " ";
-    width: 217px;
-    height: 148px;
+    width: 42%;
+    height: 50%;
     position: absolute;
     bottom: -1px;
     right: 0;
@@ -41,6 +42,11 @@
       &:nth-child(2) {
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
+      }
+
+      svg {
+        position: relative;
+        top: -2px;
       }
     }
   }
@@ -156,7 +162,6 @@
   section:nth-child(2) {
     margin-top: 16px;
     margin-bottom: 10px;
-    height: 90px;
     position: relative;
 
     .wallet-lines {

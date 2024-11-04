@@ -15,18 +15,24 @@
     left 0.05s;
   min-width: 0;
   width: 272px;
+  min-width: 80px;
 
-  @media (max-width: 999px) {
-    &,
-    &[aria-hidden] {
-      width: 272px;
-      position: fixed;
-      z-index: 12;
-      left: -300px;
-    }
+  @media (max-width: 1199px) {
+    & {
+      width: 80px;
+      .items {
+        a {
+          width: 26px;
+          gap: 0;
+          display: flex;
+          justify-content: center;
 
-    &[aria-hidden="false"] {
-      left: 0px;
+          span + span {
+            font-size: 0;
+            display: none;
+          }
+        }
+      }
     }
   }
 
@@ -45,11 +51,7 @@
     overflow: visible;
   }
 
-  &[aria-expanded="true"] {
-    width: 272px;
-  }
-
-  &[aria-expanded="false"] {
+  &:not([aria-expanded]) {
     width: 80px;
 
     .items {
@@ -61,6 +63,7 @@
 
         span + span {
           font-size: 0;
+          display: none;
         }
       }
     }
@@ -85,8 +88,13 @@
     border-radius: 8px;
 
     > svg:first-child {
-      cursor: pointer;
       min-width: 30px;
+    }
+
+    @media (min-width: 1200px) {
+      > svg:first-child {
+        cursor: pointer;
+      }
     }
 
     div {

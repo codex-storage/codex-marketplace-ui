@@ -16,12 +16,9 @@ const Layout = () => {
 
   const onClose = () => setHasMobileMenu(false);
 
-  const isMobileMenuDisplayed =
-    hasMobileMenu === true && window.innerWidth <= 999;
-
   return (
     <div className="layout">
-      <Menu isMobileMenuDisplayed={isMobileMenuDisplayed}></Menu>
+      <Menu></Menu>
 
       <main>
         <AppBar onIconClick={onIconClick} />

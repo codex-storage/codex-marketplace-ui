@@ -5,6 +5,7 @@ import { Logo } from "../Logo/Logo";
 import { Logotype } from "../Logotype/Logotype";
 import { DiscordIcon } from "./DiscordIcon";
 import { Alert } from "@codex-storage/marketplace-ui-components";
+import { AlertIcon } from "../AlertIcon/AlertIcon";
 
 export function WelcomeCard() {
   return (
@@ -27,7 +28,7 @@ export function WelcomeCard() {
           </p>
           <div>
             <Link to="/dashboard/help" className="welcome-link">
-              Explore more content<ArrowRight></ArrowRight>
+              Learn more<ArrowRight></ArrowRight>
             </Link>
             <a href="">
               <DiscordIcon></DiscordIcon>
@@ -36,7 +37,7 @@ export function WelcomeCard() {
           </div>
         </main>
         <footer>
-          <Alert variant="warning" title="Disclaimer">
+          <Alert variant="warning" title="Disclaimer" Icon={<AlertIcon />}>
             The website and the content herein is not intended for public use
             and is for informational and demonstration purposes only.
           </Alert>

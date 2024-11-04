@@ -1,0 +1,23 @@
+.progress-circle {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  background: #2f2f2f;
+
+  background-image:
+    -webkit-linear-gradient(90deg, #2f2f2f 50%, transparent 50%),
+    -webkit-linear-gradient(270deg, var(--codex-color-primary) 50%, #2f2f2f 50%);
+  background-image: linear-gradient(90deg, #2f2f2f 50%, transparent 50%),
+    linear-gradient(270deg, var(--codex-color-primary) 50%, #2f2f2f 50%);
+
+  div {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    background: #232323;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}

@@ -23,8 +23,8 @@ function Dashboard() {
   const emoji = WebStorage.onBoarding.getEmoji();
 
   return (
-    <>
-      <div className="dashboard">
+    <div className="dashboard">
+      <header>
         <div className="row gap">
           <div className="emoji">{emoji}</div>
           <div>
@@ -33,23 +33,10 @@ function Dashboard() {
           </div>
         </div>
         <Versions />
-      </div>
-      <div>
-        <div className="dashboard-body">
-          <ConnectedAccount></ConnectedAccount>
-          <div className="column">
-            <ErrorBoundary
-              fallback={({ error }) => (
-                <ErrorPlaceholder
-                  error={error}
-                  subtitle="Cannot retrieve the data."
-                />
-              )}>
-              <NodeSpace></NodeSpace>
-            </ErrorBoundary>
-            <PeersCard></PeersCard>
-          </div>
-
+      </header>
+      <main>
+        <ConnectedAccount></ConnectedAccount>
+        <div className="column">
           <ErrorBoundary
             fallback={({ error }) => (
               <ErrorPlaceholder
@@ -57,34 +44,45 @@ function Dashboard() {
                 subtitle="Cannot retrieve the data."
               />
             )}>
-            <WelcomeCard />
+            <NodeSpace></NodeSpace>
           </ErrorBoundary>
-
-          <div className="column">
-            <ErrorBoundary
-              fallback={({ error }) => (
-                <ErrorPlaceholder
-                  error={error}
-                  subtitle="Cannot retrieve the data."
-                />
-              )}>
-              <UploadCard />
-            </ErrorBoundary>
-            <Download></Download>
-            <ManifestFetchCard />
-          </div>
-
-          <ErrorBoundary
-            fallback={({ error }) => (
-              <ErrorPlaceholder
-                error={error}
-                subtitle="Cannot retrieve the data."
-              />
-            )}>
-            <Files />
-          </ErrorBoundary>
+          <PeersCard></PeersCard>
         </div>
-      </div>
-    </>
+
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
+          <WelcomeCard />
+        </ErrorBoundary>
+
+        <div className="column">
+          <ErrorBoundary
+            fallback={({ error }) => (
+              <ErrorPlaceholder
+                error={error}
+                subtitle="Cannot retrieve the data."
+              />
+            )}>
+            <UploadCard />
+          </ErrorBoundary>
+          <Download></Download>
+          <ManifestFetchCard />
+        </div>
+
+        <ErrorBoundary
+          fallback={({ error }) => (
+            <ErrorPlaceholder
+              error={error}
+              subtitle="Cannot retrieve the data."
+            />
+          )}>
+          <Files />
+        </ErrorBoundary>
+      </main>
+    </div>
   );
 }

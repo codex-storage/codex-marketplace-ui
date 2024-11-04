@@ -1,11 +1,6 @@
 export function WalletChart() {
   return (
-    <svg
-      width="464"
-      height="91"
-      viewBox="0 0 464 91"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 464 91" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line
         x1="15.5"
         x2="15.5"

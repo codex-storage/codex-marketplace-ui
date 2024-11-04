@@ -36,12 +36,10 @@ export type MenuItem =
       Component: ComponentType<MenuItemComponentProps>;
     };
 
-type Props = {
-  isMobileMenuDisplayed: boolean;
-};
+type Props = {};
 
-export function Menu({ isMobileMenuDisplayed }: Props) {
-  const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
+export function Menu({}: Props) {
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const onLogoClick = () => {
     if (isExpanded === false) {
@@ -49,22 +47,15 @@ export function Menu({ isMobileMenuDisplayed }: Props) {
     }
   };
 
-  const onExpandMenu = () => setIsExpanded(isExpanded === false ? true : false);
+  const onExpandMenu = () => setIsExpanded(!isExpanded);
 
   return (
     <>
       <aside
         className={classnames([`menu`])}
-        {...attributes(
-          isExpanded === null
-            ? {
-                "aria-hidden": (!isMobileMenuDisplayed).toString(),
-              }
-            : {
-                "aria-expanded": isExpanded.toString(),
-                "aria-hidden": (!isMobileMenuDisplayed).toString(),
-              }
-        )}>
+        {...attributes({
+          "aria-expanded": isExpanded,
+        })}>
         <div>
           <header>
             <Logo onClick={onLogoClick} width={30} />
