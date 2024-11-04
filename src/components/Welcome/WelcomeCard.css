@@ -1,13 +1,18 @@
 .welcome-card {
   display: flex;
   flex-direction: column;
+  --codex-welcome-card-background-position: right;
+
+  &.welcome-card--tiny {
+    --codex-welcome-card-background-position: 450px;
+  }
 
   > div {
     padding: 16px;
     background-color: #141414;
     background-image: url(img/welcome.png);
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: var(--codex-welcome-card-background-position);
     flex: 1;
     display: flex;
     flex-direction: column;

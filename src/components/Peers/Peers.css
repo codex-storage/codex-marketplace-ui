@@ -171,4 +171,14 @@
       }
     }
   }
+
+  .peers-chart {
+    transform: scale(0.5);
+
+    @media (min-width: 1000px) {
+      & {
+        transform: scale(0.73);
+      }
+    }
+  }
 }
