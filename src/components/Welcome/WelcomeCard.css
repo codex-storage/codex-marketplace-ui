@@ -10,7 +10,7 @@
   > div {
     padding: 16px;
     background-color: #141414;
-    background-image: url(img/welcome.png);
+    background-image: url(/img/welcome.png);
     background-repeat: no-repeat;
     background-position: var(--codex-welcome-card-background-position);
     flex: 1;
