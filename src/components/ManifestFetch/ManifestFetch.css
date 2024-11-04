@@ -1,14 +1,17 @@
-.fetch {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.fetch-inputContainer {
+.manifest-fetch {
   flex: 1;
-}
+  display: flex;
+  gap: 16px;
 
-.fetch-input {
-  width: 100%;
+  .input {
+    flex: 1;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .button {
+    width: 105px;
+  }
 }

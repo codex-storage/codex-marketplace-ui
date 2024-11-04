@@ -279,7 +279,7 @@ export function Files() {
       </div>
 
       <div className="files-fileBody">
-        <Table headers={headers} rows={rows} defaultSortIndex={2} />
+        <Table headers={headers} rows={rows.slice(0, 4)} defaultSortIndex={2} />
       </div>
 
       <FileDetails onClose={onClose} details={details} />

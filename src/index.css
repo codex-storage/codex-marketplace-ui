@@ -30,7 +30,7 @@
   --codex-color-on-primary: #333;
   --codex-color-disabled: #717171;
   --codex-color-light: rgb(150 150 150);
-  --codex-border-color: #2b303b;
+  --codex-border-color: #96969633;
   --codex-input-border-color: #494949;
   --codex-background-secondary: rgb(38 38 38);
   --codex-highlight-color: #2f2f2f;
@@ -130,7 +130,7 @@ ul {
   padding: 0;
 }
 
-main {
+body > main {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -180,4 +180,37 @@ input:-webkit-autofill:active {
 
 .gap {
   gap: var(--codex-row-gap);
+}
+
+.card {
+  border: 1px solid #96969633;
+  border-radius: 16px;
+  padding: 16px;
+  background-color: #232323;
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    svg {
+      color: #969696;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h5 {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.011em;
+    }
+  }
 }

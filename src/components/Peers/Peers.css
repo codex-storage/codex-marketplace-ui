@@ -23,13 +23,6 @@
       }
     }
 
-    circle[fill="#d6ff79"] {
-      stroke: var(--codex-color-primary);
-      stroke-width: 0.6px;
-      fill: #141414;
-      animation: circle-pulse 3s infinite;
-    }
-
     ul {
       display: none;
 
@@ -145,85 +138,9 @@
         }
       }
 
-      main {
-        > div {
-          position: relative;
-          width: 350px;
-          height: 175px;
-          overflow: hidden;
-          transform: scale(0.5);
-          margin: auto;
-          left: -32px;
-
-          @media (min-width: 1000px) {
-            & {
-              transform: scale(0.73);
-            }
-          }
-
-          *,
-          &::before {
-            box-sizing: border-box;
-          }
-
-          &::before,
-          &::after {
-            position: absolute;
-          }
-
-          &::before {
-            content: "";
-            width: inherit;
-            height: inherit;
-            border: 45px solid #323232;
-            border-bottom: none;
-            border-top-left-radius: 175px;
-            border-top-right-radius: 175px;
-          }
-
-          div {
-            position: absolute;
-            top: 100%;
-            width: inherit;
-            height: inherit;
-            border: 45px solid #323232;
-            border-top: none;
-            border-bottom-left-radius: 175px;
-            border-bottom-right-radius: 175px;
-            transform-origin: 50% 0;
-          }
-
-          div:nth-child(1) {
-            border-color: var(--codex-color-primary);
-            transform: rotate(calc(var(--codex-peers-degrees) * 1deg));
-            background-color: transparent;
-          }
-        }
-
-        span {
-          font-family: Inter;
-          font-size: 38.67px;
-          font-weight: 500;
-          line-height: 48.34px;
-          letter-spacing: -0.005em;
-          text-align: center;
-          position: absolute;
-          bottom: 0;
-          left: calc(50% - 24px);
-        }
-      }
-
       footer {
         border-top: 1px solid #96969633;
         padding-top: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-family: Inter;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        letter-spacing: -0.006em;
       }
     }
   }
@@ -253,18 +170,5 @@
         }
       }
     }
-  }
-}
-
-@keyframes circle-pulse {
-  0% {
-    opacity: 1; /* Fully opaque */
-  }
-  50% {
-    r: 2; /* Increased radius */
-    opacity: 1; /* Slightly transparent */
-  }
-  100% {
-    opacity: 1; /* Fully opaque */
   }
 }

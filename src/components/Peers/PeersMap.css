@@ -1,0 +1,21 @@
+.peers-map {
+  circle[fill="#d6ff79"] {
+    stroke: var(--codex-color-primary);
+    stroke-width: 0.6px;
+    fill: #141414;
+    animation: circle-pulse 3s infinite;
+  }
+}
+
+@keyframes circle-pulse {
+  0% {
+    opacity: 1; /* Fully opaque */
+  }
+  50% {
+    r: 2; /* Increased radius */
+    opacity: 1; /* Slightly transparent */
+  }
+  100% {
+    opacity: 1; /* Fully opaque */
+  }
+}

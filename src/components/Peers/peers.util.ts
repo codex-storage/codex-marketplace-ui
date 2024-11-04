@@ -8,10 +8,12 @@ export type PeerNode = {
     seen: boolean;
 };
 
-export type PeerPin = {
-    lat: number;
-    lng: number;
-};
+export type PeerGeo = {
+    latitude: number
+    longitude: number
+    country: string
+    country_iso: string
+}
 
 export type PeerSortFn = (a: PeerNode, b: PeerNode) => number;
 
@@ -21,12 +23,12 @@ export const PeerUtils = {
         return a?.seen === b?.seen ? 0 : b?.seen ? order : -order;
     },
 
-    sortByCountry: (state: TabSortState, ipTable: Record<string, string>) =>
+    sortByCountry: (state: TabSortState, ipTable: Record<string, PeerGeo>) =>
         (a: PeerNode, b: PeerNode) => {
             const [ipA = ""] = a.address.split(":")
             const [ipB = ""] = b.address.split(":")
-            const countryA = ipTable[ipA] || "";
-            const countryB = ipTable[ipB] || "";
+            const countryA = ipTable[ipA].country || "";
+            const countryB = ipTable[ipB].country || "";
 
             return state === "desc"
                 ? countryA.localeCompare(countryB)
@@ -36,10 +38,10 @@ export const PeerUtils = {
     /**
      * Increments the number of pin for a location  
      */
-    incPin(val: [PeerPin, number][], pin: PeerPin): [PeerPin, number][] {
+    incPin(val: [PeerNode & PeerGeo, number][], pin: PeerNode & PeerGeo): [PeerNode & PeerGeo, number][] {
         const [, quantity = 0] =
-            val.find(([p]) => p.lat === pin.lat && p.lng == pin.lng) || [];
-        const rest = val.filter(([p]) => p.lat !== pin.lat || p.lng !== pin.lng)
+            val.find(([p]) => p.latitude === pin.latitude && p.longitude == pin.longitude) || [];
+        const rest = val.filter(([p]) => p.latitude !== pin.latitude || p.longitude !== pin.longitude)
         return [...rest, [pin, quantity + 1]];
     },
 
@@ -51,6 +53,10 @@ export const PeerUtils = {
         const total = peers.length || 1;
 
         return (actives / total) * 180
+    },
+
+    isGoodQuality(actives: number) {
+        return actives > 0
     },
 
     geCountryEmoji: (countryCode: string) => {

@@ -3,7 +3,7 @@ type Props = {
 };
 
 export function NodesIcon({ variant }: Props) {
-  let color = "currentColor";
+  let color = "#969696";
 
   if (variant === "success") {
     color = "#3EE089";

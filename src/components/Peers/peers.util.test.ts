@@ -1,5 +1,5 @@
 import { assert, describe, it } from "vitest";
-import { PeerUtils } from "./peers.util";
+import { PeerGeo, PeerUtils } from "./peers.util";
 
 describe("peers", () => {
     it("sorts by boolean", async () => {
@@ -19,10 +19,16 @@ describe("peers", () => {
     it("sorts by country", async () => {
         const a = { nodeId: "a", peerId: "", record: "", address: "127.0.0.1", seen: false }
         const b = { nodeId: "a", peerId: "", record: "", address: "127.0.0.2", seen: true }
+
         const table = {
-            "127.0.0.1": "US",
-            "127.0.0.2": "France",
+            "127.0.0.1": {
+                country: "United States"
+            } as PeerGeo,
+            "127.0.0.2": {
+                country: "France"
+            } as PeerGeo,
         }
+
         const items = [a, b,]
 
         const descSorted = items.slice().sort(PeerUtils.sortByCountry("desc", table))
@@ -35,14 +41,14 @@ describe("peers", () => {
     });
 
     it("adds a new pin", async () => {
-        const latLng = { lat: 0, lng: 0 }
+        const latLng = { latitude: 0, longitude: 0 } as any
         const values = PeerUtils.incPin([], latLng)
 
         assert.deepEqual(values, [[latLng, 1]]);
     });
 
     it("increments an existing pin", async () => {
-        const latLng = { lat: 0, lng: 0 }
+        const latLng = { lat: 0, lng: 0 } as any
         const values = PeerUtils.incPin([[latLng, 1]], latLng)
 
         assert.deepEqual(values, [[latLng, 2]]);

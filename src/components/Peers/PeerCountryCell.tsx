@@ -1,63 +1,23 @@
 import { Cell } from "@codex-storage/marketplace-ui-components";
-import { useQuery } from "@tanstack/react-query";
 import "./PeerCountryCell.css";
-import { useEffect } from "react";
-import { PeerPin, PeerUtils } from "./peers.util";
+import { PeerGeo, PeerNode, PeerUtils } from "./peers.util";
 
 export type Props = {
-  address: string;
-  onPinAdd: (pin: PeerPin & { countryIso: string; ip: string }) => void;
+  node: PeerNode;
+  geo: PeerGeo | undefined;
 };
 
-export function PeerCountryCell({ address, onPinAdd }: Props) {
-  const { data } = useQuery({
-    queryFn: () => {
-      const [ip] = address.split(":");
-
-      return fetch(import.meta.env.VITE_GEO_IP_URL + "/json?ip=" + ip).then(
-        (res) => res.json()
-      );
-    },
-    refetchOnMount: true,
-
-    queryKey: [address],
-
-    // Enable only when the address exists
-    enabled: !!address,
-
-    // No need to retry because if the connection to the node
-    // is back again, all the queries will be invalidated.
-    retry: false,
-
-    // We can cache the data at Infinity because the relation between
-    // country and ip is fixed
-    staleTime: Infinity,
-
-    // Don't expect something new when coming back to the UI
-    refetchOnWindowFocus: false,
-  });
-
-  useEffect(() => {
-    if (data) {
-      onPinAdd({
-        lat: data.latitude,
-        lng: data.longitude,
-        countryIso: data.country_iso,
-        ip: data.ip,
-      });
-    }
-  }, [data, onPinAdd]);
-
+export function PeerCountryCell({ geo }: Props) {
   return (
     <Cell>
       <div className="peer-country">
-        {data ? (
+        {geo ? (
           <>
-            <span> {!!data && PeerUtils.geCountryEmoji(data.country_iso)}</span>
-            <span>{data?.country}</span>
+            <span> {!!geo && PeerUtils.geCountryEmoji(geo.country_iso)}</span>
+            <span>{geo?.country}</span>
           </>
         ) : (
-          <span>{address}</span>
+          <span></span>
         )}
       </div>
     </Cell>

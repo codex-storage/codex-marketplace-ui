@@ -1,0 +1,168 @@
+.wallet-card {
+  background-image: url(/img/wallet.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid #96969633;
+  height: 286px;
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  position: relative;
+
+  &::before {
+    content: " ";
+    width: 217px;
+    height: 148px;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    background: transparent;
+    backdrop-filter: blur(3px);
+  }
+
+  header {
+    button {
+      background-color: #161616;
+      border: 1px solid #96969633;
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+      transition: box-shadow 0.35s;
+
+      &:hover {
+        box-shadow: 0 0 0 3px var(--codex-border-color);
+      }
+
+      &:first-child {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+      }
+
+      &:nth-child(2) {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+
+  h6 {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 14.52px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  span {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.006em;
+    text-align: left;
+    color: #ffffffb2;
+  }
+
+  var {
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: -0.005em;
+    color: var(--text-strong-950, #ffffff);
+    display: block;
+    font-style: normal;
+  }
+
+  main var {
+    font-size: 32px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    &::after {
+      content: " ";
+      background-image: url(/icons/select-arrow.svg);
+      background-repeat: no-repeat;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      right: 0;
+      top: 22px;
+    }
+
+    var {
+      font-size: 20px;
+      line-height: 25px;
+    }
+
+    select {
+      background-color: #161616;
+      border-radius: 8px;
+      border: 1px solid #96969633;
+      padding: 6px 6px 6px 44px;
+      outline: none;
+      -moz-appearance: none; /* Firefox */
+      -webkit-appearance: none; /* Safari and Chrome */
+      appearance: none;
+      position: relative;
+      transition: box-shadow 0.35s;
+
+      &:hover {
+        box-shadow: 0 0 0 3px var(--codex-border-color);
+      }
+
+      &:has(option[value="US"]:checked) {
+        background-image: url(/icons/us-flag.svg);
+        background-position: 10px;
+        background-repeat: no-repeat;
+        background-size: 16px;
+      }
+
+      option {
+        border-radius: 32px;
+      }
+    }
+
+    div {
+      position: relative;
+
+      .row {
+        gap: 8px;
+      }
+    }
+
+    small {
+      color: #3ee089;
+      height: 20px;
+      width: 42px;
+      border-radius: 16px;
+      background-color: #1fc16b29;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  section:first-child {
+    margin-top: 12px;
+  }
+
+  section:nth-child(2) {
+    margin-top: 16px;
+    margin-bottom: 10px;
+    height: 90px;
+    position: relative;
+
+    .wallet-lines {
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+  }
+}

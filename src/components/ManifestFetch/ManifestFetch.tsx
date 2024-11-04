@@ -43,16 +43,14 @@ export function ManifestFetch() {
     setCid(e.currentTarget.value);
 
   return (
-    <div className="fetch">
-      <div className="fetch-inputContainer">
-        <Input
-          id="cid"
-          value={cid}
-          placeholder="CID"
-          inputClassName="fetch-input"
-          onChange={onCidChange}></Input>
-      </div>
-      <Button label="Fetch" onClick={onDownload}></Button>
+    <div className="manifest-fetch">
+      <Input
+        id="cid"
+        value={cid}
+        placeholder="CID"
+        size={"medium" as any}
+        onChange={onCidChange}></Input>
+      <Button label="Fetch" onClick={onDownload} variant="outline"></Button>
     </div>
   );
 }

@@ -1,0 +1,13 @@
+.node-space {
+  h6 {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.011em;
+    text-align: left;
+    padding-top: 16px;
+    margin-bottom: 16px;
+    border-top: 1px solid #96969633;
+  }
+}

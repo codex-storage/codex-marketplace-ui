@@ -2,7 +2,7 @@ import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { AvailabilityState } from "./types";
 import { SpaceAllocation } from "@codex-storage/marketplace-ui-components";
 import "./AvailabilitySpaceAllocation.css";
-import { nodeSpaceAllocationColors } from "../NodeSpaceAllocation/nodeSpaceAllocation.domain";
+import { nodeSpaceAllocationColors } from "../NodeSpace/nodeSpace.domain";
 
 type Props = {
   space: CodexNodeSpace;

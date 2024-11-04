@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../assets/loader.svg";
 import { CodexSdk } from "../../sdk/codex";
-import { SpaceAllocation } from "@codex-storage/marketplace-ui-components";
+import {
+  Button,
+  SpaceAllocation,
+} from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
-import { nodeSpaceAllocationColors } from "./nodeSpaceAllocation.domain";
+import { NodesIcon } from "../Menu/NodesIcon";
+import "./NodeSpace.css";
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -12,7 +16,7 @@ const defaultSpace = {
   totalBlocks: 0,
 };
 
-export function NodeSpaceAllocation() {
+export function NodeSpace() {
   const { data: space, isPending } = useQuery({
     queryFn: () =>
       CodexSdk.data()
@@ -41,24 +45,36 @@ export function NodeSpaceAllocation() {
   const { quotaMaxBytes, quotaReservedBytes, quotaUsedBytes } = space;
 
   return (
-    <SpaceAllocation
-      data={[
-        {
-          title: "Maximum storage space used by the node",
-          size: quotaMaxBytes,
-          color: nodeSpaceAllocationColors[0],
-        },
-        {
-          title: "Amount of storage space currently in use",
-          size: quotaUsedBytes,
-          color: nodeSpaceAllocationColors[1],
-        },
-        {
-          title: "Amount of storage space reserved",
-          size: quotaReservedBytes,
-          color:
-            nodeSpaceAllocationColors[nodeSpaceAllocationColors.length - 1],
-        },
-      ]}></SpaceAllocation>
+    <div className="card node-space">
+      <header>
+        <div>
+          <NodesIcon variant="default"></NodesIcon>
+          <h5>Storage</h5>
+        </div>
+        <Button label="Details" variant="outline"></Button>
+      </header>
+      <main>
+        <h6>Disk</h6>
+
+        <SpaceAllocation
+          data={[
+            {
+              title: "Allocated",
+              size: quotaUsedBytes,
+              color: "#FF6E61",
+            },
+            {
+              title: "Available",
+              size: quotaReservedBytes,
+              color: "#34A0FF",
+            },
+            {
+              title: "Free",
+              size: quotaMaxBytes - quotaReservedBytes - quotaUsedBytes,
+              color: "#6F6F6F",
+            },
+          ]}></SpaceAllocation>
+      </main>
+    </div>
   );
 }
