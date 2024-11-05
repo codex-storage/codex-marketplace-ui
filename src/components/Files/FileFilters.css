@@ -1,0 +1,35 @@
+.filter {
+  padding: 4px 8px;
+  gap: 8px;
+  border-radius: 6px;
+  border: 1px solid #96969633;
+  background-color: #2f2f2f;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #969696;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 0.35s;
+
+  &:hover {
+    box-shadow: 0 0 0 3px var(--codex-border-color);
+  }
+
+  svg {
+    color: #969696;
+  }
+
+  &.filter--active {
+    border-color: var(--codex-color-primary);
+    color: var(--codex-color-primary);
+
+    svg {
+      color: var(--codex-color-primary);
+    }
+  }
+}

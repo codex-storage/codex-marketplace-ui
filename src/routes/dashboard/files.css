@@ -1,0 +1,17 @@
+.files-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .files {
+    margin-bottom: 16px;
+    flex: 1 1 67%;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 1 auto;
+  }
+}

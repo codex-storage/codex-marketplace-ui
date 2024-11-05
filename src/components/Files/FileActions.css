@@ -1,0 +1,19 @@
+.file-actions {
+  > div {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--codex-border-color);
+    border-radius: var(--codex-border-radius);
+    padding: 0.5rem;
+    background-color: #14141499;
+    gap: 8px;
+    padding: 10px;
+
+    .button-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #2f2f2f;
+      border: 1px solid #96969633;
+    }
+  }
+}

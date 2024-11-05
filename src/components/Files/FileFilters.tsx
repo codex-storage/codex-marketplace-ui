@@ -1,7 +1,11 @@
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { Files } from "../../utils/files";
 import { classnames } from "../../utils/classnames";
-import { Check } from "lucide-react";
+import "./FileFilters.css";
+import { ArchiveIcon } from "./ArchiveIcon";
+import { ImageIcon } from "./ImageIcon";
+import { VideoIcon } from "./VideoIcon";
+import { DocumentIcon } from "./DocumentIcon";
 
 type Props = {
   files: CodexDataContent[];
@@ -9,28 +13,73 @@ type Props = {
   selected: string[];
 };
 
+function getIcon(type: string) {
+  switch (type) {
+    case "image": {
+      return <ImageIcon></ImageIcon>;
+    }
+
+    case "archive": {
+      return <ArchiveIcon></ArchiveIcon>;
+    }
+
+    case "video": {
+      return <VideoIcon></VideoIcon>;
+    }
+
+    default: {
+      return <DocumentIcon></DocumentIcon>;
+    }
+  }
+}
+
+function getType(mimetype: string) {
+  if (Files.isArchive(mimetype)) {
+    return "archive";
+  }
+
+  if (Files.isImage(mimetype)) {
+    return "image";
+  }
+
+  if (Files.isVideo(mimetype)) {
+    return "video";
+  }
+
+  return "document";
+}
+
 export function FilterFilters({ selected, files, onFilterToggle }: Props) {
   const filters = Array.from(
     new Set(
       files
         .filter((f) => f.manifest.mimetype !== "")
-        .map((file) =>
-          Files.isArchive(file.manifest.mimetype)
-            ? "archive"
-            : Files.type(file.manifest.mimetype)
-        )
+        .map((file) => getType(file.manifest.mimetype || ""))
     )
   );
 
-  return filters.map((type) => (
-    <span
-      key={type}
-      className={classnames(
-        ["files-filter"],
-        ["files-filter--active", !!filters.find((f) => selected.includes(f))]
-      )}
-      onClick={() => onFilterToggle(type)}>
-      <span>{type}</span> <Check size={"1rem"}></Check>
-    </span>
-  ));
+  const html = filters.map((type) => {
+    const count = files.reduce(
+      (acc, file) =>
+        getType(file.manifest.mimetype || "") === type ? acc + 1 : acc,
+      0
+    );
+
+    return (
+      <span
+        key={type}
+        className={classnames(
+          ["filter"],
+          ["filter--active", selected.includes(type)]
+        )}
+        onClick={() => onFilterToggle(type)}>
+        {getIcon(type)}
+        <span>
+          {type + "s"} ({count})
+        </span>
+      </span>
+    );
+  });
+
+  return <div className="filters">{html}</div>;
 }

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { COPY_DURATION, ICON_SIZE } from "../../utils/constants";
-import { Copy } from "lucide-react";
+import { COPY_DURATION } from "../../utils/constants";
 import { Button } from "@codex-storage/marketplace-ui-components";
+import { CoypIcon } from "./CopyIcon";
 
 type CopyButtonProps = {
   cid: string;
@@ -27,13 +27,11 @@ export function CidCopyButton({ cid }: CopyButtonProps) {
 
   const label = copied ? "Copied !" : "Copy CID";
 
-  const Icon = () => <Copy size={ICON_SIZE} />;
-
   return (
     <Button
       label={label}
       variant="outline"
       onClick={onCopy}
-      Icon={Icon}></Button>
+      Icon={CoypIcon}></Button>
   );
 }

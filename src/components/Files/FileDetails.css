@@ -1,16 +1,118 @@
-.fileDetails-header {
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid var(--codex-border-color);
-  display: flex;
-  align-items: center;
-}
+.file-details {
+  background-color: #232323;
+  border-left: 1px solid #96969633;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  padding: 16px;
+  height: 100%;
 
-.fileDetails-headerTitle {
-  flex-grow: 1;
-}
+  header {
+    display: flex;
+    align-items: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.011em;
+    text-align: left;
 
-.fileDetails-body {
-  padding: 0;
+    span {
+      flex-grow: 1;
+    }
+
+    .button-icon {
+      background-color: #2f2f2f;
+      border: 1px solid #96969633;
+    }
+  }
+
+  .preview {
+    background-color: #14141499;
+    border: 1px solid #69696933;
+    height: 200px;
+    margin: auto;
+    border-radius: 10px;
+    margin-bottom: 16px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      display: flex;
+    }
+
+    figure {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      margin: 0;
+
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: -0.011em;
+      text-align: left;
+      color: #ffffff33;
+
+      p {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  ul {
+    li {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: grid;
+      padding: 8px 0;
+      align-items: center;
+
+      p:first-child {
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: -0.006em;
+        text-align: left;
+      }
+
+      p:nth-child(2) {
+        grid-column: span 2 / span 2;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        letter-spacing: -0.006em;
+        text-align: left;
+        color: #ffffffcc;
+      }
+
+      &:last-child p:nth-child(2) {
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        letter-spacing: -0.006em;
+        text-align: left;
+
+        color: #6beca1;
+      }
+    }
+  }
+
+  .buttons {
+    padding: 16px 0;
+    border-bottom: 1px solid #96969633;
+    display: flex;
+    gap: 16px;
+
+    button {
+      flex: 1;
+    }
+  }
 }
 
 .fileDetails-grid {

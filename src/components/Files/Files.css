@@ -1,8 +1,29 @@
 .files {
-  border-radius: var(--codex-border-radius);
-  border: 1px solid var(--codex-border-color);
-  background-color: var(--codex-background-secondary);
-  padding: 1rem 1.5rem;
+  main > section {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+
+    .tabs {
+      flex-basis: 75%;
+    }
+  }
+
+  .filters {
+    margin-top: 16px;
+    gap: 16px;
+    display: flex;
+  }
+
+  .button {
+    width: 105px;
+  }
+
+  table thead tr th {
+    background-color: #14141499;
+  }
 }
 
 .files-cell-file {
@@ -88,10 +109,6 @@
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-}
-
-.files-fileBody {
-  margin-top: 1.25rem;
 }
 
 .files-folders {

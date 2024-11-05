@@ -13,6 +13,9 @@ export const Files = {
   isImage(type: string | null) {
     return type && type.startsWith("image");
   },
+  isVideo(type: string | null) {
+    return type && type.startsWith("video");
+  },
   type(mimetype: string | null) {
     const [type] = mimetype?.split("/") || []
     return type

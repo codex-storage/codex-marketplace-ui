@@ -7,6 +7,7 @@ import {
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { Copy } from "lucide-react";
 import { useState } from "react";
+import "./FileCell.css";
 
 type Props = {
   content: CodexDataContent;
@@ -22,23 +23,23 @@ export function FileCell({ content }: Props) {
 
   return (
     <>
-      <Cell>
-        <div className="files-cell-file">
+      <Cell className="file-cell">
+        <div>
           <WebFileIcon type={content.manifest.mimetype || ""} />
 
           <div>
-            <b>{content.manifest.filename}</b>
-            <div className="files-fileMeta">
-              <small className="files-fileMeta-cid">{content.cid}</small>
-              <ButtonIcon
-                variant="small"
-                onClick={() => onCopy(content.cid)}
-                animation="buzz"
-                Icon={(props) => (
-                  <Copy size={"1rem"} {...props} />
-                )}></ButtonIcon>
-            </div>
+            <p>
+              <b>{content.manifest.filename}</b>
+            </p>
+            <p>
+              <small>{content.cid}</small>
+            </p>
           </div>
+          <ButtonIcon
+            variant="small"
+            onClick={() => onCopy(content.cid)}
+            animation="buzz"
+            Icon={(props) => <Copy size={"1rem"} {...props} />}></ButtonIcon>
         </div>
 
         <Toast message={toast.message} time={toast.time} variant={"success"} />

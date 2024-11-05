@@ -1,9 +1,10 @@
 import { ButtonIcon, Cell } from "@codex-storage/marketplace-ui-components";
-import { Download, ReceiptText } from "lucide-react";
-import { ICON_SIZE } from "../../utils/constants";
 import { FolderButton } from "./FolderButton";
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { CodexSdk } from "../../sdk/codex";
+import "./FileActions.css";
+import { DownloadIcon } from "./DownloadIcon";
+import { InfoFileIcon } from "./InfoFileIcon";
 
 type Props = {
   content: CodexDataContent;
@@ -21,15 +22,12 @@ export function FileActions({
   const url = CodexSdk.url() + "/api/codex/v1/data/";
 
   return (
-    <Cell>
-      <div className="files-fileActions">
+    <Cell className="file-actions">
+      <div>
         <ButtonIcon
-          variant="small"
           animation="bounce"
           onClick={() => window.open(url + content.cid, "_blank")}
-          Icon={(props) => (
-            <Download size={ICON_SIZE} {...props} />
-          )}></ButtonIcon>
+          Icon={DownloadIcon}></ButtonIcon>
 
         <FolderButton
           folders={folders.map(([folder, files]) => [
@@ -42,7 +40,7 @@ export function FileActions({
         <ButtonIcon
           variant="small"
           onClick={() => onDetails(content.cid)}
-          Icon={() => <ReceiptText size={ICON_SIZE} />}></ButtonIcon>
+          Icon={InfoFileIcon}></ButtonIcon>
       </div>
     </Cell>
   );

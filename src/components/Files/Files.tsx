@@ -1,4 +1,4 @@
-import { FilesIcon, Folder, Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { PrettyBytes } from "../../utils/bytes";
 import { Dates } from "../../utils/dates";
@@ -22,6 +22,9 @@ import { Files as F } from "../../utils/files.ts";
 import { FilterFilters } from "./FileFilters.tsx";
 import { FileCell } from "./FileCell.tsx";
 import { FileActions } from "./FileActions.tsx";
+import { FilesIconOutline } from "../FilesIcon/FilesIcon.tsx";
+import { AllFilesIcon } from "./AllFilesIcon.tsx";
+import { FavoriteIcon } from "./FavoriteIcon.tsx";
 
 type SortFn = (a: CodexDataContent, b: CodexDataContent) => number;
 
@@ -82,17 +85,17 @@ export function Files() {
     setFolders([...folders, [folder, []]]);
   };
 
-  const onFolderDelete = (val: string) => {
-    WebStorage.folders.delete(val);
+  // const onFolderDelete = (val: string) => {
+  //   WebStorage.folders.delete(val);
 
-    const currentIndex = folders.findIndex(([name]) => name === val);
+  //   const currentIndex = folders.findIndex(([name]) => name === val);
 
-    if (currentIndex + 1 == index) {
-      setIndex(index - 1);
-    }
+  //   if (currentIndex + 1 == index) {
+  //     setIndex(index - 1);
+  //   }
 
-    setFolders(folders.filter(([name]) => name !== val));
-  };
+  //   setFolders(folders.filter(([name]) => name !== val));
+  // };
 
   const onFolderToggle = (cid: string, folder: string) => {
     const current = folders.find(([name]) => name === folder);
@@ -124,22 +127,22 @@ export function Files() {
     }
   };
 
-  const tabs: TabProps[] = folders.map(([folder]) => ({
+  const tabs: TabProps[] = folders.map(([folder], index) => ({
     label: folder,
-    Icon: () => <Folder size={"1rem"}></Folder>,
-    IconAfter:
-      folder === "Favorites"
-        ? undefined
-        : () => (
-            <X
-              size={"1rem"}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
+    Icon: () => (index === 0 ? <FavoriteIcon></FavoriteIcon> : null),
+    // IconAfter:
+    //   folder === "Favorites"
+    //     ? undefined
+    //     : () => (
+    //         <X
+    //           size={"1rem"}
+    //           onClick={(e) => {
+    //             e.preventDefault();
+    //             e.stopPropagation();
 
-                onFolderDelete(folder);
-              }}></X>
-          ),
+    //             onFolderDelete(folder);
+    //           }}></X>
+    //       ),
   }));
 
   const onSortByFilename = (state: TabSortState) => {
@@ -200,8 +203,8 @@ export function Files() {
       : setSelectedFilters([...selectedFilters, filter]);
 
   tabs.unshift({
-    label: "All files",
-    Icon: () => <FilesIcon size={"1rem"}></FilesIcon>,
+    label: "All",
+    Icon: () => <AllFilesIcon></AllFilesIcon>,
   });
 
   const items =
@@ -241,13 +244,17 @@ export function Files() {
     )) || [];
 
   return (
-    <div className="files">
-      <div className="files-header">
-        <div className="files-headerLeft">
-          <div className="files-title">Files</div>
+    <div className="card files">
+      <header>
+        <div>
+          <FilesIconOutline></FilesIconOutline>
+          <h5>Files</h5>
         </div>
-        <div className="files-headerRight">
-          <div>
+      </header>
+      <main>
+        <section>
+          <Tabs onTabChange={onTabChange} tabIndex={index} tabs={tabs}></Tabs>
+          <div className="row gap">
             <Input
               id="folder"
               inputClassName={classnames(["files-folders"])}
@@ -256,33 +263,35 @@ export function Files() {
               required={true}
               pattern="[A-Za-z0-9_\-]*"
               maxLength={9}
-              helper={error || "Enter the folder name"}
+              size={"medium" as any}
+              placeholder="Folder name"
               onChange={onFolderChange}></Input>
+
+            <Button
+              label="Folder"
+              Icon={Plus}
+              variant="outline"
+              disabled={!!error || !folder}
+              onClick={onFolderCreate}></Button>
           </div>
+        </section>
 
-          <Button
-            label="Folder"
-            Icon={Plus}
-            disabled={!!error || !folder}
-            onClick={onFolderCreate}></Button>
-        </div>
-      </div>
-
-      <Tabs onTabChange={onTabChange} tabIndex={index} tabs={tabs}></Tabs>
-
-      <div className="files-filters">
         <FilterFilters
           files={files}
           onFilterToggle={onToggleFilter}
           selected={selectedFilters}
         />
-      </div>
 
-      <div className="files-fileBody">
-        <Table headers={headers} rows={rows.slice(0, 4)} defaultSortIndex={2} />
-      </div>
+        <div>
+          <Table
+            headers={headers}
+            rows={rows.slice(0, 4)}
+            defaultSortIndex={2}
+          />
+        </div>
 
-      <FileDetails onClose={onClose} details={details} />
+        <FileDetails onClose={onClose} details={details} />
+      </main>
     </div>
   );
 }

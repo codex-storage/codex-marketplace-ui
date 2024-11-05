@@ -8,7 +8,7 @@ import { classnames } from "../../utils/classnames";
 import { Link } from "@tanstack/react-router";
 import { HomeIcon } from "./HomeIcon";
 import { WalletIcon } from "./WalletIcon";
-import { FilesIcon } from "./FilesIcon";
+import { FilesIcon } from "../FilesIcon/FilesIcon";
 import { NodesIcon } from "./NodesIcon";
 import { AnalyticsIcon } from "./AnalyticsIcon";
 import { DeviceIcon } from "./DeviceIcon";

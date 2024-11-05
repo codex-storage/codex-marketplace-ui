@@ -2,18 +2,20 @@ import {
   ButtonIcon,
   Button,
   Sheets,
+  WebFileIcon,
 } from "@codex-storage/marketplace-ui-components";
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { PrettyBytes } from "../../utils/bytes";
-import { ICON_SIZE } from "../../utils/constants";
 import { Dates } from "../../utils/dates";
 import { CidCopyButton } from "./CidCopyButton";
 import "./FileDetails.css";
-import { DownloadIcon, X } from "lucide-react";
 import { CodexSdk } from "../../sdk/codex";
 import { Files } from "../../utils/files";
 import { useEffect, useState } from "react";
 import { WebStorage } from "../../utils/web-storage";
+import { FileDetailsIcon } from "./FileDetailsIcon";
+import { CloseIcon } from "../CloseIcon/CloseIcon";
+import { DownloadIcon } from "./DownloadIcon";
 
 type Props = {
   details: CodexDataContent | null;
@@ -37,84 +39,85 @@ export function FileDetails({ onClose, details }: Props) {
 
   const url = CodexSdk.url() + "/api/codex/v1/data/";
 
-  const Icon = () => <X size={ICON_SIZE} onClick={onClose} />;
-
   const onDownload = () => window.open(url + details?.cid, "_target");
 
   return (
     <Sheets open={!!details} onClose={onClose}>
       <>
         {details && (
-          <>
-            <div className="fileDetails-header">
-              <b className="fileDetails-headerTitle">File details</b>
-              <ButtonIcon variant="small" Icon={Icon}></ButtonIcon>
+          <div className="file-details">
+            <header>
+              <FileDetailsIcon></FileDetailsIcon>
+              <span>File details</span>
+              <ButtonIcon
+                onClick={onClose}
+                variant="small"
+                Icon={CloseIcon}></ButtonIcon>
+            </header>
+
+            <div className="preview">
+              {Files.isImage(details.manifest.mimetype) ? (
+                <img src={url + details.cid} />
+              ) : (
+                <figure>
+                  <WebFileIcon
+                    type={details.manifest.mimetype || ""}
+                    size={32}
+                  />
+                  <p>File Preview not available.</p>
+                </figure>
+              )}
             </div>
 
-            {Files.isImage(details.manifest.mimetype) && (
-              <div className="fileDetails-imageContainer">
-                <img className="fileDetails-image" src={url + details.cid} />
-              </div>
-            )}
+            <ul>
+              <li>
+                <p>CID:</p>
+                <p>{details.cid}</p>
+              </li>
 
-            <div className="fileDetails-body">
-              <div className="fileDetails-grid">
-                <p className="text-secondary">CID:</p>
-                <p className="fileDetails-gridColumn">{details.cid}</p>
-              </div>
+              <li>
+                <p>File name:</p>
+                <p>{details.manifest.filename}</p>
+              </li>
 
-              <div className="fileDetails-grid">
-                <p className="text-secondary">File name:</p>
-                <p className="fileDetails-gridColumn">
-                  {details.manifest.filename}
+              <li>
+                <p>Date:</p>
+                <p>{Dates.format(details.manifest.uploadedAt).toString()}</p>
+              </li>
+
+              <li>
+                <p>Mimetype:</p>
+                <p>{details.manifest.mimetype}</p>
+              </li>
+
+              <li>
+                <p>Size:</p>
+                <p>{PrettyBytes(details.manifest.datasetSize)}</p>
+              </li>
+
+              <li>
+                <p>Protected:</p>
+                <p>{details.manifest.protected ? "Yes" : "No"}</p>
+              </li>
+
+              <li>
+                <p>Used:</p>
+                <p>
+                  <b>{purchases} </b> purchase(s)
                 </p>
-              </div>
+              </li>
+            </ul>
 
-              <div className="fileDetails-grid">
-                <p className="text-secondary">Date:</p>
-                <p className="fileDetails-gridColumn">
-                  {Dates.format(details.manifest.uploadedAt).toString()}
-                </p>
-              </div>
+            <div className="buttons">
+              <CidCopyButton cid={details.cid} />
 
-              <div className="fileDetails-grid">
-                <p className="text-secondary">Mimetype:</p>
-                <p className="fileDetails-gridColumn">
-                  {details.manifest.mimetype}
-                </p>
-              </div>
-
-              <div className="fileDetails-grid">
-                <p className="text-secondary">Size:</p>
-                <p className="fileDetails-gridColumn">
-                  {PrettyBytes(details.manifest.datasetSize)}
-                </p>
-              </div>
-
-              <div className="fileDetails-grid">
-                <p className="text-secondary">Protected:</p>
-                <p className="fileDetails-gridColumn">
-                  {details.manifest.protected ? "Yes" : "No"}
-                </p>
-              </div>
-
-              <div className="fileDetails-grid">
-                <p className="text-secondary">Used:</p>
-                <p className="fileDetails-gridColumn">
-                  {purchases + " purchase(s)"}
-                </p>
-              </div>
-
-              <div className="fileDetails-actions">
-                <CidCopyButton cid={details.cid} />
-
-                <Button
-                  Icon={() => <DownloadIcon size={ICON_SIZE} />}
-                  label="Download"
-                  onClick={onDownload}></Button>
-              </div>
+              <Button
+                Icon={DownloadIcon}
+                label="Download"
+                variant="outline"
+                onClick={onDownload}></Button>
             </div>
-          </>
+          </div>
         )}
       </>
     </Sheets>
