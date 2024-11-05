@@ -62,7 +62,7 @@ export function WelcomeCard() {
             <Link to="/dashboard/help" className="welcome-link">
               Learn more<ArrowRight></ArrowRight>
             </Link>
-            <a href="">
+            <a href={import.meta.env.VITE_DISCORD_LINK}>
               <DiscordIcon></DiscordIcon>
               Join Codex Discord
             </a>

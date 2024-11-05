@@ -11,6 +11,8 @@ import { usePersistence } from "../../hooks/usePersistence";
 import { useLocation, useNavigate } from "@tanstack/react-router";
 import { PeersIcon } from "../Menu/PeersIcon";
 import { SettingsIcon } from "../Menu/SettingsIcon";
+import { FilesIcon } from "../FilesIcon/FilesIcon";
+import { LogsIcon } from "../Menu/LogsIcon";
 
 type Props = {
   onIconClick: () => void;
@@ -20,12 +22,16 @@ const icons: Record<string, ReactElement> = {
   dashboard: <DashboardIcon />,
   peers: <PeersIcon />,
   settings: <SettingsIcon />,
+  files: <FilesIcon />,
+  logs: <LogsIcon />,
 };
 
 const descriptions: Record<string, string> = {
-  dashboard: "Get Overview of your Codex Vault",
-  peers: "Monitor your Codex peer connections",
-  settings: "Manage your Codex Vault",
+  dashboard: "Get Overview of your Codex Vault.",
+  peers: "Monitor your Codex peer connections.",
+  settings: "Manage your Codex Vault.",
+  files: "Manage your files in your local vault.",
+  logs: "Manage your logs and debug console.",
 };
 
 export function AppBar({ onIconClick }: Props) {

@@ -9,6 +9,8 @@ import {
   Toast,
 } from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
+import { LogsIcon } from "../Menu/LogsIcon";
+import { SaveIcon } from "./SaveIcon";
 
 export function LogLevel() {
   const queryClient = useQueryClient();
@@ -52,34 +54,39 @@ export function LogLevel() {
   };
 
   const levels = [
-    ["DEBUG", "DEBUG"],
-    ["TRACE", "TRACE"],
-    ["INFO", "INFO"],
-    ["NOTICE", "NOTICE"],
-    ["WARN", "WARN"],
-    ["ERROR", "ERROR"],
-    ["FATAL", "FATAL"],
+    ["DEBUG", "Debug"],
+    ["TRACE", "Trace"],
+    ["INFO", "Info"],
+    ["NOTICE", "Notice"],
+    ["WARN", "Warn"],
+    ["ERROR", "Error"],
+    ["FATAL", "Fatal"],
   ] satisfies [string, string][];
 
   return (
-    <>
-      <Select
-        className="logLevel-select"
-        id="level"
-        label="Log level"
-        options={levels}
-        value={level}
-        onChange={onChange}></Select>
+    <div className="log-level">
+      <div>
+        <Select
+          id="level"
+          label=""
+          options={levels}
+          value={level}
+          onChange={onChange}></Select>
+        <LogsIcon></LogsIcon>
+      </div>
+
       <Button
-        variant="primary"
-        label="Save changes"
+        variant="outline"
+        label="Save"
+        Icon={SaveIcon}
         fetching={isPending}
+        size="small"
         onClick={onClick}></Button>
       <Toast
         message={toast.message}
         time={toast.time}
         variant={toast.variant}
       />
-    </>
+    </div>
   );
 }

@@ -1,0 +1,38 @@
+.require-assistance {
+  background-color: #0a1410;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 16px;
+  border-left: 4px solid #6ccc93;
+  height: 144px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-image: url(/img/assistance.png);
+  background-position: right;
+  background-repeat: no-repeat;
+  width: 500px;
+  flex: 1 1 auto;
+  cursor: pointer;
+  text-decoration: none;
+
+  h5 {
+    font-family: Azeret Mono;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    color: #6ccc93;
+  }
+
+  h6 {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.36px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    color: #7bfbaf;
+    margin-bottom: 4px;
+  }
+}

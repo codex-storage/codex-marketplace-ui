@@ -1,7 +1,26 @@
-.logLevel {
+.log-level {
   flex-grow: 1;
-}
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
 
-.logLevel-select {
-  margin-bottom: 0.75rem;
+  > div {
+    position: relative;
+
+    svg {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      color: #969696;
+    }
+  }
+
+  .select {
+    background-position: url(/icons/logs.svg);
+  }
+
+  select {
+    border-color: #969696;
+    padding-left: 40px;
+  }
 }

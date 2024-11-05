@@ -1,0 +1,49 @@
+.logs-card {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #96969633;
+  border-radius: 16px;
+  margin-bottom: 16px;
+
+  > div:first-child {
+    padding: 16px;
+  }
+
+  h5 {
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.015em;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  small {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: #969696cc;
+  }
+
+  .button {
+    width: 187px;
+    gap: 8px;
+  }
+}
+
+.logs {
+  .node {
+    pre {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.011em;
+      text-align: left;
+      color: #757575;
+    }
+  }
+}
