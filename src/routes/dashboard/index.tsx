@@ -84,6 +84,7 @@ function Dashboard() {
 
         <Card
           icon={<FilesIconOutline width={24}></FilesIconOutline>}
+          className="card--main card--main--files"
           title="Files">
           <Files limit={4} />
         </Card>

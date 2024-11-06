@@ -6,6 +6,10 @@
       & {
         flex: 1 1 34%;
       }
+
+      &.card--main--files {
+        flex: 1 1 50%;
+      }
     }
   }
 
