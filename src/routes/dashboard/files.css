@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 16px;
 
-  .files {
+  .card {
     margin-bottom: 16px;
     flex: 1 1 67%;
   }
