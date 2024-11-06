@@ -1,5 +1,5 @@
 import { assert, describe, it } from "vitest";
-import { VersionsUtil } from "./versions.util";
+import { VersionsUtil } from "./versions.utils";
 
 describe("versions", () => {
     it("gets the last client version", async () => {

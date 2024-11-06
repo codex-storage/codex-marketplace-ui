@@ -152,12 +152,12 @@ export function AvailabilityEdit({
   const nextLabel = state.step === steps.current.length - 1 ? "Finish" : "Next";
 
   return (
-    <>
+    <div className="availability-edit">
       <Button
         label={hasLabel ? "Sale" : ""}
-        Icon={!availabilityId ? Plus : Pencil}
+        Icon={!availabilityId ? () => <Plus width={40} height={40} /> : Pencil}
         onClick={onOpen}
-        variant="primary"
+        variant="outline"
         className={className}
       />
 
@@ -181,6 +181,6 @@ export function AvailabilityEdit({
           />
         </Stepper>
       </Modal>
-    </>
+    </div>
   );
 }

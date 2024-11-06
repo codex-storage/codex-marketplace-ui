@@ -1,7 +1,7 @@
-import { Pencil } from "lucide-react";
 import "./AvailabilityActionsCell.css";
 import { CodexAvailability } from "@codex-storage/sdk-js/async";
-import { Cell } from "@codex-storage/marketplace-ui-components";
+import { ButtonIcon, Cell } from "@codex-storage/marketplace-ui-components";
+import { EditIcon } from "./EditIcon";
 
 type Props = {
   availability: CodexAvailability;
@@ -29,9 +29,10 @@ export function AvailabilityActionsCell(_: Props) {
   return (
     <Cell>
       <div className="availability-actions">
-        <a className="cell--action availability-action" title="Reservations">
-          <Pencil width={"1.25rem"} />
-        </a>
+        <ButtonIcon
+          variant="small"
+          // onClick={() => onDetails(content.cid)}
+          Icon={EditIcon}></ButtonIcon>
       </div>
     </Cell>
   );

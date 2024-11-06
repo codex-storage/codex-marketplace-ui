@@ -2,7 +2,7 @@ import { useDebug } from "../../hooks/useDebug";
 import { AlphaText } from "../AlphaText/AlphaText";
 import { AlphaIcon } from "../OnBoarding/AlphaIcon";
 import "./Versions.css";
-import { VersionsUtil } from "./versions.util";
+import { VersionsUtil } from "./versions.utils";
 
 const throwOnError = false;
 

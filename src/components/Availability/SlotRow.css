@@ -1,0 +1,9 @@
+.slot-row {
+  transition:
+    visibility 0.35s,
+    max-height 0.35s;
+
+  &.slot-row--inactive {
+    visibility: collapse;
+  }
+}

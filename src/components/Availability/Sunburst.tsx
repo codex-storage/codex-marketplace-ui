@@ -5,16 +5,16 @@ import { PrettyBytes } from "../../utils/bytes";
 import { useEffect, useRef, useState } from "react";
 import { CallbackDataParams, ECBasicOption } from "echarts/types/dist/shared";
 import * as echarts from "echarts";
-import { availabilityColors } from "./availability.colors";
+import { availabilityColors, slotColors } from "./availability.colors";
 import { AvailabilityWithSlots } from "./types";
-import "./AvailabilitySunburst.css";
+import "./Sunburst.css";
 
 type Props = {
   availabilities: AvailabilityWithSlots[];
   space: CodexNodeSpace;
 };
 
-export function AvailabilitySunburst({ availabilities, space }: Props) {
+export function Sunburst({ availabilities, space }: Props) {
   const div = useRef<HTMLDivElement>(null);
   const chart = useRef<echarts.EChartsType | null>(null);
   const [, setRefresher] = useState(Date.now());
@@ -32,7 +32,7 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
       value: a.totalSize,
       itemStyle: {
         color: availabilityColors[index],
-        borderColor: "var(--codex-background)",
+        borderColor: "transparent",
       },
       tooltip: {
         backgroundColor: "#333",
@@ -64,8 +64,8 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
         value: parseFloat(slot.size),
         children: [],
         itemStyle: {
-          color: availabilityColors[index],
-          borderColor: "var(--codex-background)",
+          color: slotColors[index],
+          borderColor: "transparent",
         },
         tooltip: {
           backgroundColor: "#333",
@@ -98,8 +98,8 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
             space.quotaUsedBytes,
           children: [],
           itemStyle: {
-            color: "#ccc",
-            borderColor: "var(--codex-background)",
+            color: "#2F2F2F",
+            borderColor: "transparent",
           },
           tooltip: {
             backgroundColor: "#333",
@@ -125,7 +125,7 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
         borderWidth: 1,
       },
       label: {
-        show: true,
+        show: false,
       },
       levels: [
         {},
@@ -139,10 +139,7 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
         {
           r0: "75%",
           r: "85%",
-          itemStyle: {
-            shadowBlur: 80,
-            shadowColor: "#ccc",
-          },
+          itemStyle: {},
           label: {
             position: "outside",
             textShadowBlur: 5,
@@ -181,5 +178,5 @@ export function AvailabilitySunburst({ availabilities, space }: Props) {
     });
   }
 
-  return <div id="chart" ref={div} className="activity-sunburst"></div>;
+  return <div id="chart" ref={div} className="sunburst"></div>;
 }

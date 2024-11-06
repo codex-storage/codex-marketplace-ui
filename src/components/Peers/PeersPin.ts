@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { PeerGeo, PeerNode } from "./peers.util";
+import { PeerGeo, PeerNode } from "./peers.utils";
 import { useEffect } from "react";
 
 type Props = {

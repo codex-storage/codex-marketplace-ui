@@ -1,5 +1,5 @@
 import { assert, describe, it } from "vitest";
-import { HealthCheckUtil } from "./health-check.util";
+import { HealthCheckUtil } from "./health-check.utils";
 
 describe("health check", () => {
     it("remove the port from an url", async () => {

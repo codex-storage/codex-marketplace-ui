@@ -12,6 +12,8 @@ import { NodeSpace } from "../../components/NodeSpace/NodeSpace.tsx";
 import { UploadCard } from "../../components/UploadCard/UploadCard.tsx";
 import { ManifestFetchCard } from "../../components/ManifestFetch/ManifestFetchCard.tsx";
 import { PeersCard } from "../../components/Peers/PeersCard.tsx";
+import { Card } from "../../components/Card/Card.tsx";
+import { NodesIcon } from "../../components/Menu/NodesIcon.tsx";
 
 export const Route = createFileRoute("/dashboard/")({
   component: Dashboard,
@@ -44,7 +46,12 @@ function Dashboard() {
                 subtitle="Cannot retrieve the data."
               />
             )}>
-            <NodeSpace></NodeSpace>
+            <Card
+              icon={<NodesIcon variant="default"></NodesIcon>}
+              title="Storage"
+              buttonLabel="Details">
+              <NodeSpace></NodeSpace>
+            </Card>
           </ErrorBoundary>
           <PeersCard></PeersCard>
         </div>

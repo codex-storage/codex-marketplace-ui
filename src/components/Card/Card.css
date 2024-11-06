@@ -1,0 +1,32 @@
+.card {
+  border: 1px solid #96969633;
+  border-radius: 16px;
+  padding: 16px;
+  background-color: #232323;
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    svg {
+      color: #969696;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h5 {
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.011em;
+    }
+  }
+}

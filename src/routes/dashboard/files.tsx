@@ -12,7 +12,7 @@ export const Route = createFileRoute("/dashboard/files")({
     <div className="files-page">
       <Files></Files>
 
-      <div className="column">
+      <aside>
         <ErrorBoundary
           fallback={({ error }) => (
             <ErrorPlaceholder
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/dashboard/files")({
         </ErrorBoundary>
         <Download></Download>
         <ManifestFetchCard />
-      </div>
+      </aside>
     </div>
   ),
 });

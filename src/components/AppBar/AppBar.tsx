@@ -13,6 +13,7 @@ import { PeersIcon } from "../Menu/PeersIcon";
 import { SettingsIcon } from "../Menu/SettingsIcon";
 import { FilesIcon } from "../FilesIcon/FilesIcon";
 import { LogsIcon } from "../Menu/LogsIcon";
+import { HostIcon } from "../Menu/HostIcon";
 
 type Props = {
   onIconClick: () => void;
@@ -24,6 +25,7 @@ const icons: Record<string, ReactElement> = {
   settings: <SettingsIcon />,
   files: <FilesIcon />,
   logs: <LogsIcon />,
+  availabilies: <HostIcon />,
 };
 
 const descriptions: Record<string, string> = {
@@ -32,6 +34,7 @@ const descriptions: Record<string, string> = {
   settings: "Manage your Codex Vault.",
   files: "Manage your files in your local vault.",
   logs: "Manage your logs and debug console.",
+  availabilies: "Manage your storage requests.",
 };
 
 export function AppBar({ onIconClick }: Props) {

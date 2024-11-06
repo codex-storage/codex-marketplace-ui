@@ -1,6 +1,6 @@
 import { getMapJSON } from "dotted-map";
 import DottedMap from "dotted-map/without-countries";
-import { PeerGeo, PeerNode, PeerUtils } from "./peers.util";
+import { PeerGeo, PeerNode, PeerUtils } from "./peers.utils";
 import { useCallback, useState } from "react";
 import { PeersPin } from "./PeersPin";
 import "./PeersMap.css";

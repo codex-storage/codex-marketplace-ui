@@ -1,5 +1,5 @@
 import { CodexDataContent } from "@codex-storage/sdk-js";
-import { Files } from "../../utils/files";
+import { FilesUtils } from "./files.utils";
 import { classnames } from "../../utils/classnames";
 import "./FileFilters.css";
 import { ArchiveIcon } from "./ArchiveIcon";
@@ -34,15 +34,15 @@ function getIcon(type: string) {
 }
 
 function getType(mimetype: string) {
-  if (Files.isArchive(mimetype)) {
+  if (FilesUtils.isArchive(mimetype)) {
     return "archive";
   }
 
-  if (Files.isImage(mimetype)) {
+  if (FilesUtils.isImage(mimetype)) {
     return "image";
   }
 
-  if (Files.isVideo(mimetype)) {
+  if (FilesUtils.isVideo(mimetype)) {
     return "video";
   }
 

@@ -1,5 +1,5 @@
 import { assert, describe, it } from "vitest";
-import { PeerGeo, PeerUtils } from "./peers.util";
+import { PeerGeo, PeerUtils } from "./peers.utils";
 
 describe("peers", () => {
     it("sorts by boolean", async () => {

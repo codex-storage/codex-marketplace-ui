@@ -2,7 +2,7 @@ import { PeersIcon } from "../Menu/PeersIcon";
 import { PeersMap } from "./PeersMap";
 import "./PeersCard.css";
 import { useDebug } from "../../hooks/useDebug";
-import { PeerUtils } from "./peers.util";
+import { PeerUtils } from "./peers.utils";
 import { PeersChart } from "./PeersChart";
 import { PeersQuality } from "./PeersQuality";
 import { Button } from "@codex-storage/marketplace-ui-components";

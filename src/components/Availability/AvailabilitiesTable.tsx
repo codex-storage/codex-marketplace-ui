@@ -6,13 +6,12 @@ import { Times } from "../../utils/times";
 import { Fragment, useState } from "react";
 import { AvailabilityReservations } from "./AvailabilityReservations";
 import { AvailabilityIdCell } from "./AvailabilityIdCell";
-import { ChevronDown } from "lucide-react";
-import "./AvailabilitiesTable.css";
 import { Arrays } from "../../utils/arrays";
-import { AvailabilitySlotRow } from "./AvailabilitySlotRow";
-import { classnames } from "../../utils/classnames";
+import { SlotRow } from "./SlotRow";
 import { AvailabilityWithSlots } from "./types";
 import { AvailabilityDiskRow } from "./AvailabilityDiskRow";
+import { ChevronDown } from "./ChevronDown";
+import { attributes } from "../../utils/attributes";
 
 type Props = {
   // onEdit: () => void;
@@ -38,7 +37,7 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
 
   const onReservationsClose = () => setAvailability(null);
 
-  const rows = availabilities.map((a, index) => {
+  const rows = availabilities.map((a) => {
     const showDetails = details.includes(a.id);
 
     const onShowDetails = () => setDetails(Arrays.toggle(details, a.id));
@@ -47,20 +46,18 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
     return (
       <Fragment key={a.id + a.duration}>
         <Row
+          className="availabilty-row"
           cells={[
             <Cell>
               {hasSlots ? (
                 <ChevronDown
-                  className={classnames(
-                    ["availabilityTable-chevron"],
-                    ["availabilityTable-chevron--open", showDetails]
-                  )}
+                  {...attributes({ "aria-expanded": showDetails })}
                   onClick={onShowDetails}></ChevronDown>
               ) : (
-                <span></span>
+                ""
               )}
             </Cell>,
-            <AvailabilityIdCell value={a} index={index} />,
+            <AvailabilityIdCell value={a} />,
             <Cell>{PrettyBytes(a.totalSize)}</Cell>,
             <Cell>{Times.pretty(a.duration)}</Cell>,
             <Cell>{a.minPrice.toString()}</Cell>,
@@ -69,11 +66,11 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
           ]}></Row>
 
         {a.slots.map((slot) => (
-          <AvailabilitySlotRow
+          <SlotRow
             key={slot.id}
             active={showDetails}
             bytes={parseFloat(slot.size)}
-            id={slot.id}></AvailabilitySlotRow>
+            id={slot.id}></SlotRow>
         ))}
       </Fragment>
     );

@@ -12,7 +12,7 @@ import { classnames } from "../../utils/classnames";
 import { RefreshIcon } from "../RefreshIcon/RefreshIcon";
 import "./HealthChecks.css";
 import { CodexSdk } from "../../sdk/codex";
-import { HealthCheckUtil } from "./health-check.util";
+import { HealthCheckUtil } from "./health-check.utils";
 import { PortForwardingUtil } from "../../hooks/port-forwarding.util";
 
 type Props = {

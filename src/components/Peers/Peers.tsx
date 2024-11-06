@@ -10,7 +10,7 @@ import { PeersIcon } from "../Menu/PeersIcon";
 import { PeerCountryCell } from "./PeerCountryCell";
 import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
 import "./Peers.css";
-import { PeerGeo, PeerNode, PeerSortFn, PeerUtils } from "./peers.util";
+import { PeerGeo, PeerNode, PeerSortFn, PeerUtils } from "./peers.utils";
 import { PeersMap } from "./PeersMap";
 import { useDebug } from "../../hooks/useDebug";
 import { PeersQuality } from "./PeersQuality";

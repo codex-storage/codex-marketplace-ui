@@ -1,12 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../assets/loader.svg";
 import { CodexSdk } from "../../sdk/codex";
-import {
-  Button,
-  SpaceAllocation,
-} from "@codex-storage/marketplace-ui-components";
+import { SpaceAllocation } from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
-import { NodesIcon } from "../Menu/NodesIcon";
 import "./NodeSpace.css";
 
 const defaultSpace = {
@@ -45,36 +41,27 @@ export function NodeSpace() {
   const { quotaMaxBytes, quotaReservedBytes, quotaUsedBytes } = space;
 
   return (
-    <div className="card node-space">
-      <header>
-        <div>
-          <NodesIcon variant="default"></NodesIcon>
-          <h5>Storage</h5>
-        </div>
-        <Button label="Details" variant="outline"></Button>
-      </header>
-      <main>
-        <h6>Disk</h6>
+    <main className="node-space">
+      <h6>Disk</h6>
 
-        <SpaceAllocation
-          data={[
-            {
-              title: "Allocated",
-              size: quotaUsedBytes,
-              color: "#FF6E61",
-            },
-            {
-              title: "Available",
-              size: quotaReservedBytes,
-              color: "#34A0FF",
-            },
-            {
-              title: "Free",
-              size: quotaMaxBytes - quotaReservedBytes - quotaUsedBytes,
-              color: "#6F6F6F",
-            },
-          ]}></SpaceAllocation>
-      </main>
-    </div>
+      <SpaceAllocation
+        data={[
+          {
+            title: "Allocated",
+            size: quotaUsedBytes,
+            color: "#FF6E61",
+          },
+          {
+            title: "Available",
+            size: quotaReservedBytes,
+            color: "#34A0FF",
+          },
+          {
+            title: "Free",
+            size: quotaMaxBytes - quotaReservedBytes - quotaUsedBytes,
+            color: "#6F6F6F",
+          },
+        ]}></SpaceAllocation>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 import { Cell } from "@codex-storage/marketplace-ui-components";
 import "./PeerCountryCell.css";
-import { PeerGeo, PeerNode, PeerUtils } from "./peers.util";
+import { PeerGeo, PeerNode, PeerUtils } from "./peers.utils";
 
 export type Props = {
   node: PeerNode;

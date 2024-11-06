@@ -10,7 +10,7 @@ import { Dates } from "../../utils/dates";
 import { CidCopyButton } from "./CidCopyButton";
 import "./FileDetails.css";
 import { CodexSdk } from "../../sdk/codex";
-import { Files } from "../../utils/files";
+import { FilesUtils } from "./files.utils";
 import { useEffect, useState } from "react";
 import { WebStorage } from "../../utils/web-storage";
 import { FileDetailsIcon } from "./FileDetailsIcon";
@@ -56,7 +56,7 @@ export function FileDetails({ onClose, details }: Props) {
             </header>
 
             <div className="preview">
-              {Files.isImage(details.manifest.mimetype) ? (
+              {FilesUtils.isImage(details.manifest.mimetype) ? (
                 <img src={url + details.cid} />
               ) : (
                 <figure>

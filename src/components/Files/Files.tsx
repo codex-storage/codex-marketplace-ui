@@ -18,7 +18,7 @@ import { useData } from "../../hooks/useData.tsx";
 import { WebStorage } from "../../utils/web-storage.ts";
 import { classnames } from "../../utils/classnames.ts";
 import { CodexDataContent } from "@codex-storage/sdk-js";
-import { Files as F } from "../../utils/files.ts";
+import { FilesUtils } from "./files.utils.ts";
 import { FilterFilters } from "./FileFilters.tsx";
 import { FileCell } from "./FileCell.tsx";
 import { FileActions } from "./FileActions.tsx";
@@ -69,7 +69,7 @@ export function Files() {
         return;
       }
 
-      if (folders.find(([folder]) => folder === val)) {
+      if (FilesUtils.exists(folders, val)) {
         setError("This folder already exists");
         return;
       }
@@ -108,22 +108,10 @@ export function Files() {
 
     if (files.includes(cid)) {
       WebStorage.folders.deleteFile(folder, cid);
-
-      setFolders(
-        folders.map(([name, files]) =>
-          name === folder
-            ? [name, files.filter((id) => id !== cid)]
-            : [name, files]
-        )
-      );
+      setFolders(FilesUtils.removeCidFromFolder(folders, folder, cid));
     } else {
       WebStorage.folders.addFile(folder, cid);
-
-      setFolders(
-        folders.map(([name, files]) =>
-          name === folder ? [name, [...files, cid]] : [name, files]
-        )
-      );
+      setFolders(FilesUtils.addCidToFolder(folders, folder, cid));
     }
   };
 
@@ -151,20 +139,7 @@ export function Files() {
       return;
     }
 
-    setSortFn(
-      () =>
-        (
-          { manifest: { filename: afilename } }: CodexDataContent,
-          { manifest: { filename: bfilename } }: CodexDataContent
-        ) =>
-          state === "desc"
-            ? (bfilename || "")
-                .toLocaleLowerCase()
-                .localeCompare((afilename || "").toLocaleLowerCase())
-            : (afilename || "")
-                .toLocaleLowerCase()
-                .localeCompare((bfilename || "").toLocaleLowerCase())
-    );
+    setSortFn(() => FilesUtils.sortByName(state));
   };
 
   const onSortBySize = (state: TabSortState) => {
@@ -173,12 +148,7 @@ export function Files() {
       return;
     }
 
-    setSortFn(
-      () => (a: CodexDataContent, b: CodexDataContent) =>
-        state === "desc"
-          ? b.manifest.datasetSize - a.manifest.datasetSize
-          : a.manifest.datasetSize - b.manifest.datasetSize
-    );
+    setSortFn(() => FilesUtils.sortBySize(state));
   };
 
   const onSortByDate = (state: TabSortState) => {
@@ -187,30 +157,11 @@ export function Files() {
       return;
     }
 
-    setSortFn(
-      () => (a: CodexDataContent, b: CodexDataContent) =>
-        state === "desc"
-          ? new Date(b.manifest.uploadedAt).getTime() -
-            new Date(a.manifest.uploadedAt).getTime()
-          : new Date(a.manifest.uploadedAt).getTime() -
-            new Date(b.manifest.uploadedAt).getTime()
-    );
+    setSortFn(() => FilesUtils.sortByDate(state));
   };
 
   const onToggleFilter = (filter: string) =>
-    selectedFilters.includes(filter)
-      ? setSelectedFilters(selectedFilters.filter((f) => f !== filter))
-      : setSelectedFilters([...selectedFilters, filter]);
-
-  tabs.unshift({
-    label: "All",
-    Icon: () => <AllFilesIcon></AllFilesIcon>,
-  });
-
-  const items =
-    index === 0
-      ? files
-      : files.filter((file) => folders[index - 1][1].includes(file.cid));
+    setSelectedFilters(FilesUtils.toggleFilters(selectedFilters, filter));
 
   const headers = [
     ["file", onSortByFilename],
@@ -219,14 +170,8 @@ export function Files() {
     ["actions"],
   ] satisfies [string, ((state: TabSortState) => void)?][];
 
-  const filtered = items.filter(
-    (item) =>
-      selectedFilters.length === 0 ||
-      selectedFilters.includes(F.type(item.manifest.mimetype)) ||
-      (selectedFilters.includes("archive") &&
-        F.isArchive(item.manifest.mimetype))
-  );
-
+  const items = FilesUtils.listInFolder(files, folders, index);
+  const filtered = FilesUtils.applyFilters(items, selectedFilters);
   const sorted = sortFn ? [...filtered].sort(sortFn) : filtered;
   const rows =
     sorted.map((c) => (
@@ -242,6 +187,11 @@ export function Files() {
             onFolderToggle={onFolderToggle}></FileActions>,
         ]}></Row>
     )) || [];
+
+  tabs.unshift({
+    label: "All",
+    Icon: () => <AllFilesIcon></AllFilesIcon>,
+  });
 
   return (
     <div className="card files">
@@ -282,13 +232,7 @@ export function Files() {
           selected={selectedFilters}
         />
 
-        <div>
-          <Table
-            headers={headers}
-            rows={rows.slice(0, 4)}
-            defaultSortIndex={2}
-          />
-        </div>
+        <Table headers={headers} rows={rows.slice(0, 4)} defaultSortIndex={2} />
 
         <FileDetails onClose={onClose} details={details} />
       </main>
