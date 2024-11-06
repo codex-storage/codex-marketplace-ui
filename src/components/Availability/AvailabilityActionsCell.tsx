@@ -1,7 +1,7 @@
 import "./AvailabilityActionsCell.css";
 import { CodexAvailability } from "@codex-storage/sdk-js/async";
 import { ButtonIcon, Cell } from "@codex-storage/marketplace-ui-components";
-import { EditIcon } from "./EditIcon";
+import EditIcon from "../../assets/icons/edit.svg?react";
 
 type Props = {
   availability: CodexAvailability;

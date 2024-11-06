@@ -2,10 +2,10 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Modal } from "@codex-storage/marketplace-ui-components";
 import { ArrowRight } from "lucide-react";
-import { AlphaText } from "../components/AlphaText/AlphaText";
-import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
-import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
+import AlphaIcon from "../assets/icons/alpha.svg?react";
+import AlphaText from "../assets/icons/alphatext.svg?react";
+import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -31,9 +31,11 @@ function Index() {
       <OnBoardingLayout defaultIsStepValid={false} step={0}>
         <>
           <section className="alpha">
-            <AlphaIcon variant="error" />
+            <AlphaIcon color="var(--codex-color-error-hexa)" width={26} />
             <div>
-              <AlphaText variant="default"></AlphaText>
+              <AlphaText
+                color="rgba(255, 255, 255, 0.6)"
+                width={72}></AlphaText>
               <b>{import.meta.env.PACKAGE_VERSION}</b>
               <a onClick={onLegalDisclaimerOpen}>Legal Disclaimer</a>
             </div>

@@ -2,10 +2,10 @@ import { CodexDataContent } from "@codex-storage/sdk-js";
 import { FilesUtils } from "./files.utils";
 import { classnames } from "../../utils/classnames";
 import "./FileFilters.css";
-import { ArchiveIcon } from "./ArchiveIcon";
-import { ImageIcon } from "./ImageIcon";
-import { VideoIcon } from "./VideoIcon";
-import { DocumentIcon } from "./DocumentIcon";
+import ImageIcon from "../../assets/icons/image.svg?react";
+import VideoIcon from "../../assets/icons/video.svg?react";
+import ArchiveIcon from "../../assets/icons/archive.svg?react";
+import DocumentIcon from "../../assets/icons/document.svg?react";
 
 type Props = {
   files: CodexDataContent[];

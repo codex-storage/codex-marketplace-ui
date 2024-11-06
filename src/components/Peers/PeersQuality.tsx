@@ -1,6 +1,6 @@
-import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
-import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
 import "./PeersQuality.css";
+import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
+import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
 
 type Props = {
   good: boolean;
@@ -10,7 +10,7 @@ export function PeersQuality({ good }: Props) {
   if (good) {
     return (
       <div className="peers-quality">
-        <SuccessCheckIcon variant="primary"></SuccessCheckIcon>
+        <SuccessCircleIcon></SuccessCircleIcon>
         <span>Peer connections in good standing. </span>
       </div>
     );

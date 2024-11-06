@@ -36,19 +36,21 @@
     }
   }
 
-  &:not([aria-expanded="false"]) a[data-title]:hover::after {
-    content: attr(data-title);
-    background-color: #2f2f2f;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    line-height: 14px;
-    display: block;
-    white-space: nowrap;
-    position: absolute;
-    right: 1rem;
-    overflow: visible;
+  @media (min-width: 1200px) {
+    &:not([aria-expanded="false"]) a[data-title]:hover::after {
+      content: attr(data-title);
+      background-color: #2f2f2f;
+      color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 14px;
+      display: block;
+      white-space: nowrap;
+      position: absolute;
+      right: 1rem;
+      overflow: visible;
+    }
   }
 
   &:not([aria-expanded]) {

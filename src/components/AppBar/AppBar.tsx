@@ -1,19 +1,19 @@
 import "./appBar.css";
-import { DashboardIcon } from "../DashboardIcon/DashboardIcon";
 import { classnames } from "../../utils/classnames";
 import { useNetwork } from "../../network/useNetwork";
-import { NetworkFlashIcon } from "../NetworkFlashIcon/NetworkFlashIcon";
 import { useQueryClient } from "@tanstack/react-query";
 import { ReactElement, useEffect } from "react";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
-import { NodesIcon } from "../Menu/NodesIcon";
 import { usePersistence } from "../../hooks/usePersistence";
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import { PeersIcon } from "../Menu/PeersIcon";
-import { SettingsIcon } from "../Menu/SettingsIcon";
-import { FilesIcon } from "../FilesIcon/FilesIcon";
-import { LogsIcon } from "../Menu/LogsIcon";
-import { HostIcon } from "../Menu/HostIcon";
+import DashboardIcon from "../../assets/icons/dashboard.svg?react";
+import PeersIcon from "../../assets/icons/peers.svg?react";
+import NodesIcon from "../../assets/icons/nodes.svg?react";
+import FilesIcon from "../../assets/icons/files.svg?react";
+import LogsIcon from "../../assets/icons/logs.svg?react";
+import HostIcon from "../../assets/icons/host.svg?react";
+import SettingsIcon from "../../assets/icons/settings.svg?react";
+import NetworkFlashIcon from "../../assets/icons/flash.svg?react";
 
 type Props = {
   onIconClick: () => void;
@@ -21,11 +21,11 @@ type Props = {
 
 const icons: Record<string, ReactElement> = {
   dashboard: <DashboardIcon />,
-  peers: <PeersIcon />,
-  settings: <SettingsIcon />,
-  files: <FilesIcon />,
-  logs: <LogsIcon />,
-  availabilies: <HostIcon />,
+  peers: <PeersIcon width={24} />,
+  settings: <SettingsIcon width={24} />,
+  files: <FilesIcon width={24} />,
+  logs: <LogsIcon width={24} />,
+  availabilities: <HostIcon width={24} />,
 };
 
 const descriptions: Record<string, string> = {
@@ -34,7 +34,7 @@ const descriptions: Record<string, string> = {
   settings: "Manage your Codex Vault.",
   files: "Manage your files in your local vault.",
   logs: "Manage your logs and debug console.",
-  availabilies: "Manage your storage requests.",
+  availabilities: "Manage your host data.",
 };
 
 export function AppBar({ onIconClick }: Props) {
@@ -68,10 +68,6 @@ export function AppBar({ onIconClick }: Props) {
           ["app-bar--no-persistence", !persistence.enabled]
         )}>
         <div className="row gap">
-          {/* <a className="appBar-burger" onClick={onExpand}>
-          <Menu size={"1.25rem"} />
-        </a> */}
-
           <span onClick={onIconClick}>{icons[title]}</span>
 
           <div>
@@ -85,7 +81,7 @@ export function AppBar({ onIconClick }: Props) {
             <span>Network</span>
           </div>
           <div className="row gap" onClick={onNodeClick}>
-            <NodesIcon variant={codex.enabled ? "success" : "failure"} />
+            <NodesIcon color="var(--codex-color-primary)" width={20} />
             <span>Node</span>
           </div>
         </aside>

@@ -1,11 +1,7 @@
 .versions {
   display: flex;
   gap: 32px;
-
-  > svg {
-    position: relative;
-    top: 6px;
-  }
+  align-items: flex-start;
 
   > div {
     width: 50px;

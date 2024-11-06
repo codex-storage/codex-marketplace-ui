@@ -1,4 +1,14 @@
 .dashboard {
+  .card--main {
+    flex: 1 1 60%;
+
+    @media (min-width: 2000px) {
+      & {
+        flex: 1 1 34%;
+      }
+    }
+  }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -39,40 +49,19 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-
-    .welcome-card,
-    .connected-account {
-      display: flex;
-      flex-direction: column;
-      flex: 1 1 50%;
-    }
-
-    .connected-account {
-      min-width: 550px;
-    }
-
-    .welcome-card {
-      min-width: 420px;
-    }
-
     .column {
       min-width: 350px;
       display: flex;
       flex-direction: column;
       gap: 16px;
       flex: 1 1 30%;
-    }
 
-    .node-space {
-      flex: 1;
+      .card {
+        flex: 1;
+      }
     }
 
     @media (min-width: 2000px) {
-      .welcome-card,
-      .connected-account {
-        flex: 1 1 34%;
-      }
-
       .column {
         flex: 1 1 25%;
       }

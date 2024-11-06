@@ -5,16 +5,16 @@ import {
   Table,
 } from "@codex-storage/marketplace-ui-components";
 import { useCallback, useState } from "react";
-import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
-import { PeersIcon } from "../Menu/PeersIcon";
 import { PeerCountryCell } from "./PeerCountryCell";
-import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
 import "./Peers.css";
 import { PeerGeo, PeerNode, PeerSortFn, PeerUtils } from "./peers.utils";
 import { PeersMap } from "./PeersMap";
 import { useDebug } from "../../hooks/useDebug";
 import { PeersQuality } from "./PeersQuality";
 import { PeersChart } from "./PeersChart";
+import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
+import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
+import PeersIcon from "../../assets/icons/peers.svg?react";
 
 const throwOnError = true;
 
@@ -31,23 +31,11 @@ export const Peers = () => {
     PeerUtils.sortByBoolean("desc")
   );
 
-  const onSortByCountry = (state: TabSortState) => {
-    if (!state) {
-      setSortFn(null);
-      return;
-    }
-
+  const onSortByCountry = (state: TabSortState) =>
     setSortFn(() => PeerUtils.sortByCountry(state, ips));
-  };
 
-  const onSortActive = (state: TabSortState) => {
-    if (!state) {
-      setSortFn(null);
-      return;
-    }
-
+  const onSortActive = (state: TabSortState) =>
     setSortFn(() => PeerUtils.sortByBoolean(state));
-  };
 
   const headers = [
     ["Country", onSortByCountry],
@@ -70,7 +58,7 @@ export const Peers = () => {
           <Cell>
             {node.seen ? (
               <div className="status--active">
-                <SuccessCheckIcon variant="primary"></SuccessCheckIcon> Active
+                <SuccessCircleIcon /> Active
               </div>
             ) : (
               <div className="status--inactive">
@@ -99,7 +87,7 @@ export const Peers = () => {
           </ul>
           <div className="connections">
             <header>
-              <PeersIcon></PeersIcon>
+              <PeersIcon width={24}></PeersIcon>
               <span>Connections</span>
             </header>
             <main>

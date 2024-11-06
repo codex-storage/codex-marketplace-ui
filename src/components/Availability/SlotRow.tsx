@@ -2,8 +2,8 @@ import { Cell, Row } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import "./SlotRow.css";
 import { classnames } from "../../utils/classnames";
-import { SlotIcon } from "./SlotIcon";
 import { attributes } from "../../utils/attributes";
+import SlotIcon from "../../assets/icons/slot.svg?react";
 
 type Props = {
   bytes: number;

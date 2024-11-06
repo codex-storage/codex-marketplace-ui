@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { classnames } from "../../utils/classnames";
-import { Logotype } from "../Logotype/Logotype";
+import Logotype from "../../assets/icons/logotype.svg?react";
 import { attributes } from "../../utils/attributes";
 import "./OnBoardingLayout.css";
 import { BackgroundImage } from "../BackgroundImage/BackgroundImage";

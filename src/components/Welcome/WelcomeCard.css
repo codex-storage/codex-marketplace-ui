@@ -1,18 +1,17 @@
 .welcome-card {
   display: flex;
   flex-direction: column;
-  --codex-welcome-card-background-position: right;
+  flex: 1 1 50%;
+  min-width: 420px;
 
-  &.welcome-card--tiny {
-    --codex-welcome-card-background-position: 450px;
+  .card {
+    position: relative;
+    overflow: hidden;
   }
 
   > div {
     padding: 16px;
     background-color: #141414;
-    background-image: url(/img/welcome.png);
-    background-repeat: no-repeat;
-    background-position: var(--codex-welcome-card-background-position);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -70,40 +69,4 @@
   footer {
     margin-top: 32px;
   }
-}
-
-.welcome {
-  border-radius: var(--codex-border-radius);
-  border: 1px solid var(--codex-border-color);
-  background-color: var(--codex-background-secondary);
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  flex: 1;
-}
-
-.welcome-disclaimer {
-  margin: 1rem 0;
-}
-
-.welcome-title {
-  font-weight: bold;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.welcome-body {
-  flex: 1;
-}
-
-.welcome-link {
-  display: flex;
-  align-items: center;
-  color: var(--codex-color-primary);
-}
-
-.welcome-link:hover {
-  text-decoration: underline;
 }

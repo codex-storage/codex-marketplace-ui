@@ -1,29 +1,22 @@
 import "./WelcomeCard.css";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Logo } from "../Logo/Logo";
-import { Logotype } from "../Logotype/Logotype";
-import { DiscordIcon } from "./DiscordIcon";
 import { Alert } from "@codex-storage/marketplace-ui-components";
-import { AlertIcon } from "../AlertIcon/AlertIcon";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { classnames } from "../../utils/classnames";
+import Logotype from "../../assets/icons/logotype.svg?react";
+import Logo from "../../assets/icons/logo.svg?react";
+import DiscordIcon from "../../assets/icons/discord.svg?react";
+import WarningIcon from "../../assets/icons/warning.svg?react";
+import { WelcomeImage } from "./WelcomeImage";
 
 export function WelcomeCard() {
   const ref = useRef<HTMLDivElement>(null);
+  const [clientWidth, setClientWidth] = useState(0);
 
   useEffect(() => {
     const onResize = () => {
-      const current = ref.current;
-      if (!current) {
-        return;
-      }
-
-      if (current.clientWidth > 800) {
-        current.classList.remove("welcome-card--tiny");
-      } else {
-        current.classList.add("welcome-card--tiny");
-      }
+      setClientWidth(ref.current?.clientWidth || 0);
     };
 
     window.addEventListener("resize", onResize);
@@ -31,17 +24,10 @@ export function WelcomeCard() {
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, [ref.current]);
-
-  const clientWidth = ref.current?.clientWidth || 0;
+  }, [setClientWidth]);
 
   return (
-    <div
-      className={classnames(
-        ["welcome-card card"],
-        ["welcome-card card--tiny", clientWidth <= 800]
-      )}
-      ref={ref}>
+    <div className={classnames(["welcome-card card card--main"])} ref={ref}>
       <div className="card">
         <header>
           <div>
@@ -50,6 +36,7 @@ export function WelcomeCard() {
           </div>
         </header>
         <main>
+          <WelcomeImage tiny={clientWidth <= 800}></WelcomeImage>
           <h6>
             Begin your journey with Codex by uploading new files for testing.
           </h6>
@@ -69,7 +56,7 @@ export function WelcomeCard() {
           </div>
         </main>
         <footer>
-          <Alert variant="warning" title="Disclaimer" Icon={<AlertIcon />}>
+          <Alert variant="warning" title="Disclaimer" Icon={<WarningIcon />}>
             The website and the content herein is not intended for public use
             and is for informational and demonstration purposes only.
           </Alert>

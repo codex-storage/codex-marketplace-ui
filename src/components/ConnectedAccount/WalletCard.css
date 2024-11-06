@@ -1,5 +1,13 @@
 .wallet-card {
-  background-image: url(/img/wallet.png);
+  background-image: -webkit-image-set(
+    url(/img/wallet.webp),
+    url(/img/wallet.png)
+  );
+  background-image: image-set(
+    url(/img/wallet.webp) type("image/webp"),
+    url(/img/wallet.png) type("image/png")
+  );
+
   background-repeat: no-repeat;
   background-size: cover;
   border: 1px solid #96969633;
@@ -29,6 +37,9 @@
       width: 24px;
       cursor: pointer;
       transition: box-shadow 0.35s;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 
       &:hover {
         box-shadow: 0 0 0 3px var(--codex-border-color);
@@ -46,7 +57,7 @@
 
       svg {
         position: relative;
-        top: -2px;
+        left: -2px;
       }
     }
   }
@@ -83,6 +94,12 @@
 
   main var {
     font-size: 32px;
+  }
+
+  svg + svg {
+    position: absolute;
+    left: 0;
+    top: 10px;
   }
 
   footer {

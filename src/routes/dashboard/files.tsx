@@ -1,29 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Files } from "../../components/Files/Files";
 import "./files.css";
-import { ErrorBoundary } from "@sentry/react";
-import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
-import { ManifestFetchCard } from "../../components/ManifestFetch/ManifestFetchCard";
 import { UploadCard } from "../../components/UploadCard/UploadCard";
 import { Download } from "../../components/Download/Download";
+import { ManifestFetch } from "../../components/ManifestFetch/ManifestFetch";
+import UploadIcon from "../../assets/icons/upload.svg?react";
+import DownloadIcon from "../../assets/icons/download.svg?react";
+import FetchIcon from "../../assets/icons/fetch.svg?react";
+import { Card } from "../../components/Card/Card";
+import FilesIconOutline from "../../assets/icons/files-outline.svg?react";
 
 export const Route = createFileRoute("/dashboard/files")({
   component: () => (
     <div className="files-page">
-      <Files></Files>
+      <Card
+        icon={<FilesIconOutline width={24}></FilesIconOutline>}
+        title="Files">
+        <Files></Files>
+      </Card>
 
       <aside>
-        <ErrorBoundary
-          fallback={({ error }) => (
-            <ErrorPlaceholder
-              error={error}
-              subtitle="Cannot retrieve the data."
-            />
-          )}>
+        <Card icon={<UploadIcon width={24}></UploadIcon>} title="Upload">
           <UploadCard />
-        </ErrorBoundary>
-        <Download></Download>
-        <ManifestFetchCard />
+        </Card>
+
+        <Card icon={<DownloadIcon></DownloadIcon>} title="Download">
+          <Download />
+        </Card>
+
+        <Card icon={<FetchIcon></FetchIcon>} title="Fetch manifest">
+          <ManifestFetch />
+        </Card>
       </aside>
     </div>
   ),

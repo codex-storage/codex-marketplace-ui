@@ -1,4 +1,9 @@
-import { Cell, Row, Table } from "@codex-storage/marketplace-ui-components";
+import {
+  Cell,
+  Row,
+  Table,
+  TabSortState,
+} from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import { AvailabilityActionsCell } from "./AvailabilityActionsCell";
 import { CodexAvailability, CodexNodeSpace } from "@codex-storage/sdk-js/async";
@@ -10,8 +15,9 @@ import { Arrays } from "../../utils/arrays";
 import { SlotRow } from "./SlotRow";
 import { AvailabilityWithSlots } from "./types";
 import { AvailabilityDiskRow } from "./AvailabilityDiskRow";
-import { ChevronDown } from "./ChevronDown";
 import { attributes } from "../../utils/attributes";
+import ChevronIcon from "../../assets/icons/chevron.svg?react";
+import { AvailabilityUtils } from "./availability.utils";
 
 type Props = {
   // onEdit: () => void;
@@ -19,25 +25,45 @@ type Props = {
   availabilities: AvailabilityWithSlots[];
 };
 
+type SortFn = (a: AvailabilityWithSlots, b: AvailabilityWithSlots) => number;
+
 export function AvailabilitiesTable({ availabilities, space }: Props) {
   const [availability, setAvailability] = useState<CodexAvailability | null>(
     null
   );
   const [details, setDetails] = useState<string[]>([]);
-
-  const headers = [
-    "",
-    "id",
-    "total size",
-    "duration",
-    "min price",
-    "max collateral",
-    "actions",
-  ];
+  const [sortFn, setSortFn] = useState<SortFn | null>(null);
 
   const onReservationsClose = () => setAvailability(null);
 
-  const rows = availabilities.map((a) => {
+  const onSortById = (state: TabSortState) =>
+    setSortFn(() => AvailabilityUtils.sortById(state));
+
+  const onSortBySize = (state: TabSortState) =>
+    setSortFn(() => AvailabilityUtils.sortBySize(state));
+
+  const onSortByDuration = (state: TabSortState) =>
+    setSortFn(() => AvailabilityUtils.sortByDuration(state));
+
+  const onSortByPrice = (state: TabSortState) =>
+    setSortFn(() => AvailabilityUtils.sortByPrice(state));
+
+  const onSortByCollateral = (state: TabSortState) =>
+    setSortFn(() => AvailabilityUtils.sortByCollateral(state));
+
+  const headers = [
+    [""],
+    ["id", onSortById],
+    ["total size", onSortBySize],
+    ["duration", onSortByDuration],
+    ["min price", onSortByPrice],
+    ["max collateral", onSortByCollateral],
+    ["actions"],
+  ] satisfies [string, ((state: TabSortState) => void)?][];
+
+  const sorted = sortFn ? [...availabilities].sort(sortFn) : availabilities;
+
+  const rows = sorted.map((a) => {
     const showDetails = details.includes(a.id);
 
     const onShowDetails = () => setDetails(Arrays.toggle(details, a.id));
@@ -50,9 +76,9 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
           cells={[
             <Cell>
               {hasSlots ? (
-                <ChevronDown
+                <ChevronIcon
                   {...attributes({ "aria-expanded": showDetails })}
-                  onClick={onShowDetails}></ChevronDown>
+                  onClick={onShowDetails}></ChevronIcon>
               ) : (
                 ""
               )}
@@ -82,7 +108,7 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
 
   return (
     <>
-      <Table headers={headers} rows={rows} />
+      <Table headers={headers} rows={rows} defaultSortIndex={0} />
       <AvailabilityReservations
         availability={availability}
         onClose={onReservationsClose}

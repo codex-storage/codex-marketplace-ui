@@ -6,7 +6,7 @@ import {
 } from "@codex-storage/marketplace-ui-components";
 import { useEffect, useRef, useState } from "react";
 import { AvailabilityForm } from "./AvailabilityForm";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { AvailabilityConfirm } from "./AvailabilityConfirmation";
 import { WebStorage } from "../../utils/web-storage";
@@ -16,6 +16,7 @@ import { useAvailabilityMutation } from "./useAvailabilityMutation";
 import { AvailabilitySuccess } from "./AvailabilitySuccess";
 import { AvailabilityError } from "./AvailabilityError";
 import "./AvailabilityEdit.css";
+import PlusIcon from "../../assets/icons/plus.svg?react";
 
 type Props = {
   space: CodexNodeSpace;
@@ -145,6 +146,13 @@ export function AvailabilityEdit({
     });
   };
 
+  useEffect(() => {
+    document.addEventListener("codexavailabilitycreate", onOpen, false);
+
+    return () =>
+      document.removeEventListener("codexavailabilitycreate", onOpen);
+  }, [onOpen]);
+
   const onClose = () => dispatch({ type: "close" });
 
   const Body = components[state.step] || (() => <span />);
@@ -152,35 +160,39 @@ export function AvailabilityEdit({
   const nextLabel = state.step === steps.current.length - 1 ? "Finish" : "Next";
 
   return (
-    <div className="availability-edit">
-      <Button
-        label={hasLabel ? "Sale" : ""}
-        Icon={!availabilityId ? () => <Plus width={40} height={40} /> : Pencil}
-        onClick={onOpen}
-        variant="outline"
-        className={className}
-      />
+    <>
+      <div className="availability-edit">
+        <Button
+          label={hasLabel ? "Sale" : ""}
+          Icon={
+            !availabilityId ? () => <PlusIcon width={40} fill="#000" /> : Pencil
+          }
+          onClick={onOpen}
+          variant="outline"
+          className={className}
+        />
 
-      <Modal open={state.open} onClose={onClose} displayCloseButton={false}>
-        <Stepper
-          className="availabilityCreate"
-          titles={steps.current}
-          state={state}
-          dispatch={dispatch}
-          duration={STEPPER_DURATION}
-          onNextStep={onNextStep}
-          backLabel={backLabel}
-          nextLabel={nextLabel}>
-          <Body
-            dispatch={dispatch}
+        <Modal open={state.open} onClose={onClose} displayCloseButton={false}>
+          <Stepper
+            className="availabilityCreate"
+            titles={steps.current}
             state={state}
-            onAvailabilityChange={onAvailabilityChange}
-            availability={availability}
-            space={space}
-            error={error}
-          />
-        </Stepper>
-      </Modal>
-    </div>
+            dispatch={dispatch}
+            duration={STEPPER_DURATION}
+            onNextStep={onNextStep}
+            backLabel={backLabel}
+            nextLabel={nextLabel}>
+            <Body
+              dispatch={dispatch}
+              state={state}
+              onAvailabilityChange={onAvailabilityChange}
+              availability={availability}
+              space={space}
+              error={error}
+            />
+          </Stepper>
+        </Modal>
+      </div>
+    </>
   );
 }

@@ -8,13 +8,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-image: url(/img/assistance.png);
-  background-position: right;
-  background-repeat: no-repeat;
   width: 500px;
   flex: 1 1 auto;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
 
   h5 {
     font-family: Azeret Mono;

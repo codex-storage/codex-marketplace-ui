@@ -1,8 +1,8 @@
 import { useDebug } from "../../hooks/useDebug";
-import { AlphaText } from "../AlphaText/AlphaText";
-import { AlphaIcon } from "../OnBoarding/AlphaIcon";
 import "./Versions.css";
 import { VersionsUtil } from "./versions.utils";
+import AlphaIcon from "../../assets/icons/alpha.svg?react";
+import AlphaText from "../../assets/icons/alphatext.svg?react";
 
 const throwOnError = false;
 
@@ -13,7 +13,7 @@ export function Versions() {
 
   return (
     <div className="versions">
-      <AlphaIcon variant="error" />
+      <AlphaIcon color="var(--codex-color-error-hexa)" width={20} />
       <div>
         <p>Client</p>
         <small>VER. {version}</small>
@@ -21,7 +21,7 @@ export function Versions() {
       <div>
         <p>Vault</p>
         <small>VER. {VersionsUtil.codexVersion()}</small>
-        <AlphaText variant="failure" width={37}></AlphaText>
+        <AlphaText color="var(--codex-color-error-hexa)" width={37}></AlphaText>
       </div>
     </div>
   );

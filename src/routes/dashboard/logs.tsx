@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import "./logs.css";
 import { RequireAssitance } from "../../components/RequireAssitance/RequireAssitance";
 import { LogLevel } from "../../components/LogLevel/LogLevel";
-import { LogsIcon } from "../../components/Menu/LogsIcon";
 import { useDebug } from "../../hooks/useDebug";
+import LogsIcon from "../../assets/icons/logs.svg?react";
 
 const throwOnError = false;
 
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/dashboard/logs")({
         <div className="card node">
           <header>
             <div>
-              <LogsIcon></LogsIcon>
+              <LogsIcon width={24}></LogsIcon>
               <h5>Node</h5>
             </div>
           </header>

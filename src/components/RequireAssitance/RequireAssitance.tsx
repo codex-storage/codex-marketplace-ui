@@ -1,5 +1,6 @@
-import { DiscordIcon } from "../Welcome/DiscordIcon";
 import "./RequireAssitance.css";
+import DiscordIcon from "../../assets/icons/discord.svg?react";
+import { AssistanceImage } from "./AssistanceImage";
 
 export function RequireAssitance() {
   return (
@@ -15,6 +16,8 @@ export function RequireAssitance() {
         <h6>Join Codex Discord</h6>
         <small>Get direct access to the Core Team.</small>
       </div>
+
+      <AssistanceImage></AssistanceImage>
     </a>
   );
 }

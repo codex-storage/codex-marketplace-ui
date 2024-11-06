@@ -23,6 +23,12 @@
     .button-icon {
       background-color: #2f2f2f;
       border: 1px solid #96969633;
+
+      svg {
+        position: relative;
+        left: -3px;
+        top: -1px;
+      }
     }
   }
 

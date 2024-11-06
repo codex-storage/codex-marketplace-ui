@@ -5,7 +5,6 @@ import {
   Button,
   SpaceAllocationItem,
   Spinner,
-  UploadIcon,
 } from "@codex-storage/marketplace-ui-components";
 import { useQuery } from "@tanstack/react-query";
 import { Promises } from "../../utils/promises";
@@ -21,7 +20,8 @@ import { availabilityColors } from "../../components/Availability/availability.c
 import { AvailabilityWithSlots } from "../../components/Availability/types";
 import { WebStorage } from "../../utils/web-storage";
 import { NodeSpace } from "../../components/NodeSpace/NodeSpace";
-import { PlusCircle } from "lucide-react";
+import PlusIcon from "../../assets/icons/plus-circle.svg?react";
+import UploadIcon from "../../assets/icons/upload.svg?react";
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -135,6 +135,9 @@ export function Availabilities() {
       );
     }
 
+    const onOpenAvailabilities = () =>
+      document.dispatchEvent(new CustomEvent("codexavailabilitycreate", {}));
+
     return (
       <div className="availabilities">
         <div className="card">
@@ -162,7 +165,8 @@ export function Availabilities() {
               </div>
 
               <Button
-                Icon={PlusCircle}
+                onClick={onOpenAvailabilities}
+                Icon={() => <PlusIcon width={20} />}
                 label="Create Availability"
                 variant="outline"></Button>
 

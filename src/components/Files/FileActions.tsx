@@ -3,8 +3,8 @@ import { FolderButton } from "./FolderButton";
 import { CodexDataContent } from "@codex-storage/sdk-js";
 import { CodexSdk } from "../../sdk/codex";
 import "./FileActions.css";
-import { DownloadIcon } from "./DownloadIcon";
-import { InfoFileIcon } from "./InfoFileIcon";
+import DownloadIcon from "../../assets/icons/download-file.svg?react";
+import InfoFileIcon from "../../assets/icons/info-file.svg?react";
 
 type Props = {
   content: CodexDataContent;

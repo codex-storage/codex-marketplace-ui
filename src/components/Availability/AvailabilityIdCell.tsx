@@ -2,7 +2,7 @@ import { Strings } from "../../utils/strings";
 import { Cell } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import { AvailabilityWithSlots } from "./types";
-import { FolderIcon } from "./FolderIcon";
+import AvailbilityIcon from "../../assets/icons/availability.svg?react";
 
 type Props = {
   value: AvailabilityWithSlots;
@@ -12,7 +12,7 @@ export function AvailabilityIdCell({ value }: Props) {
   return (
     <Cell>
       <div className="row gap" id={value.id}>
-        <FolderIcon />
+        <AvailbilityIcon />
         <div>
           <div>
             <b>{value.name || Strings.shortId(value.id)}</b>

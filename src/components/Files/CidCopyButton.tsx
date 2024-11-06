@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { COPY_DURATION } from "../../utils/constants";
 import { Button } from "@codex-storage/marketplace-ui-components";
-import { CoypIcon } from "./CopyIcon";
+import CopyIcon from "../../assets/icons/copy.svg?react";
 
 type CopyButtonProps = {
   cid: string;
@@ -32,6 +32,6 @@ export function CidCopyButton({ cid }: CopyButtonProps) {
       label={label}
       variant="outline"
       onClick={onCopy}
-      Icon={CoypIcon}></Button>
+      Icon={() => <CopyIcon width={26} />}></Button>
   );
 }

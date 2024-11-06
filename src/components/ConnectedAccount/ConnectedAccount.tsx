@@ -1,21 +1,11 @@
-import { Button } from "@codex-storage/marketplace-ui-components";
-import { AccountIcon } from "../AccountIcon/AccountIcon";
 import "./ConnectedAccount.css";
-import { PlusIcon } from "../PlusIcon/PlusIcon";
 import { WalletCard } from "./WalletCard";
 import { ProgressCircle } from "./ProgressCircle";
-import { ArrowRightIcon } from "../ArrowRightIcon/ArrowRightIcon";
+import ArrowRightIcon from "../../assets/icons/arrow-right.svg?react";
 
 export function ConnectedAccount() {
   return (
-    <div className="card connected-account">
-      <header>
-        <div>
-          <AccountIcon></AccountIcon>
-          <h5>Connected Account</h5>
-        </div>
-        <Button Icon={PlusIcon} label="Add Wallet" variant="outline"></Button>
-      </header>
+    <div className="connected-account">
       <main>
         <WalletCard></WalletCard>
       </main>

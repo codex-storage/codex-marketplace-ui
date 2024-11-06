@@ -13,9 +13,9 @@ import { CodexSdk } from "../../sdk/codex";
 import { FilesUtils } from "./files.utils";
 import { useEffect, useState } from "react";
 import { WebStorage } from "../../utils/web-storage";
-import { FileDetailsIcon } from "./FileDetailsIcon";
-import { CloseIcon } from "../CloseIcon/CloseIcon";
-import { DownloadIcon } from "./DownloadIcon";
+import DownloadIcon from "../../assets/icons/download-file.svg?react";
+import FileDetailsIcon from "../../assets/icons/file-details.svg?react";
+import CloseIcon from "../../assets/icons/close.svg?react";
 
 type Props = {
   details: CodexDataContent | null;
@@ -112,7 +112,7 @@ export function FileDetails({ onClose, details }: Props) {
               <CidCopyButton cid={details.cid} />
 
               <Button
-                Icon={DownloadIcon}
+                Icon={() => <DownloadIcon width={20} />}
                 label="Download"
                 variant="outline"
                 onClick={onDownload}></Button>

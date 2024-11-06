@@ -9,8 +9,8 @@ import {
   Toast,
 } from "@codex-storage/marketplace-ui-components";
 import { Promises } from "../../utils/promises";
-import { LogsIcon } from "../Menu/LogsIcon";
-import { SaveIcon } from "./SaveIcon";
+import LogsIcon from "../../assets/icons/logs.svg?react";
+import SaveIcon from "../../assets/icons/save.svg?react";
 
 export function LogLevel() {
   const queryClient = useQueryClient();
@@ -72,7 +72,7 @@ export function LogLevel() {
           options={levels}
           value={level}
           onChange={onChange}></Select>
-        <LogsIcon></LogsIcon>
+        <LogsIcon width={20}></LogsIcon>
       </div>
 
       <Button

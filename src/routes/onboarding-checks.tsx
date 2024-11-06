@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
 import { attributes } from "../utils/attributes";
-import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
+import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
 import { HealthChecks } from "../components/HealthChecks/HealthChecks";
 import { useNetwork } from "../network/useNetwork";
 import { WebStorage } from "../utils/web-storage";
+import AlphaIcon from "../assets/icons/alpha.svg?react";
 
 const OnBoardingChecks = () => {
   const online = useNetwork();
@@ -27,7 +27,7 @@ const OnBoardingChecks = () => {
       <>
         <section className="alpha">
           <div>
-            <AlphaIcon variant="primary" />
+            <AlphaIcon color="var(--codex-color-primary)" width={26} />
           </div>
           <p>
             Connection /<br />

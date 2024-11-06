@@ -1,7 +1,7 @@
 import { Cell, Row } from "@codex-storage/marketplace-ui-components";
 import { PrettyBytes } from "../../utils/bytes";
 import { classnames } from "../../utils/classnames";
-import { HostIcon } from "./HostIcon";
+import HardriveIcon from "../../assets/icons/hardrive.svg?react";
 
 type Props = {
   bytes: number;
@@ -16,7 +16,7 @@ export function AvailabilityDiskRow({ bytes }: Props) {
         </Cell>,
         <Cell colSpan={6}>
           <div className={classnames(["row gap"])}>
-            <HostIcon />
+            <HardriveIcon />
             <div>
               <b>Node</b>
               <small>{PrettyBytes(bytes)} allocated for the node</small>

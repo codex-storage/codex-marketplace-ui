@@ -1,11 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { AlphaIcon } from "../components/OnBoarding/AlphaIcon";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
 import { attributes } from "../utils/attributes";
-import { ArrowRightCircle } from "../components/ArrowRightCircle/ArrowRightCircle";
+import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
 import { UserInfo } from "../components/UserInfo/UserInfo";
 import { WebStorage } from "../utils/web-storage";
+import AlphaIcon from "../assets/icons/alpha.svg?react";
 
 const OnBoardingName = () => {
   const [isStepValid, setIsStepValid] = useState(
@@ -26,7 +26,7 @@ const OnBoardingName = () => {
       <>
         <section className="alpha">
           <div>
-            <AlphaIcon variant="primary" />
+            <AlphaIcon color="var(--codex-color-primary)" width={26} />
           </div>
           <p>Personalization</p>
         </section>

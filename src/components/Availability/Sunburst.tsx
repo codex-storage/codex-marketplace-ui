@@ -21,7 +21,9 @@ export function Sunburst({ availabilities, space }: Props) {
 
   useEffect(() => {
     if (div.current && !chart.current) {
-      chart.current = echarts.init(div.current);
+      chart.current = echarts.init(div.current, null, {
+        renderer: "svg",
+      });
       setRefresher(Date.now());
     }
   }, [chart, div]);
@@ -120,8 +122,8 @@ export function Sunburst({ availabilities, space }: Props) {
           },
         },
       ],
+      radius: [60, "90%"],
       itemStyle: {
-        // borderRadius: 7,
         borderWidth: 1,
       },
       label: {

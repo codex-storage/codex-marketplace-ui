@@ -5,9 +5,9 @@ import {
   WebFileIcon,
 } from "@codex-storage/marketplace-ui-components";
 import { CodexDataContent } from "@codex-storage/sdk-js";
-import { Copy } from "lucide-react";
 import { useState } from "react";
 import "./FileCell.css";
+import CopyIcon from "../../assets/icons/copy.svg?react";
 
 type Props = {
   content: CodexDataContent;
@@ -39,7 +39,9 @@ export function FileCell({ content }: Props) {
             variant="small"
             onClick={() => onCopy(content.cid)}
             animation="buzz"
-            Icon={(props) => <Copy size={"1rem"} {...props} />}></ButtonIcon>
+            Icon={(props) => (
+              <CopyIcon {...props} width={20} color="#969696" />
+            )}></ButtonIcon>
         </div>
 
         <Toast message={toast.message} time={toast.time} variant={"success"} />

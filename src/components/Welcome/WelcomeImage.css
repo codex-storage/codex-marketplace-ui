@@ -1,0 +1,14 @@
+.welcome-img {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: auto;
+  border-top-right-radius: 16px;
+  transition:
+    right 0.35s,
+    right 0.35s;
+
+  &.welcome-img--tiny {
+    right: -180px;
+  }
+}

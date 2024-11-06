@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { useDebug } from "../../hooks/useDebug";
 import { usePersistence } from "../../hooks/usePersistence";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
-import { ErrorCircleIcon } from "../ErrorCircleIcon/ErrorCircleIcon";
-import { SuccessCheckIcon } from "../SuccessCheckIcon/SuccessCheckIcon";
-import { WarningIcon } from "../WarningIcon/WarningIcon";
-import { HealthCheckIcon } from "./HealthCheckIcon";
 import { Input } from "@codex-storage/marketplace-ui-components";
 import { classnames } from "../../utils/classnames";
-import { RefreshIcon } from "../RefreshIcon/RefreshIcon";
 import "./HealthChecks.css";
 import { CodexSdk } from "../../sdk/codex";
 import { HealthCheckUtil } from "./health-check.utils";
 import { PortForwardingUtil } from "../../hooks/port-forwarding.util";
+import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
+import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
+import DeviceIcon from "../../assets/icons/device.svg?react";
+import RefreshIcon from "../../assets/icons/refresh.svg?react";
+import WarningIcon from "../../assets/icons/warning-circle.svg?react";
 
 type Props = {
   online: boolean;
@@ -113,11 +113,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             onChange={onAddressChange}
             value={address}
             placeholder="127.0.0.1"></Input>
-          {isAddressInvalid ? (
-            <ErrorCircleIcon />
-          ) : (
-            <SuccessCheckIcon variant="default" />
-          )}
+          {isAddressInvalid ? <ErrorCircleIcon /> : <SuccessCircleIcon />}
         </div>
 
         <div>
@@ -129,13 +125,13 @@ export function HealthChecks({ online, onStepValid }: Props) {
             value={port}
             isInvalid={isPortInvalid}
             placeholder="8080"></Input>
-          <SuccessCheckIcon variant="default"></SuccessCheckIcon>
+          <SuccessCircleIcon></SuccessCircleIcon>
         </div>
 
         <div className="refresh">
           <RefreshIcon
-            onClick={onSave}
-            disabled={isAddressInvalid || isPortInvalid}></RefreshIcon>
+            color={isAddressInvalid || isPortInvalid ? "#494949" : "#6FCB94"}
+            onClick={onSave}></RefreshIcon>
         </div>
       </div>
 
@@ -149,14 +145,14 @@ export function HealthChecks({ online, onStepValid }: Props) {
       <ul>
         <li>
           <span>
-            <HealthCheckIcon />
+            <DeviceIcon color="#6FCB94" />
           </span>
           Health Check
         </li>
         <li>
           <span>
             {online ? (
-              <SuccessCheckIcon variant="primary"></SuccessCheckIcon>
+              <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <ErrorCircleIcon />
             )}
@@ -166,7 +162,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
         <li>
           <span>
             {portForwarding.enabled ? (
-              <SuccessCheckIcon variant="primary"></SuccessCheckIcon>
+              <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <ErrorCircleIcon />
             )}
@@ -176,7 +172,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
         <li>
           <span>
             {codex.isSuccess ? (
-              <SuccessCheckIcon variant="primary"></SuccessCheckIcon>
+              <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <ErrorCircleIcon />
             )}
@@ -186,7 +182,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
         <li>
           <span>
             {persistence.enabled ? (
-              <SuccessCheckIcon variant="primary"></SuccessCheckIcon>
+              <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <WarningIcon />
             )}

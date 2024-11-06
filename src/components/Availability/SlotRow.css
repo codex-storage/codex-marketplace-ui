@@ -3,6 +3,10 @@
     visibility 0.35s,
     max-height 0.35s;
 
+  td:nth-child(2) {
+    padding-left: 48px;
+  }
+
   &.slot-row--inactive {
     visibility: collapse;
   }

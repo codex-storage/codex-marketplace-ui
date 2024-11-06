@@ -1,8 +1,8 @@
-import { WalletChart } from "./WalletChart";
-import { WalletLines } from "./WalletLines";
 import "./WalletCard.css";
-import { ArrowLeftIcon } from "../ArrowLeftIcon/ArrowLeftIcon";
-import { ArrowRightIcon } from "../ArrowRightIcon/ArrowRightIcon";
+import ArrowRightIcon from "../../assets/icons/arrow-right.svg?react";
+import ArrowLeftIcon from "../../assets/icons/arrow-left.svg?react";
+import WalletChart from "../../assets/icons/chart.svg?react";
+import WalletLines from "../../assets/icons/lines.svg?react";
 
 export function WalletCard() {
   return (

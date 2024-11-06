@@ -1,11 +1,14 @@
-import { ReactElement, ReactNode } from "react";
+import { ComponentType, ReactElement, ReactNode } from "react";
 import "./Card.css";
 import { Button } from "@codex-storage/marketplace-ui-components";
+import { ErrorBoundary } from "@sentry/react";
+import { ErrorPlaceholder } from "../ErrorPlaceholder/ErrorPlaceholder";
 
 type Props = {
   className?: string;
   icon: ReactNode;
   buttonLabel?: string;
+  buttonIcon?: ComponentType;
   buttonAction?: () => void;
   title?: string;
   children: ReactElement;
@@ -17,6 +20,7 @@ export function Card({
   buttonLabel,
   title,
   children,
+  buttonIcon,
   className = "",
 }: Props) {
   return (
@@ -30,10 +34,19 @@ export function Card({
           <Button
             label={buttonLabel}
             variant="outline"
+            Icon={buttonIcon}
             onClick={buttonAction}></Button>
         )}
       </header>
-      {children}
+      <ErrorBoundary
+        fallback={({ error }) => (
+          <ErrorPlaceholder
+            error={error}
+            subtitle="Cannot retrieve the data."
+          />
+        )}>
+        {children}
+      </ErrorBoundary>
     </div>
   );
 }

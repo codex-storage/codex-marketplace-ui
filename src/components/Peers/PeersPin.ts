@@ -35,7 +35,6 @@ export function PeersPin({ node, onLoad }: Props) {
     useEffect(() => {
         if (data) {
             onLoad(node, data)
-            console.info(node.address)
         }
     }, [data, onLoad, node])
 

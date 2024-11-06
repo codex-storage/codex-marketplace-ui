@@ -13,6 +13,7 @@ export default defineConfig({
         floatPrecision: 2,
       },
     },
+    // ...
   })],
   define: {
     "import.meta.env.PACKAGE_VERSION": JSON.stringify(packageJson.version),

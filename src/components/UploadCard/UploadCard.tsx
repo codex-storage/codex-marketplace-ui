@@ -1,6 +1,7 @@
-import { Upload, UploadIcon } from "@codex-storage/marketplace-ui-components";
+import { Upload } from "@codex-storage/marketplace-ui-components";
 import { CodexSdk } from "../../sdk/codex";
 import { useQueryClient } from "@tanstack/react-query";
+import UploadIcon from "../../assets/icons/upload.svg?react";
 
 export function UploadCard() {
   const queryClient = useQueryClient();
@@ -10,16 +11,13 @@ export function UploadCard() {
   };
 
   return (
-    <div className="card node-space">
-      <header>
-        <div>
-          <UploadIcon width={18} fill="#969696"></UploadIcon>
-          <h5>Upload</h5>
-        </div>
-      </header>
-      <main>
-        <Upload multiple codexData={CodexSdk.data()} onSuccess={onSuccess} />
-      </main>
-    </div>
+    <main>
+      <Upload
+        multiple
+        codexData={CodexSdk.data()}
+        onSuccess={onSuccess}
+        Icon={() => <UploadIcon width={40} color={"#96969666"} />}
+      />
+    </main>
   );
 }

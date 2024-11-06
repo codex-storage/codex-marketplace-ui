@@ -1,24 +1,24 @@
 import { attributes } from "../../utils/attributes";
 import "./menu.css";
 import { ComponentType, useState } from "react";
-import { Logo } from "../Logo/Logo";
-import { Logotype } from "../Logotype/Logotype";
-import { ExpandIcon } from "./ExpandIcon";
 import { classnames } from "../../utils/classnames";
 import { Link } from "@tanstack/react-router";
-import { HomeIcon } from "./HomeIcon";
-import { WalletIcon } from "./WalletIcon";
-import { FilesIcon } from "../FilesIcon/FilesIcon";
-import { NodesIcon } from "./NodesIcon";
-import { AnalyticsIcon } from "./AnalyticsIcon";
-import { DeviceIcon } from "./DeviceIcon";
-import { PurchaseIcon } from "./PurchaseIcon";
-import { HostIcon } from "./HostIcon";
-import { PeersIcon } from "./PeersIcon";
-import { LogsIcon } from "./LogsIcon";
-import { SettingsIcon } from "./SettingsIcon";
-import { HelpIcon } from "./HelpIcon";
-import { DisclaimerIcon } from "./DisclaimerIcon";
+import HomeIcon from "../../assets/icons/home.svg?react";
+import ExpandIcon from "../../assets/icons/expand.svg?react";
+import WalletIcon from "../../assets/icons/wallet.svg?react";
+import NodesIcon from "../../assets/icons/wallet.svg?react";
+import FilesIcon from "../../assets/icons/files.svg?react";
+import AnalyticsIcon from "../../assets/icons/analytics.svg?react";
+import Logo from "../../assets/icons/logo.svg?react";
+import Logotype from "../../assets/icons/logotype.svg?react";
+import DeviceIcon from "../../assets/icons/device.svg?react";
+import PeersIcon from "../../assets/icons/peers.svg?react";
+import PurchaseIcon from "../../assets/icons/purchase.svg?react";
+import HostIcon from "../../assets/icons/host.svg?react";
+import LogsIcon from "../../assets/icons/logs.svg?react";
+import SettingsIcon from "../../assets/icons/settings.svg?react";
+import HelpIcon from "../../assets/icons/help.svg?react";
+import DisclaimerIcon from "../../assets/icons/disclaimer.svg?react";
 
 export type MenuItemComponentProps = {
   onClick: () => void;
@@ -74,13 +74,13 @@ export function Menu({}: Props) {
             </Link>
             <Link to="/dashboard/wallet">
               <span>
-                <WalletIcon />
+                <WalletIcon width={20} height={20} />
               </span>
               <span>Wallet</span>
             </Link>
             <Link to="/dashboard/files">
               <span>
-                <FilesIcon />
+                <FilesIcon width={20} />
               </span>
               <span>Files</span>
             </Link>
@@ -90,7 +90,7 @@ export function Menu({}: Props) {
               aria-disabled={true}
               data-title="Coming soon">
               <span>
-                <NodesIcon variant="default" />
+                <NodesIcon width={20} />
               </span>
               <span>Nodes</span>
             </Link>
@@ -132,20 +132,20 @@ export function Menu({}: Props) {
             <hr />
             <Link to="/dashboard/peers">
               <span>
-                <PeersIcon />
+                <PeersIcon width={20} />
               </span>
               <span>Peers</span>
             </Link>
             <Link to="/dashboard/logs">
               <span>
-                <LogsIcon />
+                <LogsIcon width={24} />
               </span>
               <span>Log</span>
             </Link>
             <section></section>
             <Link to="/dashboard/settings">
               <span>
-                <SettingsIcon />
+                <SettingsIcon width={24} />
               </span>
               <span>Settings</span>
             </Link>

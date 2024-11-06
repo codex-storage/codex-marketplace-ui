@@ -4,9 +4,9 @@ import { ErrorBoundary } from "@sentry/react";
 import { ErrorPlaceholder } from "../../components/ErrorPlaceholder/ErrorPlaceholder";
 import { UserInfo } from "../../components/UserInfo/UserInfo";
 import { HealthChecks } from "../../components/HealthChecks/HealthChecks";
-import { Logotype } from "../../components/Logotype/Logotype";
+import Logotype from "../../assets/icons/logotype.svg?react";
+import Logo from "../../assets/icons/logo.svg?react";
 import { Versions } from "../../components/Versions/Versions";
-import { Logo } from "../../components/Logo/Logo";
 import { BackgroundImage } from "../../components/BackgroundImage/BackgroundImage";
 
 export const Route = createFileRoute("/dashboard/settings")({

@@ -3,8 +3,8 @@ import { CheckCircle } from "lucide-react";
 import "./FolderButton.css";
 import { useState } from "react";
 import { attributes } from "../../utils/attributes";
-import { FolderAdd } from "./FolderAdd";
 import { classnames } from "../../utils/classnames";
+import FolderIcon from "../../assets/icons/folder.svg?react";
 
 type Props = {
   folders: [string, boolean][];
@@ -36,7 +36,7 @@ export function FolderButton({ folders, onFolderToggle }: Props) {
           variant="small"
           className={classnames([""])}
           onClick={onOpen}
-          Icon={FolderAdd}></ButtonIcon>
+          Icon={FolderIcon}></ButtonIcon>
 
         <div {...attr}>
           {folders.map(([folder, isActive]) => (
