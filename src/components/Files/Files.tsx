@@ -183,7 +183,7 @@ export function Files({ limit }: Props) {
   });
 
   return (
-    <main>
+    <main className="files">
       <section>
         <Tabs onTabChange={onTabChange} tabIndex={index} tabs={tabs}></Tabs>
         <div className="row gap">
