@@ -14,6 +14,7 @@ import LogsIcon from "../../assets/icons/logs.svg?react";
 import HostIcon from "../../assets/icons/host.svg?react";
 import SettingsIcon from "../../assets/icons/settings.svg?react";
 import NetworkFlashIcon from "../../assets/icons/flash.svg?react";
+import { WalletConnect } from "../WalletLogin/WalletLogin";
 
 type Props = {
   onIconClick: () => void;
@@ -76,6 +77,7 @@ export function AppBar({ onIconClick }: Props) {
           </div>
         </div>
         <aside className="row gap">
+          <WalletConnect></WalletConnect>
           <div className="row gap">
             <NetworkFlashIcon />
             <span>Network</span>

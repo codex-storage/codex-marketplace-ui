@@ -1,0 +1,55 @@
+.wallet-login {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #252525;
+
+  div {
+    > p {
+      font-family: Inter;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #6e6e6e;
+      display: block;
+      font-size: 10px;
+    }
+  }
+
+  var {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff99;
+    font-style: normal;
+    font-size: 16px;
+  }
+
+  footer {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+
+    p {
+      font-family: Inter;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 10px;
+      text-align: left;
+      color: #3ee089;
+      font-style: normal;
+    }
+
+    a {
+      font-family: Inter;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 10px;
+      color: #6e6e6e;
+      cursor: pointer;
+    }
+  }
+}
