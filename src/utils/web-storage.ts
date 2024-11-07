@@ -106,8 +106,8 @@ export const WebStorage = {
       return set(key, cid, this.store);
     },
 
-    async entries() {
-      return entries(this.store);
+    async entries<T>() {
+      return entries<string, T>(this.store);
     },
 
     dates: {

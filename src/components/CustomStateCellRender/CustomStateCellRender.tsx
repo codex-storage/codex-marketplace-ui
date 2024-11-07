@@ -1,6 +1,7 @@
-import { CheckCircle, CircleDashed, ShieldAlert } from "lucide-react";
-import "./CustomStateCellRender.css";
 import { Cell, Tooltip } from "@codex-storage/marketplace-ui-components";
+import PurchaseStateIcon from "../../assets/icons/purchases-state-pending.svg?react";
+import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
+import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
 
 type Props = {
   state: string;
@@ -9,12 +10,12 @@ type Props = {
 
 export const CustomStateCellRender = ({ state, message }: Props) => {
   const icons = {
-    pending: CircleDashed,
-    submitted: CircleDashed,
-    started: CircleDashed,
-    finished: CheckCircle,
-    cancelled: ShieldAlert,
-    errored: ShieldAlert,
+    pending: PurchaseStateIcon,
+    submitted: PurchaseStateIcon,
+    started: PurchaseStateIcon,
+    finished: SuccessCircleIcon,
+    cancelled: ErrorCircleIcon,
+    errored: ErrorCircleIcon,
   };
 
   const states = {
@@ -26,7 +27,7 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
     finished: "success",
   };
 
-  const Icon = icons[state as keyof typeof icons] || CircleDashed;
+  const Icon = icons[state as keyof typeof icons] || PurchaseStateIcon;
 
   return (
     <Cell>
@@ -37,13 +38,11 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
         }>
         {message ? (
           <Tooltip message={message}>
-            <Icon size={"1rem"} className="cell-stateIcon" />
+            <Icon width={32} className="cell-stateIcon" />
           </Tooltip>
         ) : (
-          <Icon size={"1rem"} className="cell-stateIcon" />
+          <Icon width={32} className="cell-stateIcon" />
         )}
-
-        <span>{state}</span>
       </p>
     </Cell>
   );

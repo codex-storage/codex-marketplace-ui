@@ -4,18 +4,20 @@ import {
   Sheets,
   WebFileIcon,
 } from "@codex-storage/marketplace-ui-components";
-import { CodexDataContent } from "@codex-storage/sdk-js";
+import { CodexDataContent, CodexPurchase } from "@codex-storage/sdk-js";
 import { PrettyBytes } from "../../utils/bytes";
 import { Dates } from "../../utils/dates";
 import { CidCopyButton } from "./CidCopyButton";
 import "./FileDetails.css";
 import { CodexSdk } from "../../sdk/codex";
 import { FilesUtils } from "./files.utils";
-import { useEffect, useState } from "react";
-import { WebStorage } from "../../utils/web-storage";
 import DownloadIcon from "../../assets/icons/download-file.svg?react";
 import FileDetailsIcon from "../../assets/icons/file-details.svg?react";
 import CloseIcon from "../../assets/icons/close.svg?react";
+import { useQuery } from "@tanstack/react-query";
+import { Promises } from "../../utils/promises";
+import { PurchaseHistory } from "./PurchaseHistory";
+import { WebStorage } from "../../utils/web-storage";
 
 type Props = {
   details: CodexDataContent | null;
@@ -23,19 +25,50 @@ type Props = {
 };
 
 export function FileDetails({ onClose, details }: Props) {
-  const [purchases, setPurchases] = useState(0);
+  const { data: purchases = [] } = useQuery({
+    queryFn: () =>
+      CodexSdk.marketplace()
+        .purchases()
+        .then(async (res) => {
+          if (res.error) {
+            return res;
+          }
 
-  useEffect(() => {
-    WebStorage.purchases
-      .entries()
-      .then((entries) =>
-        setPurchases(
-          entries
-            .filter((e) => e[1] === details?.cid)
-            .reduce((acc) => acc + 1, 0)
-        )
-      );
-  }, [details?.cid]);
+          const all: CodexPurchase[] = [];
+          for (const p of res.data) {
+            const cid = await WebStorage.purchases.get(p.requestId);
+            if (cid == details?.cid) {
+              all.push(p);
+            }
+          }
+
+          return {
+            error: false as any,
+            data: all,
+          };
+        })
+        .then((s) => Promises.rejectOnError(s)),
+    queryKey: ["purchases"],
+
+    enabled: !!details,
+
+    // No need to retry because if the connection to the node
+    // is back again, all the queries will be invalidated.
+    retry: false,
+
+    // The client node should be local, so display the cache value while
+    // making a background request looks good.
+    staleTime: 0,
+
+    // Refreshing when focus returns can be useful if a user comes back
+    // to the UI after performing an operation in the terminal.
+    refetchOnWindowFocus: true,
+
+    initialData: [],
+
+    // Throw the error to the error boundary
+    throwOnError: true,
+  });
 
   let url = CodexSdk.url() + "/api/codex/v1/data/";
 
@@ -110,7 +143,7 @@ export function FileDetails({ onClose, details }: Props) {
               <li>
                 <p>Used:</p>
                 <p>
-                  <b>{purchases} </b> purchase(s)
+                  <b>{purchases.length} </b> purchase(s)
                 </p>
               </li>
             </ul>
@@ -124,6 +157,8 @@ export function FileDetails({ onClose, details }: Props) {
                 variant="outline"
                 onClick={onDownload}></Button>
             </div>
+
+            <PurchaseHistory purchases={purchases}></PurchaseHistory>
           </div>
         )}
       </>
