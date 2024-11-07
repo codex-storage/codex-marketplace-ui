@@ -37,7 +37,7 @@ export function FileDetails({ onClose, details }: Props) {
       );
   }, [details?.cid]);
 
-  const url = CodexSdk.url() + "/api/codex/v1/data/";
+  let url = CodexSdk.url() + "/api/codex/v1/data/";
 
   const onDownload = () => window.open(url + details?.cid, "_target");
 
@@ -57,7 +57,14 @@ export function FileDetails({ onClose, details }: Props) {
 
             <div className="preview">
               {FilesUtils.isImage(details.manifest.mimetype) ? (
-                <img src={url + details.cid} />
+                <img
+                  src={
+                    details?.cid ===
+                    "FHZhZgD8jKzUUb04IZKKf50JGko7HCtIMuNbzmOcbMCvbZ3SUq07eu50x78Rgfeg"
+                      ? "/img/onboarding.png"
+                      : url + details.cid
+                  }
+                />
               ) : (
                 <figure>
                   <WebFileIcon
