@@ -1,4 +1,6 @@
 .files {
+  position: relative;
+
   section {
     display: inline-flex;
     justify-content: space-between;

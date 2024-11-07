@@ -1,22 +1,22 @@
 .folder-button {
   > div {
     position: absolute;
-    transform: translate(-110px, -75px);
+    right: 300px;
     opacity: 0;
     transition:
       transform 0.25s,
+      left 0.25s,
       opacity 0.15s;
     background-color: var(--codex-background);
     padding: 0.5rem;
     border-radius: var(--codex-border-radius);
     width: 150px;
-    right: -40px;
     border: 1px solid var(--codex-border-color);
     z-index: -1;
 
     &[aria-expanded] {
       z-index: 12;
-      transform: translate(-110px, -200px);
+      right: 30px;
       opacity: 1;
     }
 
