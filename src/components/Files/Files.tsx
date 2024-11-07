@@ -38,7 +38,9 @@ export function Files({ limit }: Props) {
   const [folders, setFolders] = useState<[string, string[]][]>([]);
   const [error, setError] = useState("");
   const [details, setDetails] = useState<CodexDataContent | null>(null);
-  const [sortFn, setSortFn] = useState<SortFn | null>(null);
+  const [sortFn, setSortFn] = useState<SortFn>(() =>
+    FilesUtils.sortByDate("desc")
+  );
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   useEffect(() => {

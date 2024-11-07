@@ -27,7 +27,7 @@ export const Peers = () => {
     setIps((ips) => ({ ...ips, [ip]: geo }));
   }, []);
 
-  const [sortFn, setSortFn] = useState<PeerSortFn | null>(() =>
+  const [sortFn, setSortFn] = useState<PeerSortFn>(() =>
     PeerUtils.sortByBoolean("desc")
   );
 

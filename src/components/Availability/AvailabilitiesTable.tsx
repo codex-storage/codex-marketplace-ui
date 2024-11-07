@@ -32,7 +32,9 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
     null
   );
   const [details, setDetails] = useState<string[]>([]);
-  const [sortFn, setSortFn] = useState<SortFn | null>(null);
+  const [sortFn, setSortFn] = useState<SortFn>(() =>
+    AvailabilityUtils.sortById("desc")
+  );
 
   const onReservationsClose = () => setAvailability(null);
 
