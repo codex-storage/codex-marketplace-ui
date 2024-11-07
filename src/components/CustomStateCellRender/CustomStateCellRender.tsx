@@ -9,7 +9,7 @@ type Props = {
   message: string | undefined;
 };
 
-export const CustomStateCellRender = ({ state, message }: Props) => {
+export const CustomStateCellRender = ({ state }: Props) => {
   const icons = {
     pending: PurchaseStateIcon,
     submitted: PurchaseStateIcon,
