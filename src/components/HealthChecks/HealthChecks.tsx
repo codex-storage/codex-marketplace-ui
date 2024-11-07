@@ -113,7 +113,11 @@ export function HealthChecks({ online, onStepValid }: Props) {
             onChange={onAddressChange}
             value={address}
             placeholder="127.0.0.1"></Input>
-          {isAddressInvalid ? <ErrorCircleIcon /> : <SuccessCircleIcon />}
+          {isAddressInvalid ? (
+            <ErrorCircleIcon width={16} />
+          ) : (
+            <SuccessCircleIcon />
+          )}
         </div>
 
         <div>
@@ -154,7 +158,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {online ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
-              <ErrorCircleIcon />
+              <ErrorCircleIcon width={16} />
             )}
           </span>
           Internet connection
@@ -164,7 +168,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {portForwarding.enabled ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
-              <ErrorCircleIcon />
+              <ErrorCircleIcon width={16} />
             )}
           </span>
           Port forwarding
@@ -174,7 +178,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {codex.isSuccess ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
-              <ErrorCircleIcon />
+              <ErrorCircleIcon width={16} />
             )}
           </span>
           Codex connection

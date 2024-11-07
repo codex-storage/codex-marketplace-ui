@@ -18,7 +18,7 @@ export function PeersQuality({ good }: Props) {
 
   return (
     <div className="peers-quality">
-      <ErrorCircleIcon />
+      <ErrorCircleIcon width={16} />
       <span>No peer connection active. </span>
     </div>
   );

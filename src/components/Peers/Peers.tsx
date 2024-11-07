@@ -62,7 +62,7 @@ export const Peers = () => {
               </div>
             ) : (
               <div className="status--inactive">
-                <ErrorCircleIcon></ErrorCircleIcon> Inactive
+                <ErrorCircleIcon width={16}></ErrorCircleIcon> Inactive
               </div>
             )}
           </Cell>,
