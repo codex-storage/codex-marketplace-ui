@@ -19,9 +19,10 @@ type Props = {
   purchaseCid: string;
   index: number;
   data: CodexDataContent[];
+  onMetadata?: (requestId: string, metadata: FileMetadata) => void;
 };
 
-export function FileCell({ requestId, purchaseCid, data }: Props) {
+export function FileCell({ requestId, purchaseCid, data, onMetadata }: Props) {
   const [cid, setCid] = useState(purchaseCid);
   const [metadata, setMetadata] = useState<FileMetadata>({
     filename: "-",
@@ -42,6 +43,11 @@ export function FileCell({ requestId, purchaseCid, data }: Props) {
             uploadedAt = 0,
           } = content.manifest;
           setMetadata({
+            filename,
+            mimetype,
+            uploadedAt,
+          });
+          onMetadata?.(requestId, {
             filename,
             mimetype,
             uploadedAt,

@@ -16,6 +16,7 @@ import { useStorageRequestMutation } from "./useStorageRequestMutation";
 import { Plus } from "lucide-react";
 import "./StorageRequestCreate.css";
 import { StorageRequestError } from "./StorageRequestError";
+import PurchaseIcon from "../../assets/icons/purchase.svg?react";
 
 const CONFIRM_STATE = 2;
 
@@ -35,7 +36,7 @@ export function StorageRequestCreate() {
   const [storageRequest, setStorageRequest] = useState<StorageRequest>(
     defaultStorageRequest
   );
-  const steps = useRef(["File", "Criteria", "Success"]);
+  const steps = useRef(["Select File", "Select Request Criteria", "Success"]);
   const { state, dispatch } = useStepperReducer();
   const { mutateAsync, error } = useStorageRequestMutation(dispatch, state);
 
@@ -117,15 +118,21 @@ export function StorageRequestCreate() {
   const nextLabel = state.step === steps.current.length - 1 ? "Finish" : "Next";
 
   return (
-    <>
+    <div className="storage-request">
       <Button
         label="Storage Request"
         Icon={Plus}
         onClick={onOpen}
-        variant="primary"
+        variant="outline"
+        size="small"
       />
 
-      <Modal open={state.open} onClose={onClose} displayCloseButton={false}>
+      <Modal
+        title="Storage request"
+        Icon={PurchaseIcon}
+        open={state.open}
+        onClose={onClose}
+        displayCloseButton={false}>
         <Stepper
           titles={steps.current}
           state={state}
@@ -133,7 +140,6 @@ export function StorageRequestCreate() {
           duration={STEPPER_DURATION}
           onNextStep={onNextStep}
           backLabel={backLabel}
-          className="storageRequestCreate"
           nextLabel={nextLabel}>
           <Body
             dispatch={dispatch}
@@ -144,6 +150,6 @@ export function StorageRequestCreate() {
           />
         </Stepper>
       </Modal>
-    </>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import { CodexSdk } from "../../sdk/codex";
 import "./StorageRequestFileChooser.css";
 import { ChangeEvent, useEffect } from "react";
-import { classnames } from "../../utils/classnames";
 import {
   Dropdown,
   DropdownOption,
@@ -11,6 +10,8 @@ import {
 import { useData } from "../../hooks/useData";
 import { StorageRequestComponentProps } from "./types";
 import { useQueryClient } from "@tanstack/react-query";
+import ChooseCidIcon from "../../assets/icons/choose-cid.svg?react";
+import UploadIcon from "../../assets/icons/upload.svg?react";
 
 export function StorageRequestFileChooser({
   storageRequest,
@@ -55,49 +56,42 @@ export function StorageRequestFileChooser({
     }) || [];
 
   return (
-    <>
-      <span className="storageRequest-title">Choose a CID</span>
-
-      <label className="label" htmlFor="cid">
-        CID
-      </label>
+    <div className="file-chooser">
+      <header>
+        <ChooseCidIcon></ChooseCidIcon>
+        <h6>Choose a CID</h6>
+      </header>
 
       <Dropdown
         label=""
         id="cid"
-        placeholder="Select or type your CID"
+        placeholder="CID"
         onChange={onChange}
         value={storageRequest.cid}
         options={options}
         onSelected={onSelected}
-        className={classnames(
-          ["storageRequestFileChooser-dropdown"],
-          ["storageRequestFileChooser-dropdown-success", !!storageRequest.cid]
-        )}
+        size="medium"
       />
 
-      <div className="storageRequestFileChooser-separator">
-        <hr className="storageRequestFileChooser-hr" />
-        <span className="storageRequestFileChooser-or">OR</span>
-        <hr className="storageRequestFileChooser-hr" />
+      <div className="row gap">
+        <hr />
+        <span>OR</span>
+        <hr />
       </div>
 
-      <span className="storageRequest-title">
-        <div>
-          <span>Upload a file</span>
-        </div>
-        <span className="input-helper-text text-secondary">
-          The CID will be automatically copied after your upload.
-        </span>
-      </span>
+      <div className="row gap">
+        <UploadIcon width={24} color="#969696"></UploadIcon>
+        <h6>Upload</h6>
+      </div>
 
       <Upload
         onSuccess={onSuccess}
         editable={false}
+        multiple={false}
         onDeleteItem={onDelete}
         codexData={CodexSdk.data()}
         successMessage={"Success, the CID has been copied to the field on top."}
       />
-    </>
+    </div>
   );
 }

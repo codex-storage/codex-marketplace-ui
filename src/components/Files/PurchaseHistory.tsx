@@ -10,7 +10,7 @@ import { TruncateCell } from "../TruncateCell/TruncateCell";
 import { CodexPurchase } from "@codex-storage/sdk-js";
 import PurchaseHistoryIcon from "../../assets/icons/purchase-history-outline.svg?react";
 import { useState } from "react";
-import { PurchaseUtils } from "../StorageRequestSetup/purchase.util";
+import { PurchaseUtils } from "../Purchase/purchase.utils";
 
 type Props = {
   purchases: CodexPurchase[];

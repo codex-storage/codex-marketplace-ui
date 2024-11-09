@@ -1,5 +1,35 @@
-@media (min-width: 801px) {
-  .storageRequestCreate {
-    min-width: 700px;
+.storage-request {
+  .modal dialog {
+    width: 80%;
+    max-width: 100% !important;
+  }
+
+  header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    small {
+      font-family: Inter;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+      text-align: left;
+      color: #969696;
+    }
+  }
+
+  h6 {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.011em;
+    text-align: left;
+  }
+
+  .upload-file {
+    margin-bottom: 16px;
   }
 }

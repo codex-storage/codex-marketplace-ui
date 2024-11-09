@@ -3,12 +3,14 @@ import "./StorageRequestReview.css";
 import { Alert } from "@codex-storage/marketplace-ui-components";
 import { CardNumbers } from "../CardNumbers/CardNumbers";
 import { FileWarning } from "lucide-react";
-import { classnames } from "../../utils/classnames";
-import {
-  AvailabilityUnit,
-  StorageRequest,
-  StorageRequestComponentProps,
-} from "./types";
+import { StorageRequest, StorageRequestComponentProps } from "./types";
+import DurabilityIcon from "../../assets/icons/durability.svg?react";
+import AlphaIcon from "../../assets/icons/alpha.svg?react";
+import PresetIcon from "../../assets/icons/preset.svg?react";
+import CommitmentIcon from "../../assets/icons/commitment.svg?react";
+import RequestDurationIcon from "../../assets/icons/request-duration.svg?react";
+import { attributes } from "../../utils/attributes";
+import { Strings } from "../../utils/strings";
 
 type Durability = {
   nodes: number;
@@ -32,14 +34,14 @@ const findDurabilityIndex = (d: Durability) => {
   return durabilities.findIndex((d) => JSON.stringify(d) === s);
 };
 
-const units = ["days", "minutes", "hours", "days", "months", "years"];
+// const units = ["days", "minutes", "hours", "days", "months", "years"];
 
 export function StorageRequestReview({
   dispatch,
   onStorageRequestChange,
   storageRequest,
 }: StorageRequestComponentProps) {
-  const [durability, setDurability] = useState<number>(1);
+  const [durability, setDurability] = useState<number>(2);
 
   const isInvalidConstrainst = useCallback(
     (nodes: number, tolerance: number) => {
@@ -124,7 +126,7 @@ export function StorageRequestReview({
   };
 
   const isInvalidAvailability = (data: string) => {
-    const [value, unit = "days"] = data.split(" ");
+    const [value] = data.split(" ");
 
     const error = isInvalidNumber(value);
 
@@ -136,9 +138,9 @@ export function StorageRequestReview({
     //   unit += "s";
     // }
 
-    if (!units.includes(unit)) {
-      return "Invalid unit must one of: minutes, hours, days, months, years";
-    }
+    // if (!units.includes(unit)) {
+    //   return "Invalid unit must one of: minutes, hours, days, months, years";
+    // }
 
     return "";
   };
@@ -156,7 +158,7 @@ export function StorageRequestReview({
     onUpdateDurability({ proofProbability: Number(value) });
 
   const onAvailabilityChange = (value: string) => {
-    const [availability, availabilityUnit = "days"] = value.split(" ");
+    const [availability] = value.split(" ");
 
     // if (!availabilityUnit.endsWith("s")) {
     //   availabilityUnit += "s";
@@ -164,7 +166,7 @@ export function StorageRequestReview({
 
     onStorageRequestChange({
       availability: Number(availability),
-      availabilityUnit: availabilityUnit as AvailabilityUnit,
+      availabilityUnit: "months",
     });
   };
 
@@ -189,157 +191,148 @@ export function StorageRequestReview({
   //   return data.availabilityUnit;
   // };
 
-  const availability = `${storageRequest.availability} ${storageRequest.availabilityUnit}`;
+  const availability = storageRequest.availability;
 
   return (
-    <div>
-      <span className="storageRequest-title">Durability</span>
-      <div className="storageRequestReview-numbers">
-        <CardNumbers
-          title={"Nodes"}
-          data={storageRequest.nodes.toString()}
-          onChange={onNodesChange}
-          onValidation={isInvalidNodes}
-          helper="Number of storage nodes"></CardNumbers>
-        <CardNumbers
-          title={"Tolerance"}
-          data={storageRequest.tolerance.toString()}
-          onChange={onToleranceChange}
-          onValidation={isInvalidTolerance}
-          helper="Failure node tolerated"></CardNumbers>
-        <CardNumbers
-          title={"Proof probability"}
-          data={storageRequest.proofProbability.toString()}
-          onChange={onProofProbabilityChange}
-          helper="Proof request frequency"></CardNumbers>
-      </div>
-
-      <div className="storageRequestReview-presets">
-        <div className="storageRequestReview-presets-title">
-          <b>Define your durability profile</b>
-          <p>
+    <div className="request-review">
+      <header>
+        <DurabilityIcon></DurabilityIcon>
+        <div>
+          <h6>Define your Durability Profile</h6>
+          <small>
             Select the appropriate level of data storage reliability ensuring
             your information is protected and accessible.
-          </p>
+          </small>
         </div>
-        <div className="storageRequestReview-presets-blocs">
-          <div
-            onClick={() => onDurabilityChange(0)}
-            className={classnames(
-              ["storageRequestReview-presets-bloc"],
-              [
-                "storageRequestReview-presets--selected",
-                durability <= 0 || durability > 3,
-              ]
-            )}>
-            <div className="storageRequestReview-presets-blocIcon">
-              <img src="/shape-1.png" width={48} />
+      </header>
+      <main>
+        <div className="presets">
+          <div>
+            <AlphaIcon width={20} color="#6FCB94"></AlphaIcon>
+            <div>
+              <span>Durability</span>
+              <small>Suggested Defaults</small>
             </div>
-            <p>Custom</p>
           </div>
           <div
-            onClick={() => onDurabilityChange(1)}
-            className={classnames(
-              ["storageRequestReview-presets-bloc"],
-              ["storageRequestReview-presets--selected", durability === 1]
-            )}>
-            <div className="storageRequestReview-presets-blocIcon">
-              <img src="/shape-2.png" width={48} />
-            </div>
-            <p>Low</p>
+            {...attributes({
+              "aria-selected": durability <= 0 || durability > 3,
+            })}
+            onClick={() => onDurabilityChange(0)}>
+            <span>Custom</span>
+            <PresetIcon></PresetIcon>
           </div>
           <div
-            onClick={() => onDurabilityChange(2)}
-            className={classnames(
-              ["storageRequestReview-presets-bloc"],
-              ["storageRequestReview-presets--selected", durability === 2]
-            )}>
-            <div className="storageRequestReview-presets-blocIcon">
-              <img src="/shape-3.png" width={48} />
-            </div>
-            <p>Medium</p>
+            {...attributes({
+              "aria-selected": durability == 1,
+            })}
+            onClick={() => onDurabilityChange(1)}>
+            <span>Low</span>
+            <PresetIcon></PresetIcon>
           </div>
           <div
-            onClick={() => onDurabilityChange(3)}
-            className={classnames(
-              ["storageRequestReview-presets-bloc"],
-              ["storageRequestReview-presets--selected", durability === 3]
-            )}>
-            <div className="storageRequestReview-presets-blocIcon">
-              <img src="/shape-4.png" width={48} />
-            </div>
-            <p>High</p>
+            {...attributes({
+              "aria-selected": durability == 2,
+            })}
+            onClick={() => onDurabilityChange(2)}>
+            <span>Medium</span>
+            <span>Recommanded</span>
+            <PresetIcon></PresetIcon>
+          </div>
+          <div
+            {...attributes({
+              "aria-selected": durability == 3,
+            })}
+            onClick={() => onDurabilityChange(3)}>
+            <span>High</span>
+            <PresetIcon></PresetIcon>
           </div>
         </div>
-      </div>
 
-      {/* <Range
-        onChange={onDurabilityRangeChange}
-        className={classnames(
-          ["storageRequestReview-range"],
-          ["storageRequestReview-range--disabled", durability === 0]
-        )}
-        labels={["Weak", "Low", "Medium", "High", "Confident"]}
-        max={5}
-        label=""
-        value={durability}
-      /> */}
+        <div className="grid">
+          <CardNumbers
+            helper="Minimal number of nodes the content should be stored on."
+            id="nodes"
+            unit={"Nodes"}
+            value={storageRequest.nodes.toString()}
+            onChange={onNodesChange}
+            onValidation={isInvalidNodes}
+            title="Number of storage nodes"></CardNumbers>
+          <CardNumbers
+            id="tolerance"
+            unit={"Tolerance Multiplier"}
+            value={storageRequest.tolerance.toString()}
+            onChange={onToleranceChange}
+            onValidation={isInvalidTolerance}
+            title="Failure Node Tolerated"
+            helper="Additional number of nodes on top of the nodes property that can be lost before pronouncing the content lost."></CardNumbers>
+          <CardNumbers
+            helper="How often storage proofs are required."
+            id="proof-request"
+            unit={"Frequency Level"}
+            value={storageRequest.proofProbability.toString()}
+            onChange={onProofProbabilityChange}
+            title="Proof Request Frequency"></CardNumbers>
+        </div>
 
-      <span className="storageRequest-title">Commitment</span>
+        <div className="row">
+          <CommitmentIcon></CommitmentIcon>
+          <h6>Commitment</h6>
+        </div>
 
-      <div className="storageRequestReview-numbers">
-        <CardNumbers
-          title={"Contract duration"}
-          data={availability}
-          onChange={onAvailabilityChange}
-          onValidation={isInvalidAvailability}
-          repositionCaret={false}
-          helper="Full period of the contract"></CardNumbers>
-        <CardNumbers
-          title={"Collateral"}
-          data={storageRequest.collateral.toString()}
-          onChange={onCollateralChange}
-          onValidation={isInvalidNumber}
-          helper="Reward tokens for hosts"></CardNumbers>
-        <CardNumbers
-          title={"Reward"}
-          data={storageRequest.reward.toString()}
-          onChange={onRewardChange}
-          onValidation={isInvalidNumber}
-          helper="Penality tokens"></CardNumbers>
-        <div className="storageRequest-price"></div>
-        {/* <Range
-          className={classnames(
-            ["storageRequestReview-range"],
-            ["storageRequestReview-range--disabled", price === 0]
-          )}
-          labels={["Low", "Average", "Attractive"]}
-          max={100}
-          label=""
-          onChange={onPriceRangeChange}
-        /> */}
-      </div>
+        <div className="grid">
+          <CardNumbers
+            helper="The duration of the request in months"
+            id="duration"
+            title={"Full period of the contract"}
+            value={availability.toString()}
+            onChange={onAvailabilityChange}
+            onValidation={isInvalidAvailability}
+            unit="Contract duration"></CardNumbers>
+          <CardNumbers
+            helper="Represents how much collateral is asked from hosts that wants to fill a slots"
+            id="collateral"
+            unit={"Collateral"}
+            value={storageRequest.collateral.toString()}
+            onChange={onCollateralChange}
+            onValidation={isInvalidNumber}
+            title="Reward tokens for hosts"></CardNumbers>
+          <CardNumbers
+            helper="The maximum amount of tokens paid per second per slot to hosts the client is willing to pay."
+            id="reward"
+            unit={"Reward"}
+            value={storageRequest.reward.toString()}
+            onChange={onRewardChange}
+            onValidation={isInvalidNumber}
+            title="Penality tokens"></CardNumbers>
+        </div>
 
-      <hr className="storageRequestReview-hr" />
+        <div className="row">
+          <RequestDurationIcon></RequestDurationIcon>
+          <h6>Request Duration</h6>
+        </div>
 
-      <div className="storageRequestReview-alert">
-        <CardNumbers
-          title={"Expiration"}
-          data={storageRequest.expiration.toString()}
-          onChange={onExpirationChange}
-          className="storageRequestReview-expiration"
-          onValidation={isInvalidNumber}
-          helper="Request expiration in seconds"></CardNumbers>
-        <Alert
-          Icon={<FileWarning />}
-          title="Warning"
-          variant="warning"
-          className="storageRequestReview-alert">
-          If no suitable hosts are found for the CID {storageRequest.cid}{" "}
-          matching your storage requirements, you will incur a charge a small
-          amount of tokens.
-        </Alert>
-      </div>
+        <footer>
+          <CardNumbers
+            helper="Represents expiry threshold in seconds from when the Request is submitted. When the threshold is reached and the Request does not find requested amount of nodes to host the data, the Request is voided. "
+            id="expiration"
+            unit={"Expiration"}
+            value={storageRequest.expiration.toString()}
+            onChange={onExpirationChange}
+            className="storageRequestReview-expiration"
+            onValidation={isInvalidNumber}
+            title="Request expiration in seconds"></CardNumbers>
+          <Alert
+            Icon={<FileWarning />}
+            title="Warning"
+            variant="warning"
+            className="storageRequestReview-alert">
+            If no suitable hosts are found for the CID{" "}
+            {Strings.shortId(storageRequest.cid)} matching your storage
+            requirements, you will incur a charge a small amount of tokens.
+          </Alert>
+        </footer>
+      </main>
     </div>
   );
 }

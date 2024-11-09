@@ -3,21 +3,3 @@
   display: flex;
   align-items: center;
 }
-
-.storageRequestFileChooser-dropdown-success {
-  animation-duration: 3s;
-  animation-name: cid-selected;
-  border-radius: var(--codex-border-radius);
-}
-
-@keyframes cid-selected {
-  0% {
-    box-shadow: 0 0 0 0px var(--codex-color-primary-variant);
-  }
-  50% {
-    box-shadow: 0 0 0 3px var(--codex-color-primary-variant);
-  }
-  100% {
-    box-shadow: 0 0 0 0px var(--codex-color-primary-variant);
-  }
-}

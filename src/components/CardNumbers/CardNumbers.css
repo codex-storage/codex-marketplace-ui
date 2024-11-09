@@ -1,87 +1,72 @@
-.cardNumber {
-  border-radius: var(--codex-border-radius);
-  border: 1px solid var(--codex-border-color);
-  font-family: var(--codex-font-family);
-  padding: 0.5rem 1rem;
-  background-color: rgb(56 56 56);
-  display: flex;
-  flex-direction: column;
-}
+.card-number {
+  --codex-card-number-label-color: #7b7b7b;
+  --codex-card-number-unit-color: #969696;
 
-.cardNumber-container {
-  display: flex;
-  flex-direction: column;
-}
+  &[aria-invalid] {
+    --codex-card-number-label-color: var(--codex-input-color-error);
+    --codex-card-number-unit-color: var(--codex-input-color-error);
+  }
 
-.cardNumber--error {
-  border-color: rgb(var(--codex-color-error));
-}
-
-.cardNumber-errorText,
-.cardNumber-helperText {
-  height: 2rem;
-  display: inline-block;
-  margin-top: 0.25rem;
-  padding: 0 0.5rem;
-}
-
-.cardNumber-errorText {
-  color: rgb(var(--codex-color-error));
-}
-
-.cardNumber-title {
-  display: inline-block;
-  font-size: 0.9rem;
-}
-
-.cardNumber-data {
-  font-size: 2rem;
-  color: var(--codex-color-primary);
-  margin-bottom: 0.5rem;
-}
-
-.cardNumber-data:focus-visible {
-  outline: 1px solid var(--codex-border-color);
-  outline-offset: 0.25rem;
-}
-
-.cardNumber-dataContainer {
   position: relative;
-  flex: 1;
 
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  position: relative;
-  top: 0px;
-  /* --codex-button-icon-background: var(--codex-color-primary); */
-  justify-content: space-between;
-  align-items: center;
-}
+  label {
+    color: var(--codex-card-number-label-color);
+  }
 
-.cardNumber-dataContainer .button-icon {
-  position: relative;
-  top: 3px;
-}
+  input {
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: -0.015em;
+    width: 100%;
+    background-color: transparent;
 
-.cardNumber-tooltip {
-  color: var(--codex-color-disabled);
-  display: flex;
-}
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-.cardNumber-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+    & {
+      -moz-appearance: textfield;
+    }
+  }
 
-.cardNumber .input {
-  min-width: 0;
-  width: 65px;
-  height: 2.5rem;
-}
+  .tooltip {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
 
-.cardNumber .inputGroup-select {
-  height: 2.5rem;
-  padding: 0.25rem 1rem;
+  svg {
+    color: var(--codex-card-number-unit-color);
+  }
+
+  /* svg::after {
+    content: attr(data-title);
+    background-color: #2f2f2f;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 14px;
+    display: block;
+    white-space: nowrap;
+    position: absolute;
+    right: 1rem;
+    overflow: visible;
+  } */
+
+  span {
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
+    color: var(--codex-card-number-unit-color);
+    position: absolute;
+    top: 54px;
+    right: 16px;
+  }
 }

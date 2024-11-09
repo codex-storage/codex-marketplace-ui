@@ -205,6 +205,7 @@ export function Files({ limit }: Props) {
             label="Folder"
             Icon={PlusIcon}
             variant="outline"
+            size="small"
             disabled={!!error || !folder}
             onClick={onFolderCreate}></Button>
         </div>
