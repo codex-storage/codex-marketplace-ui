@@ -19,6 +19,7 @@ import {
   CodexNode,
   CodexNodeSpace,
   CodexReservation,
+  CodexUpdateAvailabilityInput,
 } from "@codex-storage/sdk-js";
 import { GB } from "./utils/constants";
 import { DebugErrorsData } from "./components/DebugErrors/debug-errors.domain";
@@ -82,7 +83,7 @@ class CodexDataMock extends CodexData {
               }])
               resolve({
                 error: false,
-                data: Date.now().toString(),
+                data: Strings.randomCid(64),
               });
             }
           }
@@ -528,7 +529,7 @@ class CodexMarketplaceMock extends CodexMarketplace {
           "0x0f6623325747c25c57f766a656f0609a08dc5e7d48e17bb22f31d2f5775b166d",
         id: "0x1aad5b0495097f98010b87079e07f4f1bf283f533670057123e493b452e601a3",
       },
-      state: "submitted",
+      state: "finished",
       error: "",
     },
     {
@@ -573,7 +574,6 @@ class CodexMarketplaceMock extends CodexMarketplace {
     maxCollateral: 10,
   },]
 
-
   static defaultReservations = [
     {
       id: "0x123456789",
@@ -596,6 +596,13 @@ class CodexMarketplaceMock extends CodexMarketplace {
       slotIndex: "1",
     },
   ]
+
+  override updateAvailability(_: CodexUpdateAvailabilityInput): Promise<SafeValue<"">> {
+    return Promise.resolve({
+      error: false,
+      data: ""
+    })
+  }
 
   override async purchases(): Promise<SafeValue<CodexPurchase[]>> {
     if (DebugErrorsData.purchasesApi) {
