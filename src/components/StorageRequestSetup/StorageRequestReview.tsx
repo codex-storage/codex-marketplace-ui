@@ -69,10 +69,12 @@ export function StorageRequestReview({
   const onUpdateDurability = (data: Partial<StorageRequest>) => {
     onStorageRequestChange(data);
 
+    const merge = { ...storageRequest, ...data };
+
     const index = findDurabilityIndex({
-      nodes: storageRequest.nodes,
-      tolerance: storageRequest.tolerance,
-      proofProbability: storageRequest.proofProbability,
+      nodes: merge.nodes,
+      tolerance: merge.tolerance,
+      proofProbability: merge.proofProbability,
     });
 
     setDurability(index + 1);
