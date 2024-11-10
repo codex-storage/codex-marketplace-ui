@@ -17,12 +17,9 @@ import { TruncateCell } from "../TruncateCell/TruncateCell";
 import { CustomStateCellRender } from "../CustomStateCellRender/CustomStateCellRender";
 import { PurchaseUtils } from "./purchase.utils";
 
-type Props = {};
-
 type SortFn = (a: CodexPurchase, b: CodexPurchase) => number;
 
-export function PurchasesTable({}: Props) {
-  const [metadata, setMetadata] = useState<{ [key: string]: number }>({});
+export function PurchasesTable() {
   const content = useData();
   const { data, isPending } = useQuery({
     queryFn: () =>
@@ -49,21 +46,21 @@ export function PurchasesTable({}: Props) {
     throwOnError: true,
   });
 
-  const onMetadata = (
-    requestId: string,
-    { uploadedAt }: { uploadedAt: number }
-  ) => {
-    setMetadata((m) => ({ ...m, [requestId]: uploadedAt }));
-    setSortFn(() =>
-      PurchaseUtils.sortByUploadedAt("desc", {
-        ...metadata,
-        [requestId]: uploadedAt,
-      })
-    );
-  };
+  // const onMetadata = (
+  //   requestId: string,
+  //   { uploadedAt }: { uploadedAt: number }
+  // ) => {
+  //   setMetadata((m) => ({ ...m, [requestId]: uploadedAt }));
+  //   setSortFn(() =>
+  //     PurchaseUtils.sortByUploadedAt("desc", {
+  //       ...metadata,
+  //       [requestId]: uploadedAt,
+  //     })
+  //   );
+  // };
 
   const [sortFn, setSortFn] = useState<SortFn>(() =>
-    PurchaseUtils.sortByUploadedAt("desc", metadata)
+    PurchaseUtils.sortByDuration("desc")
   );
 
   const onSortByDuration = (state: TabSortState) =>
@@ -75,11 +72,11 @@ export function PurchasesTable({}: Props) {
   const onSortByState = (state: TabSortState) =>
     setSortFn(() => PurchaseUtils.sortByState(state));
 
-  const onSortByUploadedAt = (state: TabSortState) =>
-    setSortFn(() => PurchaseUtils.sortByUploadedAt(state, metadata));
+  // const onSortByUploadedAt = (state: TabSortState) =>
+  //   setSortFn(() => PurchaseUtils.sortByUploadedAt(state, metadata));
 
   const headers = [
-    ["file", onSortByUploadedAt],
+    ["file"],
     ["request id"],
     ["duration", onSortByDuration],
     ["slots"],
@@ -104,7 +101,6 @@ export function PurchasesTable({}: Props) {
             purchaseCid={r.content.cid}
             index={index}
             data={content}
-            onMetadata={onMetadata}
           />,
           <TruncateCell value={r.id} />,
           <Cell>{Times.pretty(duration)}</Cell>,
@@ -116,8 +112,6 @@ export function PurchasesTable({}: Props) {
     );
   });
 
-  console.info(metadata);
-
   if (isPending) {
     return (
       <div className="purchases-loader">
@@ -128,7 +122,7 @@ export function PurchasesTable({}: Props) {
 
   return (
     <>
-      <Table headers={headers} rows={rows} defaultSortIndex={0} />
+      <Table headers={headers} rows={rows} defaultSortIndex={2} />
     </>
   );
 }

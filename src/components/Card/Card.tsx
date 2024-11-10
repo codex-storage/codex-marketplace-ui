@@ -35,6 +35,7 @@ export function Card({
             label={buttonLabel}
             variant="outline"
             Icon={buttonIcon}
+            size="small"
             onClick={buttonAction}></Button>
         )}
       </header>

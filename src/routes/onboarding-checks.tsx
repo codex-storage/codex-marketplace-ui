@@ -16,7 +16,7 @@ const OnBoardingChecks = () => {
 
   const onNextStep = () => {
     if (isStepValid) {
-      navigate({ to: "/onboarding-checks" });
+      navigate({ to: "/dashboard" });
     }
   };
 
@@ -36,7 +36,7 @@ const OnBoardingChecks = () => {
         </section>
         <section className="main">
           <h1>
-            Nice to meet {displayName},<br />
+            Nice to meet you {displayName},<br />
             Let’s establish our connection.
           </h1>
 

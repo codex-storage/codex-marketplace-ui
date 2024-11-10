@@ -26,6 +26,7 @@ if (import.meta.env.PROD && !import.meta.env.CI) {
       Sentry.feedbackIntegration({
         // Additional SDK configuration goes in here, for example:
         colorScheme: "dark",
+        triggerLabel: "",
       }),
     ],
     // Tracing

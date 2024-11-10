@@ -76,6 +76,7 @@ export function UserInfo({ onNameChange }: Props) {
           onChange={onDisplayNameChange}
           label="Preferred name"
           id="displayName"
+          autoComplete="off"
           value={displayName}></Input>
       </div>
     </div>

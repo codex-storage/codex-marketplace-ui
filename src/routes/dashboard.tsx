@@ -1,4 +1,8 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  ScrollRestoration,
+} from "@tanstack/react-router";
 import "./layout.css";
 import { Menu } from "../components/Menu/Menu";
 import { useState } from "react";
@@ -23,6 +27,7 @@ const Layout = () => {
       <main>
         <AppBar onIconClick={onIconClick} />
         <div>
+          <ScrollRestoration></ScrollRestoration>
           <Outlet />
         </div>
       </main>

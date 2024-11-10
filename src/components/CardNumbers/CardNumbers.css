@@ -21,16 +21,6 @@
     letter-spacing: -0.015em;
     width: 100%;
     background-color: transparent;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    & {
-      -moz-appearance: textfield;
-    }
   }
 
   .tooltip {
@@ -67,6 +57,6 @@
     color: var(--codex-card-number-unit-color);
     position: absolute;
     top: 54px;
-    right: 16px;
+    right: 48px;
   }
 }

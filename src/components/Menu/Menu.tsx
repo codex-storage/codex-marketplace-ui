@@ -36,9 +36,7 @@ export type MenuItem =
       Component: ComponentType<MenuItemComponentProps>;
     };
 
-type Props = {};
-
-export function Menu({}: Props) {
+export function Menu() {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const onLogoClick = () => {
@@ -72,7 +70,11 @@ export function Menu({}: Props) {
               </span>
               <span>Dashboard</span>
             </Link>
-            <Link to="/dashboard/wallet">
+            <Link
+              to="/dashboard/wallet"
+              disabled={true}
+              aria-disabled={true}
+              data-title="Coming soon">
               <span>
                 <WalletIcon width={20} height={20} />
               </span>

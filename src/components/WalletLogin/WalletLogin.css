@@ -5,6 +5,15 @@
   gap: 16px;
   background-color: #252525;
 
+  & {
+    filter: grayscale(30);
+    transition: filter 0.5s;
+  }
+
+  &:hover {
+    filter: none;
+  }
+
   div {
     > p {
       font-family: Inter;

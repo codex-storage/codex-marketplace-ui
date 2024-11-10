@@ -162,22 +162,22 @@ export function Sunburst({ availabilities, space }: Props) {
 
   if (chart.current) {
     chart.current.setOption(option);
-    chart.current.off("click");
-    chart.current.on("click", function (params) {
-      // console.info(params.componentIndex);
-      // console.info(params.dataIndex);
+    // chart.current.off("click");
+    // chart.current.on("click", function (params) {
+    //   // console.info(params.componentIndex);
+    //   // console.info(params.dataIndex);
 
-      const index = params.dataIndex;
+    //   const index = params.dataIndex;
 
-      const detail =
-        params.dataIndex === 0 ? null : availabilities[index - 1].id;
+    //   const detail =
+    //     params.dataIndex === 0 ? null : availabilities[index - 1].id;
 
-      document.dispatchEvent(
-        new CustomEvent("codexavailabilityid", {
-          detail,
-        })
-      );
-    });
+    //   document.dispatchEvent(
+    //     new CustomEvent("codexavailabilityid", {
+    //       detail,
+    //     })
+    //   );
+    // });
   }
 
   return <div id="chart" ref={div} className="sunburst"></div>;

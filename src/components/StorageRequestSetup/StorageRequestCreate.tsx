@@ -22,14 +22,14 @@ const CONFIRM_STATE = 2;
 
 const defaultStorageRequest: StorageRequest = {
   cid: "",
-  availabilityUnit: "days",
+  availabilityUnit: "months",
   availability: 1,
   tolerance: 1,
   proofProbability: 1,
   nodes: 3,
   reward: 10,
   collateral: 10,
-  expiration: 300,
+  expiration: 5,
 };
 
 export function StorageRequestCreate() {
@@ -88,7 +88,7 @@ export function StorageRequestCreate() {
       mutateAsync({
         ...rest,
         duration: Times.toSeconds(availability, availabilityUnit),
-        expiry: expiration,
+        expiry: expiration * 60,
       });
     } else {
       dispatch({

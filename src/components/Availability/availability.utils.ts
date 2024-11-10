@@ -1,5 +1,7 @@
 import { TabSortState } from "@codex-storage/marketplace-ui-components"
-import { AvailabilityWithSlots } from "./types"
+import { AvailabilityState, AvailabilityWithSlots } from "./types"
+import { GB, TB } from "../../utils/constants";
+import { CodexNodeSpace } from "@codex-storage/sdk-js";
 
 export const AvailabilityUtils = {
     sortById: (state: TabSortState) =>
@@ -33,4 +35,18 @@ export const AvailabilityUtils = {
             ? b.maxCollateral - a.maxCollateral
             : a.maxCollateral - b.maxCollateral
     ,
+    toUnit(bytes: number, unit: "gb" | "tb") {
+        return bytes / this.unitValue(unit || "gb")
+    },
+    maxValue(space: CodexNodeSpace) {
+        return space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes
+    },
+    unitValue(unit: "gb" | "tb") {
+        return unit === "tb" ? TB : GB
+    },
+    isValid: (
+        availability: AvailabilityState,
+        max: number
+    ) => availability.totalSize > 0 && availability.totalSize <= max
+
 }

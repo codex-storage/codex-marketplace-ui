@@ -61,4 +61,33 @@ export const Times = {
 
     return plural(value, "seconds");
   },
+
+  unit(value: number) {
+    let seconds = 30 * 24 * 60 * 60;
+
+    if (value >= seconds) {
+      return "months";
+    }
+
+    seconds /= 30;
+    if (value >= seconds) {
+      return "days"
+    }
+
+    return "hours"
+  },
+
+  unitValue(unit: "hours" | "days" | "months") {
+    switch (unit) {
+      case "months": {
+        return 30 * 24 * 60 * 60
+      }
+      case "days": {
+        return 24 * 60 * 60
+      }
+      default: {
+        return 60 * 60
+      }
+    }
+  }
 };

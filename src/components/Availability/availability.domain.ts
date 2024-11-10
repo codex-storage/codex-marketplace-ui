@@ -38,12 +38,6 @@ export class AvailabilityDomain {
   }
 }
 
-export const availabilityUnit = (unit: "gb" | "tb") =>
-  unit === "gb" ? GB : TB;
-
-export const availabilityMax = (space: CodexNodeSpace) =>
-  space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes;
-
 export const isAvailabilityValid = (
   availability: AvailabilityState,
   max: number

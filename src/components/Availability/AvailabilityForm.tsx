@@ -1,37 +1,39 @@
-import { Input, InputGroup } from "@codex-storage/marketplace-ui-components";
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  Input,
+  InputGroup,
+  SpaceAllocation,
+  Tooltip,
+} from "@codex-storage/marketplace-ui-components";
+import { ChangeEvent, useEffect } from "react";
 import "./AvailabilityForm.css";
 import { AvailabilityComponentProps } from "./types";
-import { classnames } from "../../utils/classnames";
-import { AvailabilitySpaceAllocation } from "./AvailabilitySpaceAllocation";
-import {
-  availabilityMax,
-  availabilityUnit,
-  isAvailabilityValid,
-} from "./availability.domain";
+import NodesIcon from "../../assets/icons/nodes.svg?react";
+import InfoIcon from "../../assets/icons/info.svg?react";
+import { attributes } from "../../utils/attributes";
+import { AvailabilityUtils } from "./availability.utils";
+import { Times } from "../../utils/times";
 
 export function AvailabilityForm({
   dispatch,
   onAvailabilityChange,
   availability,
   space,
+  editAvailabilityValue,
 }: AvailabilityComponentProps) {
-  const [availabilityValue, setAvailabilityValue] = useState(
-    (
-      availability.totalSize / availabilityUnit(availability.totalSizeUnit)
-    ).toFixed(2)
-  );
-
   useEffect(() => {
-    const max = availabilityMax(space);
-    const isValid = isAvailabilityValid(availability, max);
+    let max = AvailabilityUtils.maxValue(space);
+    if (availability.id && editAvailabilityValue) {
+      max += editAvailabilityValue;
+    }
+
+    const isValid = AvailabilityUtils.isValid(availability, max);
 
     dispatch({
       type: "toggle-buttons",
       isNextEnable: isValid,
       isBackEnable: true,
     });
-  }, [dispatch, space, availability]);
+  }, [dispatch, space, availability, editAvailabilityValue]);
 
   const onTotalSizeUnitChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const element = e.currentTarget;
@@ -42,24 +44,33 @@ export function AvailabilityForm({
     });
   };
 
-  const onDurationUnitChange = async (e: ChangeEvent<HTMLSelectElement>) => {
+  const onDurationChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
+    const unitValue = Times.unitValue(availability.durationUnit);
 
     onAvailabilityChange({
-      duration: 1,
-      durationUnit: element.value as "hours" | "days" | "months",
+      duration: parseInt(element.value) * unitValue,
+    });
+  };
+
+  const onDurationUnitChange = async (e: ChangeEvent<HTMLSelectElement>) => {
+    const element = e.currentTarget;
+    const unit = element.value as "hours" | "days" | "months";
+    const unitValue = Times.unitValue(unit);
+
+    onAvailabilityChange({
+      duration: unitValue,
+      durationUnit: unit,
     });
   };
 
   const onAvailablityChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
     const v = element.value;
-    const unit = availabilityUnit(availability.totalSizeUnit);
-
-    setAvailabilityValue(v);
+    const unit = AvailabilityUtils.unitValue(availability.totalSizeUnit);
 
     onAvailabilityChange({
-      [element.name]: parseFloat(v) * unit,
+      totalSize: parseFloat(v) * unit,
     });
   };
 
@@ -72,128 +83,162 @@ export function AvailabilityForm({
     });
   };
 
-  // const domain = new AvailabilityDomain(space, availability);
-
   const onMaxSize = () => {
-    const available =
-      space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes;
-
-    const unit = availabilityUnit(availability.totalSizeUnit);
-
-    setAvailabilityValue((available / unit).toFixed(2));
+    const available = AvailabilityUtils.maxValue(space);
 
     onAvailabilityChange({
       totalSize: available,
     });
   };
 
-  const available =
-    space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes;
-  const isValid = available >= availability.totalSize;
-  const unit = availabilityUnit(availability.totalSizeUnit);
-  const max = available / unit;
+  let available = AvailabilityUtils.maxValue(space);
+  if (availability.id && editAvailabilityValue) {
+    available += editAvailabilityValue;
+  }
+
+  const isValid =
+    availability.totalSize > 0 && available >= availability.totalSize;
+
   const helper = isValid
     ? "Total size of sale's storage in bytes"
     : "The total size cannot exceed the space available.";
 
+  const value = AvailabilityUtils.toUnit(
+    availability.totalSize,
+    availability.totalSizeUnit
+  ).toFixed(2);
+
+  const unitValue = Times.unitValue(availability.durationUnit);
+  const duration = availability.duration / unitValue;
+
   return (
-    <>
-      <AvailabilitySpaceAllocation availability={availability} space={space} />
+    <div className="availability-form">
+      <header>
+        <NodesIcon width={20}></NodesIcon>
+        <h6>Disk</h6>
+      </header>
+      <SpaceAllocation
+        data={[
+          {
+            title: "Allocated",
+            size: space.quotaUsedBytes,
+            color: "#FF6E61",
+          },
+          {
+            title: "Available",
+            size: space.quotaReservedBytes,
+            color: "#34A0FF",
+          },
+          {
+            title: "Free",
+            size: isValid ? available - availability.totalSize : available,
+            color: "#6F6F6F",
+          },
+        ]}></SpaceAllocation>
 
-      <InputGroup
-        id="totalSize"
-        name="totalSize"
-        type="number"
-        label="Total size"
-        helper={helper}
-        className={classnames(
-          ["availabilityForm-item"],
-          ["availabilityForm-item--error", !isValid]
-        )}
-        inputClassName="availabilityForm-itemInput"
-        min={0.01}
-        max={max.toFixed(2)}
-        onChange={onAvailablityChange}
-        onGroupChange={onTotalSizeUnitChange}
-        value={availabilityValue}
-        step={"0.01"}
-        group={[
-          ["gb", "GB"],
-          ["tb", "TB"],
-        ]}
-        groupValue={availability.totalSizeUnit}
-        extra={
-          <a onClick={onMaxSize} className="availabilityForm-itemInput-maxSize">
-            Use max size
-          </a>
-        }
-      />
-
-      <div className="availabilityForm-item">
-        <InputGroup
-          id="duration"
-          name="duration"
-          type="number"
-          label="Duration"
-          helper="The duration of the request in seconds"
-          inputClassName="availabilityForm-itemInput"
-          min={1}
-          onChange={onInputChange}
-          onGroupChange={onDurationUnitChange}
-          group={[
-            ["hours", "Hours"],
-            ["days", "Days"],
-            ["months", "Months"],
-          ]}
-          value={availability.duration.toString()}
-          groupValue={availability.durationUnit}
-        />
-      </div>
-
-      <div className="availabilityForm-row">
-        <div className="availabilityForm-item">
-          <Input
-            id="minPrice"
-            name="minPrice"
+      <div className="row gap">
+        <div className="group" {...attributes({ "aria-invalid": !isValid })}>
+          <InputGroup
+            id="totalSize"
+            name="totalSize"
             type="number"
-            label="Min price"
-            min={0}
-            helper="Minimum price to be paid (in amount of tokens)"
-            inputClassName="availabilityForm-itemInput"
-            onChange={onInputChange}
-            value={availability.minPrice.toString()}
+            label="Total size"
+            min={0.01}
+            isInvalid={!isValid}
+            max={available.toFixed(2)}
+            onChange={onAvailablityChange}
+            onGroupChange={onTotalSizeUnitChange}
+            step={"0.01"}
+            value={value}
+            group={[
+              ["gb", "GB"],
+              // ["tb", "TB"],
+            ]}
+            groupValue={availability.totalSizeUnit}
+            extra={<a onClick={onMaxSize}>Use max size</a>}
           />
+          <Tooltip message={helper}>
+            <InfoIcon></InfoIcon>
+          </Tooltip>
         </div>
 
-        <div className="availabilityForm-item">
-          <Input
-            id="maxCollateral"
-            name="maxCollateral"
+        <div className="group">
+          <InputGroup
+            id="duration"
+            name="duration"
             type="number"
-            label="Max collateral"
-            min={0}
-            helper="Maximum collateral user is willing to pay per filled Slot (in amount of tokens)"
-            inputClassName="availabilityForm-itemInput"
-            onChange={onInputChange}
-            value={availability.maxCollateral.toString()}
+            label="Duration"
+            min={1}
+            onChange={onDurationChange}
+            onGroupChange={onDurationUnitChange}
+            group={[
+              ["hours", "Hours"],
+              ["days", "Days"],
+              ["months", "Months"],
+            ]}
+            value={duration.toString()}
+            groupValue={availability.durationUnit}
           />
+          <Tooltip message={"The duration of the request in seconds"}>
+            <InfoIcon></InfoIcon>
+          </Tooltip>
         </div>
       </div>
 
-      <div className="availabilityForm-item">
+      <div>
+        <div className="row gap">
+          <div className="group">
+            <Input
+              id="minPrice"
+              name="minPrice"
+              type="number"
+              label="Min price"
+              min={0}
+              onChange={onInputChange}
+              value={availability.minPrice.toString()}
+            />
+            <Tooltip message={"Minimum price to be paid (in amount of tokens)"}>
+              <InfoIcon></InfoIcon>
+            </Tooltip>
+          </div>
+
+          <div className="group">
+            <Input
+              id="maxCollateral"
+              name="maxCollateral"
+              type="number"
+              label="Max collateral"
+              min={0}
+              onChange={onInputChange}
+              value={availability.maxCollateral.toString()}
+            />
+            <Tooltip
+              message={
+                "Maximum collateral user is willing to pay per filled Slot (in amount of tokens)"
+              }>
+              <InfoIcon></InfoIcon>
+            </Tooltip>
+          </div>
+        </div>
+      </div>
+
+      <div className="group">
         <Input
           id="name"
           name="name"
           type="string"
           label="Nickname"
           max={9}
-          helper="You can add a custom name to easily retrieve your sale."
-          inputClassName="availabilityForm-itemInput"
           onChange={onInputChange}
-          value={availability.name?.toString()}
+          value={availability.name?.toString() || ""}
           maxLength={9}
+          autoComplete="falsep"
         />
+        <Tooltip
+          message={"You can add a custom name to easily retrieve your sale."}>
+          <InfoIcon></InfoIcon>
+        </Tooltip>
       </div>
-    </>
+    </div>
   );
 }

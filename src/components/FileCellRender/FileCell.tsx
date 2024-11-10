@@ -55,7 +55,7 @@ export function FileCell({ requestId, purchaseCid, data, onMetadata }: Props) {
         }
       }
     });
-  }, [requestId, data]);
+  }, [requestId, data, onMetadata]);
 
   let filename = metadata.filename || "-";
 

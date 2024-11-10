@@ -47,7 +47,7 @@ function Dashboard() {
           className="card--main"
           title="Connected Account"
           buttonLabel="Add Wallet"
-          buttonIcon={PlusIcon}>
+          buttonIcon={() => <PlusIcon width={20} />}>
           <ConnectedAccount></ConnectedAccount>
         </Card>
 

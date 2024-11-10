@@ -22,6 +22,7 @@ import { WebStorage } from "../../utils/web-storage";
 import { NodeSpace } from "../../components/NodeSpace/NodeSpace";
 import PlusIcon from "../../assets/icons/plus-circle.svg?react";
 import UploadIcon from "../../assets/icons/upload.svg?react";
+import { AvailabilityUtils } from "../../components/Availability/availability.utils";
 
 const defaultSpace = {
   quotaMaxBytes: 0,
@@ -121,9 +122,7 @@ export function Availabilities() {
 
     allocation.push({
       title: "Space remaining",
-      // TODO move this to domain
-      size:
-        space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes,
+      size: AvailabilityUtils.maxValue(space),
       color: "transparent",
     });
 

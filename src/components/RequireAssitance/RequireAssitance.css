@@ -13,6 +13,7 @@
   cursor: pointer;
   text-decoration: none;
   position: relative;
+  max-width: 508px;
 
   h5 {
     font-family: Azeret Mono;

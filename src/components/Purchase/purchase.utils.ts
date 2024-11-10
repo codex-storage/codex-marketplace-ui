@@ -34,7 +34,6 @@ export const PurchaseUtils = {
     ,
     sortByUploadedAt: (state: TabSortState, table: Record<string, number>) =>
         (a: CodexPurchase, b: CodexPurchase) => {
-            console.info(table)
             return state === "desc"
                 ? (table[b.requestId] || 0) - (table[a.requestId] || 0)
                 : (table[a.requestId] || 0) - (table[b.requestId] || 0)

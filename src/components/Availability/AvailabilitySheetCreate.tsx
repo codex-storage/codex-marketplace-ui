@@ -142,7 +142,6 @@ export function AvailabilitySheetCreate({
 
       <Modal open={state.open} onClose={onClose}>
         <Stepper
-          className="availabilityCreate"
           titles={steps.current}
           state={state}
           dispatch={dispatch}

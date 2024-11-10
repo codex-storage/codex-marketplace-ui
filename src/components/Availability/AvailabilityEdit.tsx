@@ -4,19 +4,20 @@ import {
   Button,
   Modal,
 } from "@codex-storage/marketplace-ui-components";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AvailabilityForm } from "./AvailabilityForm";
-import { Pencil } from "lucide-react";
 import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { AvailabilityConfirm } from "./AvailabilityConfirmation";
 import { WebStorage } from "../../utils/web-storage";
 import { AvailabilityState } from "./types";
-import { STEPPER_DURATION } from "../../utils/constants";
+import { GB, STEPPER_DURATION } from "../../utils/constants";
 import { useAvailabilityMutation } from "./useAvailabilityMutation";
 import { AvailabilitySuccess } from "./AvailabilitySuccess";
 import { AvailabilityError } from "./AvailabilityError";
 import "./AvailabilityEdit.css";
 import PlusIcon from "../../assets/icons/plus.svg?react";
+import HostIcon from "../../assets/icons/host.svg?react";
+import { Times } from "../../utils/times";
 
 type Props = {
   space: CodexNodeSpace;
@@ -27,8 +28,8 @@ type Props = {
 const CONFIRM_STATE = 2;
 
 const defaultAvailabilityData: AvailabilityState = {
-  totalSize: 1,
-  duration: 1,
+  totalSize: 0.5 * GB,
+  duration: Times.unitValue("days"),
   minPrice: 0,
   maxCollateral: 0,
   totalSizeUnit: "gb",
@@ -46,7 +47,7 @@ export function AvailabilityEdit({
   );
   const { state, dispatch } = useStepperReducer();
   const { mutateAsync, error } = useAvailabilityMutation(dispatch, state);
-  const [availabilityId, setAvailabilityId] = useState<string | null>(null);
+  const editAvailabilityValue = useRef(0);
 
   useEffect(() => {
     Promise.all([
@@ -67,24 +68,24 @@ export function AvailabilityEdit({
   }, [dispatch]);
 
   // We use a custom event to not re render the sunburst component
-  useEffect(() => {
-    const onAvailabilityIdChange = (e: Event) => {
-      const custom = e as CustomEvent;
-      setAvailabilityId(custom.detail);
-    };
+  // useEffect(() => {
+  //   const onAvailabilityIdChange = (e: Event) => {
+  //     const custom = e as CustomEvent;
+  //     setAvailabilityId(custom.detail);
+  //   };
 
-    document.addEventListener(
-      "codexavailabilityid",
-      onAvailabilityIdChange,
-      false
-    );
+  //   document.addEventListener(
+  //     "codexavailabilityid",
+  //     onAvailabilityIdChange,
+  //     false
+  //   );
 
-    return () =>
-      document.removeEventListener(
-        "codexavailabilityid",
-        onAvailabilityIdChange
-      );
-  }, []);
+  //   return () =>
+  //     document.removeEventListener(
+  //       "codexavailabilityid",
+  //       onAvailabilityIdChange
+  //     );
+  // }, []);
 
   const components = [
     AvailabilityForm,
@@ -111,7 +112,8 @@ export function AvailabilityEdit({
     WebStorage.set("availability-step", step);
 
     if (step == CONFIRM_STATE) {
-      mutateAsync(availability);
+      const { slots, name, ...rest } = availability as any;
+      mutateAsync(rest);
     } else {
       dispatch({
         step,
@@ -123,18 +125,12 @@ export function AvailabilityEdit({
   const onAvailabilityChange = (data: Partial<AvailabilityState>) => {
     const val = { ...availability, ...data };
 
-    WebStorage.set("availability", val);
-
     setAvailability(val);
   };
 
-  const onOpen = () => {
-    if (availability.id) {
-      WebStorage.set("availability-step", 0);
-      WebStorage.set("availability", defaultAvailabilityData);
-
-      setAvailability(defaultAvailabilityData);
-    }
+  const onOpen = useCallback(() => {
+    setAvailability(defaultAvailabilityData);
+    editAvailabilityValue.current = 0;
 
     dispatch({
       type: "open",
@@ -144,7 +140,7 @@ export function AvailabilityEdit({
       step: 0,
       type: "next",
     });
-  };
+  }, [editAvailabilityValue, dispatch]);
 
   useEffect(() => {
     document.addEventListener("codexavailabilitycreate", onOpen, false);
@@ -152,6 +148,40 @@ export function AvailabilityEdit({
     return () =>
       document.removeEventListener("codexavailabilitycreate", onOpen);
   }, [onOpen]);
+
+  const onEdit = useCallback(
+    (event: Event) => {
+      const e = event as CustomEvent<AvailabilityState>;
+      const a = e.detail;
+
+      editAvailabilityValue.current = a.totalSize;
+      WebStorage.set("availability-step", 0);
+      WebStorage.set("availability", a);
+
+      const unit = Times.unit(a.duration);
+
+      setAvailability({
+        ...a,
+        durationUnit: unit as "hours" | "days" | "months",
+      });
+
+      dispatch({
+        type: "open",
+      });
+
+      dispatch({
+        step: 0,
+        type: "next",
+      });
+    },
+    [editAvailabilityValue, dispatch]
+  );
+
+  useEffect(() => {
+    document.addEventListener("codexavailabilityedit", onEdit, false);
+
+    return () => document.removeEventListener("codexavailabilityedit", onEdit);
+  }, [onEdit, dispatch]);
 
   const onClose = () => dispatch({ type: "close" });
 
@@ -164,17 +194,18 @@ export function AvailabilityEdit({
       <div className="availability-edit">
         <Button
           label={hasLabel ? "Sale" : ""}
-          Icon={
-            !availabilityId ? () => <PlusIcon width={40} fill="#000" /> : Pencil
-          }
+          Icon={() => <PlusIcon width={40} fill="#000" />}
           onClick={onOpen}
           variant="outline"
           className={className}
         />
 
-        <Modal open={state.open} onClose={onClose} displayCloseButton={false}>
+        <Modal
+          open={state.open}
+          onClose={onClose}
+          title="Availability"
+          Icon={HostIcon}>
           <Stepper
-            className="availabilityCreate"
             titles={steps.current}
             state={state}
             dispatch={dispatch}
@@ -189,6 +220,7 @@ export function AvailabilityEdit({
               availability={availability}
               space={space}
               error={error}
+              editAvailabilityValue={editAvailabilityValue.current}
             />
           </Stepper>
         </Modal>

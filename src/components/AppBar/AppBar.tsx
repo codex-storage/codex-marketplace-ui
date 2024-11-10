@@ -13,7 +13,11 @@ import FilesIcon from "../../assets/icons/files.svg?react";
 import LogsIcon from "../../assets/icons/logs.svg?react";
 import HostIcon from "../../assets/icons/host.svg?react";
 import SettingsIcon from "../../assets/icons/settings.svg?react";
+import WalletIcon from "../../assets/icons/wallet.svg?react";
 import NetworkFlashIcon from "../../assets/icons/flash.svg?react";
+import PurchasesIcon from "../../assets/icons/purchase.svg?react";
+import HelpIcon from "../../assets/icons/help.svg?react";
+import DisclaimerIcon from "../../assets/icons/disclaimer.svg?react";
 import { WalletConnect } from "../WalletLogin/WalletLogin";
 
 type Props = {
@@ -27,6 +31,10 @@ const icons: Record<string, ReactElement> = {
   files: <FilesIcon width={24} />,
   logs: <LogsIcon width={24} />,
   availabilities: <HostIcon width={24} />,
+  wallet: <WalletIcon width={24} />,
+  purchases: <PurchasesIcon width={24} />,
+  help: <HelpIcon width={24} />,
+  disclaimer: <DisclaimerIcon width={24} />,
 };
 
 const descriptions: Record<string, string> = {
@@ -36,6 +44,10 @@ const descriptions: Record<string, string> = {
   files: "Manage your files in your local vault.",
   logs: "Manage your logs and debug console.",
   availabilities: "Manage your host data.",
+  wallet: "Manage your Codex wallet.",
+  purchases: "Manage your storage requests.",
+  help: "Quick help resources.",
+  disclaimer: "Important information.",
 };
 
 export function AppBar({ onIconClick }: Props) {
@@ -59,6 +71,12 @@ export function AppBar({ onIconClick }: Props) {
 
   const title =
     location.pathname.split("/")[2] || location.pathname.split("/")[1];
+  const networkIconColor = online
+    ? "#3EE089"
+    : "var(--codex-input-color-error)";
+  const nodesIconColor = codex.enabled
+    ? "#3EE089"
+    : "var(--codex-input-color-error)";
 
   return (
     <>
@@ -79,11 +97,11 @@ export function AppBar({ onIconClick }: Props) {
         <aside className="row gap">
           <WalletConnect></WalletConnect>
           <div className="row gap">
-            <NetworkFlashIcon />
+            <NetworkFlashIcon color={networkIconColor} />
             <span>Network</span>
           </div>
           <div className="row gap" onClick={onNodeClick}>
-            <NodesIcon color="var(--codex-color-primary)" width={20} />
+            <NodesIcon color={nodesIconColor} width={20} />
             <span>Node</span>
           </div>
         </aside>

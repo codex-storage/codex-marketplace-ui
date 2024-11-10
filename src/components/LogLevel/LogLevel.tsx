@@ -39,7 +39,7 @@ export function LogLevel() {
   const [toast, setToast] = useState({
     time: 0,
     message: "",
-    variant: "success" as "success" | "error" | "default",
+    variant: "success" as "success" | "error",
   });
 
   function onChange(e: React.FormEvent<HTMLSelectElement>) {
@@ -86,6 +86,7 @@ export function LogLevel() {
         message={toast.message}
         time={toast.time}
         variant={toast.variant}
+        duration={400000000}
       />
     </div>
   );

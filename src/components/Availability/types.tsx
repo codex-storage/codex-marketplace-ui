@@ -27,6 +27,7 @@ export type AvailabilityComponentProps = {
   onAvailabilityChange: (data: Partial<AvailabilityState>) => void;
   availability: AvailabilityState;
   error: Error | null;
+  editAvailabilityValue?: number;
 };
 
 export type AvailabilityWithSlots = CodexAvailability & {

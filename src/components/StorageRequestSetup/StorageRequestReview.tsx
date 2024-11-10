@@ -314,14 +314,14 @@ export function StorageRequestReview({
 
         <footer>
           <CardNumbers
-            helper="Represents expiry threshold in seconds from when the Request is submitted. When the threshold is reached and the Request does not find requested amount of nodes to host the data, the Request is voided. "
+            helper="Represents expiry threshold in minutes from when the Request is submitted. When the threshold is reached and the Request does not find requested amount of nodes to host the data, the Request is voided. "
             id="expiration"
             unit={"Expiration"}
             value={storageRequest.expiration.toString()}
             onChange={onExpirationChange}
             className="storageRequestReview-expiration"
             onValidation={isInvalidNumber}
-            title="Request expiration in seconds"></CardNumbers>
+            title="Request expiration in minutes"></CardNumbers>
           <Alert
             Icon={<FileWarning />}
             title="Warning"

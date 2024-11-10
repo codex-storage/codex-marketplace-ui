@@ -196,6 +196,7 @@ export function Files({ limit }: Props) {
             value={folder}
             required={true}
             pattern="[A-Za-z0-9_\-]*"
+            autoComplete="off"
             maxLength={9}
             size={"medium" as any}
             placeholder="Folder name"

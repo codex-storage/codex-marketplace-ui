@@ -2,13 +2,26 @@
   .card--main {
     flex: 1 1 60%;
 
+    &:first-child {
+      filter: grayscale(30);
+      transition: filter 0.5s;
+
+      &:hover {
+        filter: none;
+      }
+    }
+
     @media (min-width: 2000px) {
-      & {
+      &:nth-child(n + 1) {
         flex: 1 1 34%;
       }
 
+      &:first-child {
+        flex: 1 1 20%;
+      }
+
       &.card--main--files {
-        flex: 1 1 50%;
+        flex: 1 1 62%;
       }
     }
   }
@@ -66,6 +79,10 @@
     }
 
     @media (min-width: 2000px) {
+      .column:nth-child(2) {
+        flex: 1 1 15%;
+      }
+
       .column {
         flex: 1 1 25%;
       }

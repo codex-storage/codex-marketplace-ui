@@ -3,9 +3,12 @@
   flex-wrap: wrap;
   gap: 16px;
 
-  .card {
+  > .card {
     margin-bottom: 16px;
-    flex: 1 1 67%;
+
+    &:first-child {
+      flex: 1 1 70%;
+    }
   }
 
   aside {
@@ -13,5 +16,11 @@
     flex-direction: column;
     gap: 16px;
     flex: 1 1 auto;
+
+    .card:first-child {
+      display: flex;
+      flex-direction: column;
+      /* flex: 1 1 67%; */
+    }
   }
 }

@@ -24,16 +24,26 @@ export function PeersMap({ nodes, onPinAdd }: Props) {
       setPins((val) => PeerUtils.incPin(val, { ...node, ...geo }));
       onPinAdd?.(node, geo);
     },
-    [setPins]
+    [setPins, onPinAdd]
   );
 
-  pins.map(([pin, quantity]) =>
+  pins.map(([pin, quantity]) => {
+    let radius = 0.65;
+
+    if (quantity > 3) {
+      radius = 0.85;
+    }
+
+    if (quantity > 5) {
+      radius = 0.95;
+    }
+
     map.addPin({
       lat: pin.latitude,
       lng: pin.longitude,
-      svgOptions: { color: "#d6ff79", radius: 0.1 * quantity },
-    })
-  );
+      svgOptions: { color: "#d6ff79", radius },
+    });
+  });
 
   const svgMap = map
     .getSVG({
@@ -60,7 +70,7 @@ export function PeersMap({ nodes, onPinAdd }: Props) {
           opacity: 1; /* Fully opaque */
         }
         50% {
-          r: 2; /* Increased radius */
+          r: 1.5; /* Increased radius */
           opacity: 1; /* Slightly transparent */
         }
         100% {

@@ -9,69 +9,7 @@ import { PortForwardingUtil as PUtil } from "./hooks/port-forwarding.util";
 import { WebStorage } from "./utils/web-storage";
 
 class CodexDataMock extends CodexData {
-  // override upload(
-  //   file: File,
-  //   onProgress?: (loaded: number, total: number) => void
-  // ): UploadResponse {
-  //   // const url = CodexSdk.url() + "/api/codex/v1/data";
 
-  //   // const xhr = new XMLHttpRequest();
-
-  //   // const promise = new Promise<SafeValue<string>>((resolve) => {
-  //   //   xhr.upload.onprogress = (evt) => {
-  //   //     if (evt.lengthComputable) {
-  //   //       onProgress?.(evt.loaded, evt.total);
-  //   //     }
-  //   //   };
-
-  //   //   xhr.open("POST", url, true);
-  //   //   xhr.setRequestHeader("Content-Disposition", "attachment; filename=\"" + file.name + "\"")
-  //   //   xhr.send(file);
-
-  //   //   xhr.onload = function () {
-  //   //     if (xhr.status != 200) {
-  //   //       resolve({
-  //   //         error: true,
-  //   //         data: new CodexError(xhr.responseText, {
-  //   //           code: xhr.status,
-  //   //         }),
-  //   //       });
-  //   //     } else {
-  //   //       resolve({ error: false, data: xhr.response });
-  //   //     }
-  //   //   };
-
-  //   //   xhr.onerror = function () {
-  //   //     resolve({
-  //   //       error: true,
-  //   //       data: new CodexError("Something went wrong during the file upload."),
-  //   //     });
-  //   //   };
-  //   // });
-
-  //   // return {
-  //   //   result: promise,
-  //   //   abort: () => {
-  //   //     xhr.abort();
-  //   //   },
-  //   // };
-  //   const { result, abort } = super.upload(file, onProgress);
-
-  //   return {
-  //     abort,
-  //     result: result.then((safe) => {
-  //       if (!safe.error) {
-  //         return WebStorage.files.set(safe.data, {
-  //           mimetype: file.type,
-  //           name: file.name,
-  //           uploadedAt: new Date().toJSON(),
-  //         }).then(() => safe);
-  //       }
-
-  //       return safe;
-  //     }),
-  //   };
-  // }
 }
 
 
@@ -159,6 +97,34 @@ class CodexMarketplaceMock extends CodexMarketplace {
   //          * Size in bytes
   //          */
   //         size: 500_000_000 + "",
+  //         /**
+  //          * Slot Index as hexadecimal string
+  //          */
+  //         slotIndex: "1",
+  //       },
+  //     ],
+  //   });
+  // }
+
+  // override reservations(): Promise<SafeValue<CodexReservation[]>> {
+  //   return Promise.resolve({
+  //     error: false,
+  //     data: [
+  //       {
+  //         id: "0x123456789",
+  //         availabilityId: "0x12345678910",
+  //         requestId: "0x1234567891011",
+  //         size: GB * 0.5 + "",
+  //         slotIndex: "2",
+  //       },
+  //       {
+  //         id: "0x987654321",
+  //         availabilityId: "0x9876543210",
+  //         requestId: "0x98765432100",
+  //         /**
+  //          * Size in bytes
+  //          */
+  //         size: GB * 0.25 + "",
   //         /**
   //          * Slot Index as hexadecimal string
   //          */

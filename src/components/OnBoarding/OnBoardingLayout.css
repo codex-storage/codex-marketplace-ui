@@ -66,14 +66,13 @@
       gap: 8px;
 
       li {
-        & {
-          width: 12px;
-          height: 12px;
-          background-color: white;
-          display: inline-block;
-          border-radius: 50%;
-          transition: opacity 0.35s;
-        }
+        cursor: pointer;
+        width: 12px;
+        height: 12px;
+        background-color: white;
+        display: inline-block;
+        border-radius: 50%;
+        transition: opacity 0.35s;
 
         &:hover {
           animation-name: pulse;
@@ -200,12 +199,8 @@
     text-decoration: none;
     z-index: 1;
 
-    @media (min-width: 1000px) {
-      & {
-        right: 6rem;
-        bottom: 3rem;
-      }
-    }
+    right: 6rem;
+    bottom: 16px;
 
     &:hover {
       animation-name: example;
@@ -238,4 +233,8 @@
   100% {
     opacity: 0.4;
   }
+}
+
+#sentry-feedback {
+  right: 128px;
 }

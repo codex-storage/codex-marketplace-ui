@@ -7,38 +7,39 @@ import LogsIcon from "../../assets/icons/logs.svg?react";
 
 const throwOnError = false;
 
-export const Route = createFileRoute("/dashboard/logs")({
-  component: () => {
-    const { data } = useDebug(throwOnError);
+const Logs = () => {
+  const { data } = useDebug(throwOnError);
 
-    const { table, ...rest } = data ?? {};
+  const { table, ...rest } = data ?? {};
 
-    return (
-      <div className="logs">
-        <div className="logs-card">
-          <div>
-            <h5>Log level</h5>
-            <small>
-              Manage the type of logs being displayed on your CLI for Codex
-              Node.
-            </small>
-            <LogLevel></LogLevel>
-          </div>
-          <RequireAssitance></RequireAssitance>
+  return (
+    <div className="logs">
+      <div className="logs-card">
+        <div>
+          <h5>Log level</h5>
+          <small>
+            Manage the type of logs being displayed on your CLI for Codex Node.
+          </small>
+          <LogLevel></LogLevel>
         </div>
-
-        <div className="card node">
-          <header>
-            <div>
-              <LogsIcon width={24}></LogsIcon>
-              <h5>Node</h5>
-            </div>
-          </header>
-          <main>
-            <pre>{JSON.stringify(rest, null, 2)}</pre>
-          </main>
-        </div>
+        <RequireAssitance></RequireAssitance>
       </div>
-    );
-  },
+
+      <div className="card node">
+        <header>
+          <div>
+            <LogsIcon width={24}></LogsIcon>
+            <h5>Node</h5>
+          </div>
+        </header>
+        <main>
+          <pre>{JSON.stringify(rest, null, 2)}</pre>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export const Route = createFileRoute("/dashboard/logs")({
+  component: Logs,
 });

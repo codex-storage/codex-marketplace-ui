@@ -37,7 +37,7 @@
   }
 
   @media (min-width: 1200px) {
-    &:not([aria-expanded="false"]) a[data-title]:hover::after {
+    &[aria-expanded] a[data-title]:hover::after {
       content: attr(data-title);
       background-color: #2f2f2f;
       color: #fff;

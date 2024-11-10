@@ -1,9 +1,7 @@
 import { classnames } from "../../utils/classnames";
 import "./AssistanceImage.css";
 
-type Props = {};
-
-export function AssistanceImage({}: Props) {
+export function AssistanceImage() {
   return (
     <picture>
       <source
