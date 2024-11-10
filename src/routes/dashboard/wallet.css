@@ -1,0 +1,10 @@
+.wallet-page {
+  .card {
+    flex: 1;
+  }
+
+  .require-assistance {
+    max-height: 145px;
+    margin-top: 8px;
+  }
+}

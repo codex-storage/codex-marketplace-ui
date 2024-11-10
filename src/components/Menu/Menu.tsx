@@ -70,11 +70,7 @@ export function Menu() {
               </span>
               <span>Dashboard</span>
             </Link>
-            <Link
-              to="/dashboard/wallet"
-              disabled={true}
-              aria-disabled={true}
-              data-title="Coming soon">
+            <Link to="/dashboard/wallet">
               <span>
                 <WalletIcon width={20} height={20} />
               </span>

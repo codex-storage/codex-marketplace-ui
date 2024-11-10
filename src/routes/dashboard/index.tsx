@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Files } from "../../components/Files/Files.tsx";
 import { WelcomeCard } from "../../components/Welcome/WelcomeCard.tsx";
 import { Download } from "../../components/Download/Download.tsx";
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/dashboard/")({
 
 function Dashboard() {
   const username = WebStorage.onBoarding.getDisplayName();
-
+  const navigate = useNavigate({ from: window.location.pathname });
   const emoji = WebStorage.onBoarding.getEmoji();
 
   return (
@@ -55,13 +55,15 @@ function Dashboard() {
           <Card
             icon={<NodesIcon width={24}></NodesIcon>}
             title="Storage"
-            buttonLabel="Details">
+            buttonLabel="Details"
+            buttonAction={() => navigate({ to: "/dashboard/availabilities" })}>
             <NodeSpace></NodeSpace>
           </Card>
           <Card
             icon={<PeersIcon width={20}></PeersIcon>}
             title="Peers"
-            buttonLabel="Details">
+            buttonLabel="Details"
+            buttonAction={() => navigate({ to: "/dashboard/peers" })}>
             <PeersCard></PeersCard>
           </Card>
         </div>
