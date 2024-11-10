@@ -3,7 +3,7 @@ import { CodexSdk } from "../sdk/codex";
 import { Promises } from "../utils/promises";
 
 export function useDebug(throwOnError: boolean) {
-    const { data, isError, isPending, refetch, isSuccess } = useQuery({
+    const { data, isError, isPending, refetch, isSuccess, isFetching } = useQuery({
         queryFn: () =>
             CodexSdk.debug()
                 .info()
@@ -27,5 +27,5 @@ export function useDebug(throwOnError: boolean) {
         throwOnError,
     });
 
-    return { data, isPending, isError, isSuccess, refetch };
+    return { data, isPending, isError, isSuccess, refetch, isFetching };
 }

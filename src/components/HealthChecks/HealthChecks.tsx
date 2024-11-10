@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDebug } from "../../hooks/useDebug";
 import { usePersistence } from "../../hooks/usePersistence";
 import { usePortForwarding } from "../../hooks/usePortForwarding";
-import { Input } from "@codex-storage/marketplace-ui-components";
+import { Input, Spinner } from "@codex-storage/marketplace-ui-components";
 import { classnames } from "../../utils/classnames";
 import "./HealthChecks.css";
 import { CodexSdk } from "../../sdk/codex";
@@ -165,7 +165,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </li>
         <li>
           <span>
-            {portForwarding.enabled ? (
+            {portForwarding.isFetching ? (
+              <Spinner></Spinner>
+            ) : portForwarding.enabled ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <ErrorCircleIcon width={16} />
@@ -175,7 +177,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </li>
         <li>
           <span>
-            {codex.isSuccess ? (
+            {codex.isFetching ? (
+              <Spinner></Spinner>
+            ) : codex.isSuccess ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <ErrorCircleIcon width={16} />
@@ -185,7 +189,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </li>
         <li>
           <span>
-            {persistence.enabled ? (
+            {persistence.isFetching ? (
+              <Spinner></Spinner>
+            ) : persistence.enabled ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
               <WarningIcon />
