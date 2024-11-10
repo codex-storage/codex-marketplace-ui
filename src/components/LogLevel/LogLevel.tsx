@@ -86,7 +86,6 @@ export function LogLevel() {
         message={toast.message}
         time={toast.time}
         variant={toast.variant}
-        duration={400000000}
       />
     </div>
   );
