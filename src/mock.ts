@@ -788,6 +788,5 @@ export const CodexSdk = {
 
 
 export const Echo = {
-  portForwarding: () => Promise.resolve({ reachable: !DebugErrorsData.portForwarding })
-
+  portForwarding: () => Promise.resolve({ reachable: true })
 }

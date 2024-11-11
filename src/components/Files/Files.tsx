@@ -204,7 +204,7 @@ export function Files({ limit }: Props) {
 
           <Button
             label="Folder"
-            Icon={PlusIcon}
+            Icon={() => <PlusIcon width={24}></PlusIcon>}
             variant="outline"
             size="small"
             disabled={!!error || !folder}

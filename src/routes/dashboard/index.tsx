@@ -26,7 +26,7 @@ export const Route = createFileRoute("/dashboard/")({
 
 function Dashboard() {
   const username = WebStorage.onBoarding.getDisplayName();
-  const navigate = useNavigate({ from: window.location.pathname });
+  const naviguate = useNavigate({ from: window.location.pathname });
   const emoji = WebStorage.onBoarding.getEmoji();
 
   return (
@@ -47,8 +47,7 @@ function Dashboard() {
           className="card--main"
           title="Connected Account"
           buttonLabel="Add Wallet"
-          buttonIcon={() => <PlusIcon width={20} />}
-          buttonAction={() => navigate({ to: "/dashboard/availabilities" })}>
+          buttonIcon={() => <PlusIcon width={20} />}>
           <ConnectedAccount></ConnectedAccount>
         </Card>
 
@@ -57,14 +56,14 @@ function Dashboard() {
             icon={<NodesIcon width={24}></NodesIcon>}
             title="Storage"
             buttonLabel="Details"
-            buttonAction={() => navigate({ to: "/dashboard/availabilities" })}>
+            buttonAction={() => naviguate({ to: "/dashboard/availabilities" })}>
             <NodeSpace></NodeSpace>
           </Card>
           <Card
             icon={<PeersIcon width={20}></PeersIcon>}
             title="Peers"
             buttonLabel="Details"
-            buttonAction={() => navigate({ to: "/dashboard/peers" })}>
+            buttonAction={() => naviguate({ to: "/dashboard/peers" })}>
             <PeersCard></PeersCard>
           </Card>
         </div>
