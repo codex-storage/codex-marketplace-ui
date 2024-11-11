@@ -13,7 +13,7 @@
 
     &[aria-expanded] {
       z-index: 12;
-      right: 30px;
+      transform: translate(-110px, -150px);
       opacity: 1;
     }
 

@@ -44,7 +44,7 @@ export default defineConfig({
       "../sdk/codex": "../mock",
       "../../sdk/codex": "../../mock",
       "../utils/echo": "../mock",
-      "./port-forwarding.util": "../proxy",
+      "./port-forwarding.util": "../mock",
     },
   },
 });

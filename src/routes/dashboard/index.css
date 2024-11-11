@@ -1,4 +1,6 @@
 .dashboard {
+  padding-bottom: 32px;
+
   .card--main {
     flex: 1 1 60%;
 

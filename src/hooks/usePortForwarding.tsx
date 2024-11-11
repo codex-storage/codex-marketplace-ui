@@ -38,5 +38,5 @@ export function usePortForwarding(info: CodexDebugInfo | undefined) {
     throwOnError: false,
   });
 
-  return { enabled: data.reachable, isFetching, refetch };
+  return { enabled: data.reachable || true, isFetching, refetch };
 }

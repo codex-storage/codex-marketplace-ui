@@ -25,7 +25,7 @@ import { GB } from "./utils/constants";
 import { DebugErrorsData } from "./components/DebugErrors/debug-errors.domain";
 import { WebStorage } from "./utils/web-storage";
 import { Strings } from "./utils/strings";
-
+import { PortForwardingUtil as PUtil } from "./hooks/port-forwarding.util";
 
 class CodexDataMock extends CodexData {
   static defaultContent = {
@@ -787,6 +787,9 @@ export const CodexSdk = {
 };
 
 
-export const Echo = {
-  portForwarding: () => Promise.resolve({ reachable: true })
+export const PortForwardingUtil = {
+  ...PUtil,
+  check: () => {
+    return true
+  }
 }
