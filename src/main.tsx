@@ -16,18 +16,19 @@ import { CodexSdk } from "./sdk/codex";
 import { ErrorPlaceholder } from "./components/ErrorPlaceholder/ErrorPlaceholder.tsx";
 import { DebugErrorsDataLoad } from "./components/DebugErrors/debug-errors.domain.ts";
 
-if (import.meta.env.PROD && !import.meta.env.CI) {
+if (true || (import.meta.env.PROD && !import.meta.env.CI)) {
   Sentry.init({
     release: "codex-storage-marketplace-ui@" + import.meta.env.PACKAGE_VERSION,
     dsn: "https://22d77c59a27b8d5efc07132188b505b9@o4507855852011520.ingest.de.sentry.io/4507866758512720",
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
-      Sentry.feedbackIntegration({
-        // Additional SDK configuration goes in here, for example:
-        colorScheme: "dark",
-        triggerLabel: "",
-      }),
+      // Sentry.feedbackIntegration({
+      //   // Additional SDK configuration goes in here, for example:
+      //   colorScheme: "dark",
+      //   triggerLabel: "",
+      //   autoInject: false,
+      // }),
     ],
     // Tracing
     tracesSampleRate: 1.0, //  Capture 100% of the transactions

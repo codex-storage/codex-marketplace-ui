@@ -1,4 +1,63 @@
 .wallet-page {
+  display: flex;
+  gap: 16px;
+
+  .card {
+    filter: grayscale(30);
+    transition: filter 0.5s;
+
+    &:hover {
+      filter: none;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-top: 1px solid #96969633;
+    border-bottom: 1px solid #96969633;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      small {
+        font-family: Inter;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        text-align: left;
+        color: #969696;
+      }
+    }
+
+    span {
+      height: 36px;
+      width: 1px;
+      background-color: #ffffff33;
+      margin: auto 0;
+    }
+  }
+
+  .button-icon {
+    background-color: #2f2f2f;
+    height: 60px;
+    width: 60px;
+    color: #96969666;
+    border: 0.75px solid #96969633;
+
+    svg {
+      mix-blend-mode: unset;
+    }
+  }
+
   .card {
     flex: 1;
   }
@@ -6,5 +65,67 @@
   .require-assistance {
     max-height: 145px;
     margin-top: 8px;
+  }
+
+  .card:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #969696;
+      font-size: 20px;
+    }
+  }
+
+  .tabs {
+    > div {
+      cursor: not-allowed;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin-top: 16px;
+
+    li {
+      display: flex;
+      gap: 48px;
+      border-bottom: 1px solid #96969633;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        small {
+          font-family: Inter;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          letter-spacing: -0.006em;
+          text-align: left;
+          color: #ffffffb2;
+        }
+
+        p {
+          font-family: Inter;
+          font-size: 32px;
+          font-weight: 500;
+          line-height: 40px;
+          letter-spacing: -0.005em;
+          text-align: left;
+        }
+      }
+    }
   }
 }

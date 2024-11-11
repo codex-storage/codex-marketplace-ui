@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "@codex-storage/marketplace-ui-components";
 import { ArrowRight } from "lucide-react";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
@@ -25,6 +25,19 @@ function Index() {
   const onLegalDisclaimerClose = () => setModal(false);
 
   const onNextStep = () => navigate({ to: "/onboarding-name" });
+
+  useEffect(() => {
+    const onKeyPress = (event: Event) => {
+      const e = event as KeyboardEvent;
+      if (e.key === "ArrowRight") {
+        navigate({ to: "/onboarding-name" });
+      }
+    };
+
+    document.addEventListener("keydown", onKeyPress);
+
+    return () => document.removeEventListener("keydown", onKeyPress);
+  }, [navigate]);
 
   return (
     <>
@@ -56,7 +69,10 @@ function Index() {
               Let’s get started <ArrowRight></ArrowRight>
             </a>
 
-            <Modal onClose={onLegalDisclaimerClose} open={modal}>
+            <Modal
+              onClose={onLegalDisclaimerClose}
+              open={modal}
+              className="disclaimer">
               <h1>Disclaimer</h1>
 
               <p>

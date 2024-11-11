@@ -1,12 +1,9 @@
 .folder-button {
   > div {
     position: absolute;
-    right: 300px;
+    transform: translate(310px, -200px);
     opacity: 0;
-    transition:
-      transform 0.25s,
-      left 0.25s,
-      opacity 0.15s;
+    transition: opacity 0.15s;
     background-color: var(--codex-background);
     padding: 0.5rem;
     border-radius: var(--codex-border-radius);

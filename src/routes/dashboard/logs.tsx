@@ -4,11 +4,27 @@ import { RequireAssitance } from "../../components/RequireAssitance/RequireAssit
 import { LogLevel } from "../../components/LogLevel/LogLevel";
 import { useDebug } from "../../hooks/useDebug";
 import LogsIcon from "../../assets/icons/logs.svg?react";
+import * as Sentry from "@sentry/react";
+import { useEffect } from "react";
 
 const throwOnError = false;
 
+// Sentry.showReportDialog({});
+
 const Logs = () => {
   const { data } = useDebug(throwOnError);
+
+  useEffect(() => {
+    const feedback = Sentry.feedbackIntegration({
+      // Additional SDK configuration goes in here, for example:
+      colorScheme: "dark",
+      triggerLabel: "",
+    });
+    const widget = feedback.createWidget();
+    return () => {
+      return widget.removeFromDom();
+    };
+  }, []);
 
   const { table, ...rest } = data ?? {};
 

@@ -26,7 +26,7 @@
     border-right-color: var(--codex-input-color-error);
   }
 
-  &.app-bar--no-persistence {
+  &.app-bar--no-persistence:not(.app-bar--offline) {
     border-right-color: rgb(var(--codex-color-warning));
   }
 

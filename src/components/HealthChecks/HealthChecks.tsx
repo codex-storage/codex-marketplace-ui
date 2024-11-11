@@ -37,14 +37,10 @@ export function HealthChecks({ online, onStepValid }: Props) {
 
   useEffect(
     () => {
-      if (codex.isSuccess) {
-        persistence.refetch();
-        portForwarding.refetch().then(({ data }) => {
-          onStepValid(data?.reachable || false);
-        });
-      } else {
-        onStepValid(false);
-      }
+      persistence.refetch();
+      portForwarding.refetch();
+
+      onStepValid(codex.isSuccess);
     },
     // We really do not want to add persistence and portForwarding as
     // dependencies because it will cause a re-render every time.
@@ -165,18 +161,6 @@ export function HealthChecks({ online, onStepValid }: Props) {
         </li>
         <li>
           <span>
-            {portForwarding.isFetching ? (
-              <Spinner></Spinner>
-            ) : portForwarding.enabled ? (
-              <SuccessCircleIcon></SuccessCircleIcon>
-            ) : (
-              <ErrorCircleIcon width={16} />
-            )}
-          </span>
-          Port forwarding
-        </li>
-        <li>
-          <span>
             {codex.isFetching ? (
               <Spinner></Spinner>
             ) : codex.isSuccess ? (
@@ -186,6 +170,18 @@ export function HealthChecks({ online, onStepValid }: Props) {
             )}
           </span>
           Codex connection
+        </li>
+        <li>
+          <span>
+            {portForwarding.isFetching ? (
+              <Spinner></Spinner>
+            ) : portForwarding.enabled ? (
+              <SuccessCircleIcon></SuccessCircleIcon>
+            ) : (
+              <WarningIcon width={16} />
+            )}
+          </span>
+          Port forwarding
         </li>
         <li>
           <span>

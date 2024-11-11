@@ -74,9 +74,12 @@ export function AppBar({ onIconClick }: Props) {
   const networkIconColor = online
     ? "#3EE089"
     : "var(--codex-input-color-error)";
-  const nodesIconColor = codex.enabled
-    ? "#3EE089"
-    : "var(--codex-input-color-error)";
+  const nodesIconColor =
+    codex.enabled === false
+      ? "var(--codex-input-color-error)"
+      : persistence.enabled
+        ? "#3EE089"
+        : "var(--codex-input-color-warning)";
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { attributes } from "../utils/attributes";
 import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
@@ -13,6 +13,21 @@ const OnBoardingChecks = () => {
   const displayName = WebStorage.onBoarding.getDisplayName();
   const [isStepValid, setIsStepValid] = useState(false);
   const navigate = useNavigate({ from: "/onboarding-checks" });
+
+  useEffect(() => {
+    const onKeyPress = (event: Event) => {
+      const e = event as KeyboardEvent;
+      if (e.key === "ArrowRight" && isStepValid) {
+        navigate({ to: "/dashboard" });
+      } else if (e.key === "ArrowLeft") {
+        navigate({ to: "/onboarding-name" });
+      }
+    };
+
+    document.addEventListener("keydown", onKeyPress);
+
+    return () => document.removeEventListener("keydown", onKeyPress);
+  }, [navigate, isStepValid]);
 
   const onNextStep = () => {
     if (isStepValid) {
