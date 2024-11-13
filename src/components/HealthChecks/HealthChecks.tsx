@@ -178,7 +178,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             ) : portForwarding.enabled ? (
               <SuccessCircleIcon></SuccessCircleIcon>
             ) : (
-              <WarningIcon width={16} />
+              <WarningIcon />
             )}
           </span>
           Port forwarding

@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "@codex-storage/marketplace-ui-components";
 import { ArrowRight } from "lucide-react";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
@@ -26,18 +26,18 @@ function Index() {
 
   const onNextStep = () => navigate({ to: "/onboarding-name" });
 
-  useEffect(() => {
-    const onKeyPress = (event: Event) => {
-      const e = event as KeyboardEvent;
-      if (e.key === "ArrowRight") {
-        navigate({ to: "/onboarding-name" });
-      }
-    };
+  // useEffect(() => {
+  //   const onKeyPress = (event: Event) => {
+  //     const e = event as KeyboardEvent;
+  //     if (e.key === "ArrowRight") {
+  //       navigate({ to: "/onboarding-name" });
+  //     }
+  //   };
 
-    document.addEventListener("keydown", onKeyPress);
+  //   document.addEventListener("keydown", onKeyPress);
 
-    return () => document.removeEventListener("keydown", onKeyPress);
-  }, [navigate]);
+  //   return () => document.removeEventListener("keydown", onKeyPress);
+  // }, [navigate]);
 
   return (
     <>
