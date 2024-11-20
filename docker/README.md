@@ -54,6 +54,5 @@
    --name codex-marketplace-ui \
    --net=host \
    -e 'APP_PORT=3000' \
-   -p 3000:3000 \
    codexstorage/codex-marketplace-ui:latest
  ```
