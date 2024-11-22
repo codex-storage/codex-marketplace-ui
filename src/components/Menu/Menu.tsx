@@ -1,8 +1,7 @@
 import { attributes } from "../../utils/attributes";
 import "./menu.css";
-import { ComponentType, useState } from "react";
+import { ComponentType, useEffect } from "react";
 import { classnames } from "../../utils/classnames";
-import { Link } from "@tanstack/react-router";
 import HomeIcon from "../../assets/icons/home.svg?react";
 import ExpandIcon from "../../assets/icons/expand.svg?react";
 import WalletIcon from "../../assets/icons/wallet.svg?react";
@@ -19,9 +18,16 @@ import LogsIcon from "../../assets/icons/logs.svg?react";
 import SettingsIcon from "../../assets/icons/settings.svg?react";
 import HelpIcon from "../../assets/icons/help.svg?react";
 import DisclaimerIcon from "../../assets/icons/disclaimer.svg?react";
+import { NavLink } from "react-router-dom";
+import { useIsMobile } from "../../hooks/useMobile";
 
 export type MenuItemComponentProps = {
   onClick: () => void;
+};
+
+export type Props = {
+  isExpanded: boolean;
+  onExpanded: (val: boolean) => void;
 };
 
 export type MenuItem =
@@ -36,16 +42,28 @@ export type MenuItem =
       Component: ComponentType<MenuItemComponentProps>;
     };
 
-export function Menu() {
-  const [isExpanded, setIsExpanded] = useState(true);
+export function Menu({ isExpanded, onExpanded }: Props) {
+  const isMobile = useIsMobile();
 
   const onLogoClick = () => {
     if (isExpanded === false) {
-      setIsExpanded(true);
+      onExpanded(true);
     }
   };
 
-  const onExpandMenu = () => setIsExpanded(!isExpanded);
+  useEffect(() => {
+    if (isMobile) {
+      onExpanded(false);
+    }
+  }, [isMobile, onExpanded]);
+
+  const onExpandMenu = () => onExpanded(!isExpanded);
+
+  const onClose = () => {
+    if (isMobile) {
+      onExpanded(false);
+    }
+  };
 
   return (
     <>
@@ -64,37 +82,38 @@ export function Menu() {
           </header>
 
           <div className="items">
-            <Link to="/dashboard" activeOptions={{ exact: true }}>
+            <NavLink onClick={onClose} to="/dashboard" end>
               <span>
                 <HomeIcon />
               </span>
               <span>Dashboard</span>
-            </Link>
-            <Link to="/dashboard/wallet">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/wallet">
               <span>
                 <WalletIcon width={20} height={20} />
               </span>
               <span>Wallet</span>
-            </Link>
-            <Link to="/dashboard/files">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/files">
               <span>
                 <FilesIcon width={20} />
               </span>
               <span>Files</span>
-            </Link>
-            <Link
-              to="/dashboard/nodes"
-              disabled={true}
+            </NavLink>
+            <NavLink
+              onClick={onClose}
+              to="#"
               aria-disabled={true}
-              data-title="Coming soon">
+              data-title="Coming soon"
+              end>
               <span>
                 <NodesIcon width={20} />
               </span>
               <span>Nodes</span>
-            </Link>
-            <Link
-              to="/dashboard/analytics"
-              disabled={true}
+            </NavLink>
+            <NavLink
+              onClick={onClose}
+              to="#"
               aria-disabled={true}
               title="Coming soon"
               data-title="Coming soon">
@@ -102,10 +121,10 @@ export function Menu() {
                 <AnalyticsIcon />
               </span>
               <span>Analytics</span>
-            </Link>
-            <Link
-              to="/dashboard/device"
-              disabled={true}
+            </NavLink>
+            <NavLink
+              onClick={onClose}
+              to="#"
               aria-disabled={true}
               title="Coming soon"
               data-title="Coming soon">
@@ -113,52 +132,52 @@ export function Menu() {
                 <DeviceIcon />
               </span>
               <span>Devices</span>
-            </Link>
+            </NavLink>
             <hr />
-            <Link to="/dashboard/purchases">
+            <NavLink onClick={onClose} to="/dashboard/purchases">
               <span>
                 <PurchaseIcon />
               </span>
               <span>Purchases</span>
-            </Link>
-            <Link to="/dashboard/availabilities">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/availabilities">
               <span>
                 <HostIcon />
               </span>
               <span>Host</span>
-            </Link>
+            </NavLink>
             <hr />
-            <Link to="/dashboard/peers">
+            <NavLink onClick={onClose} to="/dashboard/peers">
               <span>
                 <PeersIcon width={20} />
               </span>
               <span>Peers</span>
-            </Link>
-            <Link to="/dashboard/logs">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/logs">
               <span>
                 <LogsIcon width={24} />
               </span>
               <span>Log</span>
-            </Link>
+            </NavLink>
             <section></section>
-            <Link to="/dashboard/settings">
+            <NavLink onClick={onClose} to="/dashboard/settings">
               <span>
                 <SettingsIcon width={24} />
               </span>
               <span>Settings</span>
-            </Link>
-            <Link to="/dashboard/help">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/help">
               <span>
                 <HelpIcon />
               </span>
               <span>Help</span>
-            </Link>
-            <Link to="/dashboard/disclaimer">
+            </NavLink>
+            <NavLink onClick={onClose} to="/dashboard/disclaimer">
               <span>
                 <DisclaimerIcon />
               </span>
               <span>Disclaimer</span>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </aside>

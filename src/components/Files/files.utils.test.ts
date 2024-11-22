@@ -292,4 +292,10 @@ describe("files", () => {
 
         assert.deepEqual(FilesUtils.applyFilters(files, ["archive"]), [files[1]]);
     });
+
+    it("formats date", async () => {
+
+        assert.equal(FilesUtils.formatDate(1732102577), "20 Nov 2024, 11:36");
+
+    })
 })

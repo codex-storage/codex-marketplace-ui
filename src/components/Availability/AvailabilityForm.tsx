@@ -185,40 +185,38 @@ export function AvailabilityForm({
         </div>
       </div>
 
-      <div>
-        <div className="row gap">
-          <div className="group">
-            <Input
-              id="minPrice"
-              name="minPrice"
-              type="number"
-              label="Min price"
-              min={0}
-              onChange={onInputChange}
-              value={availability.minPrice.toString()}
-            />
-            <Tooltip message={"Minimum price to be paid (in amount of tokens)"}>
-              <InfoIcon></InfoIcon>
-            </Tooltip>
-          </div>
+      <div className="row gap">
+        <div className="group">
+          <Input
+            id="minPrice"
+            name="minPrice"
+            type="number"
+            label="Min price"
+            min={0}
+            onChange={onInputChange}
+            value={availability.minPrice.toString()}
+          />
+          <Tooltip message={"Minimum price to be paid (in amount of tokens)"}>
+            <InfoIcon></InfoIcon>
+          </Tooltip>
+        </div>
 
-          <div className="group">
-            <Input
-              id="maxCollateral"
-              name="maxCollateral"
-              type="number"
-              label="Max collateral"
-              min={0}
-              onChange={onInputChange}
-              value={availability.maxCollateral.toString()}
-            />
-            <Tooltip
-              message={
-                "Maximum collateral user is willing to pay per filled Slot (in amount of tokens)"
-              }>
-              <InfoIcon></InfoIcon>
-            </Tooltip>
-          </div>
+        <div className="group">
+          <Input
+            id="maxCollateral"
+            name="maxCollateral"
+            type="number"
+            label="Max collateral"
+            min={0}
+            onChange={onInputChange}
+            value={availability.maxCollateral.toString()}
+          />
+          <Tooltip
+            message={
+              "Maximum collateral user is willing to pay per filled Slot (in amount of tokens)"
+            }>
+            <InfoIcon></InfoIcon>
+          </Tooltip>
         </div>
       </div>
 

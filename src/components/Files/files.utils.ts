@@ -89,6 +89,16 @@ export const FilesUtils = {
     return files.filter(
       (file) => filters.length === 0 || filters.includes(this.type(file.manifest.mimetype))
     )
+  },
+  formatDate(date: number) {
+    if (!date) {
+      return "-";
+    }
+
+    return new Intl.DateTimeFormat("en-GB", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(date * 1000));
   }
 };
 

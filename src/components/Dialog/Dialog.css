@@ -1,11 +1,11 @@
-.dialog::backdrop {
-  background: rgba(70, 70, 70, 0.75);
-  backdrop-filter: blur(2px);
-}
-
 .dialog {
   background-color: var(--codex-background-secondary);
   border: none;
   color: var(--codex-color);
   min-width: 200px;
+
+  &::backdrop {
+    background: rgba(70, 70, 70, 0.75);
+    backdrop-filter: blur(2px);
+  }
 }

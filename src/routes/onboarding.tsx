@@ -1,43 +1,20 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Modal } from "@codex-storage/marketplace-ui-components";
-import { ArrowRight } from "lucide-react";
 import { OnBoardingLayout } from "../components/OnBoarding/OnBoardingLayout";
 import AlphaIcon from "../assets/icons/alpha.svg?react";
 import AlphaText from "../assets/icons/alphatext.svg?react";
-import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
+import ArrowCircleIcon from "../assets/icons/arrow-circle.svg?react";
+import { useNavigate } from "react-router-dom";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-  beforeLoad: async () => {
-    // throw redirect({
-    //   to: "/dashboard",
-    // });
-  },
-});
-
-function Index() {
+export function OnBoardingRoute() {
   const [modal, setModal] = useState(false);
-  const navigate = useNavigate({ from: "/" });
+  const navigate = useNavigate();
 
   const onLegalDisclaimerOpen = () => setModal(true);
 
   const onLegalDisclaimerClose = () => setModal(false);
 
-  const onNextStep = () => navigate({ to: "/onboarding-name" });
-
-  // useEffect(() => {
-  //   const onKeyPress = (event: Event) => {
-  //     const e = event as KeyboardEvent;
-  //     if (e.key === "ArrowRight") {
-  //       navigate({ to: "/onboarding-name" });
-  //     }
-  //   };
-
-  //   document.addEventListener("keydown", onKeyPress);
-
-  //   return () => document.removeEventListener("keydown", onKeyPress);
-  // }, [navigate]);
+  const onNextStep = () => navigate("/onboarding-name");
 
   return (
     <>
@@ -65,9 +42,7 @@ function Index() {
             </p>
           </section>
           <section className="get-started">
-            <a onClick={onNextStep}>
-              Let’s get started <ArrowRight></ArrowRight>
-            </a>
+            <a onClick={onNextStep}>Let’s get started →</a>
 
             <Modal
               onClose={onLegalDisclaimerClose}
@@ -105,7 +80,7 @@ function Index() {
             </Modal>
           </section>
           <a className="navigation" onClick={onNextStep}>
-            <ArrowRightCircle></ArrowRightCircle>
+            <ArrowCircleIcon></ArrowCircleIcon>
           </a>
         </>
       </OnBoardingLayout>

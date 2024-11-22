@@ -1,4 +1,3 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { attributes } from "../utils/attributes";
 import ArrowRightCircle from "../assets/icons/arrow-circle.svg?react";
@@ -7,12 +6,13 @@ import { HealthChecks } from "../components/HealthChecks/HealthChecks";
 import { useNetwork } from "../network/useNetwork";
 import { WebStorage } from "../utils/web-storage";
 import AlphaIcon from "../assets/icons/alpha.svg?react";
+import { useNavigate } from "react-router-dom";
 
-const OnBoardingChecks = () => {
+export const OnBoardingChecksRoute = () => {
   const online = useNetwork();
   const displayName = WebStorage.onBoarding.getDisplayName();
   const [isStepValid, setIsStepValid] = useState(false);
-  const navigate = useNavigate({ from: "/onboarding-checks" });
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const onKeyPress = (event: Event) => {
@@ -31,7 +31,7 @@ const OnBoardingChecks = () => {
 
   const onNextStep = () => {
     if (isStepValid) {
-      navigate({ to: "/dashboard" });
+      navigate("/dashboard");
     }
   };
 
@@ -70,7 +70,3 @@ const OnBoardingChecks = () => {
     </OnBoardingLayout>
   );
 };
-
-export const Route = createFileRoute("/onboarding-checks")({
-  component: OnBoardingChecks,
-});

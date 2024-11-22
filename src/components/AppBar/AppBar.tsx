@@ -5,7 +5,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ReactElement, useEffect } from "react";
 import { useCodexConnection } from "../../hooks/useCodexConnection";
 import { usePersistence } from "../../hooks/usePersistence";
-import { useLocation, useNavigate } from "@tanstack/react-router";
 import DashboardIcon from "../../assets/icons/dashboard.svg?react";
 import PeersIcon from "../../assets/icons/peers.svg?react";
 import NodesIcon from "../../assets/icons/nodes.svg?react";
@@ -19,9 +18,13 @@ import PurchasesIcon from "../../assets/icons/purchase.svg?react";
 import HelpIcon from "../../assets/icons/help.svg?react";
 import DisclaimerIcon from "../../assets/icons/disclaimer.svg?react";
 import { WalletConnect } from "../WalletLogin/WalletLogin";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/icons/logo.svg?react";
+import { useIsMobile } from "../../hooks/useMobile";
 
 type Props = {
   onIconClick: () => void;
+  onExpanded: (val: boolean) => void;
 };
 
 const icons: Record<string, ReactElement> = {
@@ -50,13 +53,13 @@ const descriptions: Record<string, string> = {
   disclaimer: "Important information.",
 };
 
-export function AppBar({ onIconClick }: Props) {
+export function AppBar({ onIconClick, onExpanded }: Props) {
   const online = useNetwork();
   const queryClient = useQueryClient();
   const codex = useCodexConnection();
   const persistence = usePersistence(codex.enabled);
-  const location = useLocation();
-  const navigate = useNavigate({ from: location.pathname });
+  const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     queryClient.invalidateQueries({
@@ -67,7 +70,7 @@ export function AppBar({ onIconClick }: Props) {
 
   const offline = !online || !codex.enabled;
 
-  const onNodeClick = () => navigate({ to: "/dashboard/settings" });
+  const onNodeClick = () => navigate("/dashboard/settings");
 
   const title =
     location.pathname.split("/")[2] || location.pathname.split("/")[1];
@@ -81,6 +84,12 @@ export function AppBar({ onIconClick }: Props) {
         ? "#3EE089"
         : "var(--codex-input-color-warning)";
 
+  const icon = isMobile ? (
+    <Logo onClick={() => onExpanded(true)}></Logo>
+  ) : (
+    icons[title]
+  );
+
   return (
     <>
       <div
@@ -90,7 +99,7 @@ export function AppBar({ onIconClick }: Props) {
           ["app-bar--no-persistence", !persistence.enabled]
         )}>
         <div className="row gap">
-          <span onClick={onIconClick}>{icons[title]}</span>
+          <span onClick={onIconClick}>{icon}</span>
 
           <div>
             <h1>{title}</h1>

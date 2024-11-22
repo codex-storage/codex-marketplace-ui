@@ -58,34 +58,6 @@ export function CardNumbers({
         <InfoIcon></InfoIcon>
       </Tooltip>
       <span>{unit}</span>
-
-      {/* <div
-        className={classnames(["cardNumber"], ["cardNumber--error", !!error])}>
-        <div className="cardNumber-dataContainer">
-          <>
-            <p
-              ref={ref}
-              className="cardNumber-data"
-              onBlur={onBlur}
-              onInput={onInput}
-              contentEditable={true}
-            />
-
-            <ButtonIcon
-              onClick={onEditingClick}
-              variant="small"
-              Icon={Icon}></ButtonIcon>
-          </>
-        </div>
-        <div className="cardNumber-info">
-          <b className="cardNumber-title">{title}</b>
-        </div>
-      </div>
-      {error ? (
-        <small className="cardNumber-errorText">{error}</small>
-      ) : (
-        <small className="cardNumber-helperText">{helper}</small>
-      )} */}
     </div>
   );
 }

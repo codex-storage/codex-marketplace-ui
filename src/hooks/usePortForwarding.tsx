@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Errors } from "../utils/errors";
 import { CodexDebugInfo } from "@codex-storage/sdk-js";
 import { PortForwardingUtil } from "./port-forwarding.util";
+import { HealthCheckUtils } from "../components/HealthChecks/health-check.utils";
 
 type PortForwardingResponse = { reachable: boolean };
 
@@ -9,12 +10,21 @@ export function usePortForwarding(info: CodexDebugInfo | undefined) {
   const { data, isFetching, refetch } = useQuery({
     queryFn: (): Promise<PortForwardingResponse> => {
       const port = PortForwardingUtil.getTcpPort(info!);
+
       if (port.error) {
         Errors.report(port);
         return Promise.resolve({ reachable: false });
       } else {
-        return PortForwardingUtil.check(port.data).catch((e) =>
-          Errors.report(e)
+        const ip = HealthCheckUtils.extractAnnounceAddresses(
+          info!.announceAddresses
+        );
+        if (ip.error) {
+          Errors.report(ip);
+          return Promise.resolve({ reachable: false });
+        }
+
+        return PortForwardingUtil.check(ip.data, port.data).catch(
+          Errors.report
         );
       }
     },

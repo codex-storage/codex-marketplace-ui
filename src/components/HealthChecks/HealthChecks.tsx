@@ -7,7 +7,7 @@ import { Input, Spinner } from "@codex-storage/marketplace-ui-components";
 import { classnames } from "../../utils/classnames";
 import "./HealthChecks.css";
 import { CodexSdk } from "../../sdk/codex";
-import { HealthCheckUtil } from "./health-check.utils";
+import { HealthCheckUtils } from "./health-check.utils";
 import { PortForwardingUtil } from "../../hooks/port-forwarding.util";
 import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
 import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
@@ -30,9 +30,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
   const [isAddressInvalid, setIsAddressInvalid] = useState(false);
   const [isPortInvalid, setIsPortInvalid] = useState(false);
   const [address, setAddress] = useState(
-    HealthCheckUtil.removePort(CodexSdk.url())
+    HealthCheckUtils.removePort(CodexSdk.url())
   );
-  const [port, setPort] = useState(HealthCheckUtil.getPort(CodexSdk.url()));
+  const [port, setPort] = useState(HealthCheckUtils.getPort(CodexSdk.url()));
   const queryClient = useQueryClient();
 
   useEffect(
@@ -54,12 +54,16 @@ export function HealthChecks({ online, onStepValid }: Props) {
 
     setIsAddressInvalid(!element.checkValidity());
 
-    const address = HealthCheckUtil.removePort(value);
-    setAddress(address);
+    setAddress(value);
 
-    if (HealthCheckUtil.containsPort(value)) {
-      const p = HealthCheckUtil.getPort(value);
+    if (HealthCheckUtils.containsPort(value)) {
+      const address = HealthCheckUtils.removePort(value);
+      setAddress(address);
+
+      const p = HealthCheckUtils.getPort(value);
       setPort(p);
+    } else {
+      setAddress(value);
     }
   };
 
@@ -74,7 +78,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
   const onSave = () => {
     const url = address + ":" + port;
 
-    if (HealthCheckUtil.isUrlInvalid(url)) {
+    if (HealthCheckUtils.isUrlInvalid(url)) {
       return;
     }
 
@@ -112,7 +116,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
           {isAddressInvalid ? (
             <ErrorCircleIcon width={16} />
           ) : (
-            <SuccessCircleIcon />
+            <SuccessCircleIcon width={20} />
           )}
         </div>
 
@@ -125,7 +129,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
             value={port}
             isInvalid={isPortInvalid}
             placeholder="8080"></Input>
-          <SuccessCircleIcon></SuccessCircleIcon>
+          <SuccessCircleIcon width={20}></SuccessCircleIcon>
         </div>
 
         <div className="refresh">
@@ -152,9 +156,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
         <li>
           <span>
             {online ? (
-              <SuccessCircleIcon></SuccessCircleIcon>
+              <SuccessCircleIcon width={16} height={16}></SuccessCircleIcon>
             ) : (
-              <ErrorCircleIcon width={16} />
+              <ErrorCircleIcon width={16} height={16} />
             )}
           </span>
           Internet connection
@@ -164,9 +168,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {codex.isFetching ? (
               <Spinner></Spinner>
             ) : codex.isSuccess ? (
-              <SuccessCircleIcon></SuccessCircleIcon>
+              <SuccessCircleIcon width={16} height={16}></SuccessCircleIcon>
             ) : (
-              <ErrorCircleIcon width={16} />
+              <ErrorCircleIcon width={16} height={16} />
             )}
           </span>
           Codex connection
@@ -176,9 +180,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {portForwarding.isFetching ? (
               <Spinner></Spinner>
             ) : portForwarding.enabled ? (
-              <SuccessCircleIcon></SuccessCircleIcon>
+              <SuccessCircleIcon width={16} height={16}></SuccessCircleIcon>
             ) : (
-              <WarningIcon />
+              <WarningIcon width={16} height={16} />
             )}
           </span>
           Port forwarding
@@ -188,9 +192,9 @@ export function HealthChecks({ online, onStepValid }: Props) {
             {persistence.isFetching ? (
               <Spinner></Spinner>
             ) : persistence.enabled ? (
-              <SuccessCircleIcon></SuccessCircleIcon>
+              <SuccessCircleIcon width={16} height={16}></SuccessCircleIcon>
             ) : (
-              <WarningIcon />
+              <WarningIcon width={16} height={16} />
             )}
           </span>
           Marketplace

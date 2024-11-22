@@ -3,7 +3,7 @@ import test, { expect } from "@playwright/test";
 test('create an availability', async ({ page }) => {
     await page.goto('/dashboard/availabilities');
     await page.waitForTimeout(500);
-    await page.locator('.availabilities-create').first().click();
+    await page.locator('.availability-edit button').first().click();
     await page.getByLabel('Total size').click();
     await page.getByLabel('Total size').fill('0.50');
     await page.getByLabel('Duration').click();
@@ -17,7 +17,6 @@ test('create an availability', async ({ page }) => {
     await page.getByLabel('Nickname').fill('test');
     await page.getByRole('button', { name: 'Next' }).click();
     await expect(page.getByText('Confirm your new sale')).toBeVisible();
-    await expect(page.getByText('512.0 MB').first()).toBeVisible();
     await page.getByRole('button', { name: 'Next' }).click();
     await expect(page.getByText('Success', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Finish' }).click();
@@ -27,7 +26,7 @@ test('create an availability', async ({ page }) => {
 test('availability navigation buttons', async ({ page }) => {
     await page.goto('/dashboard/availabilities');
     await page.waitForTimeout(500);
-    await page.locator('.availabilities-create').first().click();
+    await page.locator('.availability-edit button').first().click();
     await expect(page.locator('.stepper-number-done')).not.toBeVisible()
     await expect(page.locator('.step--active')).toBeVisible()
     await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");

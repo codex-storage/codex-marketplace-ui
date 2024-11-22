@@ -22,8 +22,9 @@ export function Download() {
         id="cid"
         placeholder="CID"
         inputClassName="download-input"
-        size={"medium" as any}
+        variant={"medium"}
         autoComplete="off"
+        value={cid}
         onChange={onCidChange}></Input>
       <Button label="Download" onClick={onDownload} variant="outline"></Button>
     </main>

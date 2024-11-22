@@ -9,13 +9,12 @@
   }
 
   > div:first-child {
-    width: calc(100% - 16px);
+    width: 100%;
     border: 1px solid #96969633;
-    padding: 16px;
     border-radius: 16px;
     position: relative;
 
-    @media (min-width: 1000px) {
+    @media (min-width: 801px) {
       & {
         width: calc(100% - 128px - 16px);
         padding: 16px 16px 16px 128px;
@@ -26,7 +25,7 @@
     ul {
       display: none;
 
-      @media (min-width: 1000px) {
+      @media (min-width: 801px) {
         & {
           list-style-type: none;
           width: 71px;
@@ -94,24 +93,18 @@
       border-radius: 16px;
       max-width: 280px;
       padding: 16px;
-      transform: scale(0.7);
+      /* transform: scale(0.7); */
       width: 280px;
 
-      @media (max-width: 999px) {
+      @media (max-width: 800px) {
         & {
           position: relative;
-          bottom: -32px;
-          left: -32px;
+          width: calc(100% - 32px);
+          max-width: inherit;
         }
       }
 
-      @media (min-width: 1000px) {
-        & {
-          transform: scale(1);
-        }
-      }
-
-      @media (min-width: 1000px) {
+      @media (min-width: 801px) {
         & {
           position: absolute;
           bottom: 16px;
@@ -170,15 +163,16 @@
         }
       }
     }
-  }
 
-  .peers-chart {
-    transform: scale(0.5);
-
-    @media (min-width: 1000px) {
-      & {
-        transform: scale(0.73);
+    @media (max-width: 800px) {
+      th:nth-child(2),
+      td:nth-child(2) {
+        display: none;
       }
     }
+  }
+
+  .gauge {
+    margin: auto;
   }
 }

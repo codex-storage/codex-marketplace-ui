@@ -1,10 +1,10 @@
 import "./AvailabilityConfirm.css";
 import { AvailabilityComponentProps } from "./types";
 import "./AvailabilityConfirm.css";
-import { Info } from "lucide-react";
 import { useEffect } from "react";
 import { SpaceAllocation } from "@codex-storage/marketplace-ui-components";
 import NodesIcon from "../../assets/icons/nodes.svg?react";
+import InfoIcon from "../../assets/icons/info.svg?react";
 
 export function AvailabilityConfirm({
   dispatch,
@@ -54,15 +54,15 @@ export function AvailabilityConfirm({
           },
         ]}></SpaceAllocation>
 
-      <div className="availabilitConfirm-bottom">
-        <div className="availabilitConfirm-iconContainer">
-          <Info className="availabilitConfirm-icon" />
+      <div>
+        <div>
+          <InfoIcon />
         </div>
 
         <div>
-          <b className="availabilitConfirm-subtitle">Confirm your new sale</b>
+          <b>Confirm your new sale</b>
 
-          <p className="availabilitConfirm-message">
+          <p>
             By clicking 'Next', you will establish a new sale based on the space
             allocation specified above. Do you want to confirm ?
           </p>

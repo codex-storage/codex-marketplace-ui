@@ -69,17 +69,17 @@ export function FileCell({ requestId, purchaseCid, data, onMetadata }: Props) {
 
   return (
     <Cell>
-      <div className="fileCell">
+      <div className="file-render">
         <WebFileIcon type={metadata.mimetype || "-"} />
         <div>
-          <span className="fileCell-title">
+          <div>
             <Tooltip message={filename}>{filename}</Tooltip>
-          </span>
-          <span className="fileCell-subtitle">
+          </div>
+          <div>
             <Tooltip message={cid}>
-              <span className="fileCell-cid">{cidTruncated}</span>
+              <small>{cidTruncated}</small>
             </Tooltip>
-          </span>
+          </div>
         </div>
       </div>
     </Cell>

@@ -1,5 +1,5 @@
 import { assert, describe, it } from "vitest";
-import { PeerGeo, PeerUtils } from "./peers.utils";
+import { PeerGeo, PeerNode, PeerUtils } from "./peers.utils";
 
 describe("peers", () => {
     it("sorts by boolean", async () => {
@@ -41,14 +41,14 @@ describe("peers", () => {
     });
 
     it("adds a new pin", async () => {
-        const latLng = { latitude: 0, longitude: 0 } as any
-        const values = PeerUtils.incPin([], latLng)
+        const latLng = { latitude: 0, longitude: 0 }
+        const values = PeerUtils.incPin([], latLng as PeerNode & PeerGeo)
 
         assert.deepEqual(values, [[latLng, 1]]);
     });
 
     it("increments an existing pin", async () => {
-        const latLng = { lat: 0, lng: 0 } as any
+        const latLng = { lat: 0, lng: 0 } as unknown as PeerNode & PeerGeo
         const values = PeerUtils.incPin([[latLng, 1]], latLng)
 
         assert.deepEqual(values, [[latLng, 2]]);

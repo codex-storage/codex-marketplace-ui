@@ -1,10 +1,10 @@
 import { Backdrop, ButtonIcon } from "@codex-storage/marketplace-ui-components";
-import { CheckCircle } from "lucide-react";
 import "./FolderButton.css";
 import { useState } from "react";
 import { attributes } from "../../utils/attributes";
 import { classnames } from "../../utils/classnames";
 import FolderIcon from "../../assets/icons/folder.svg?react";
+import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
 
 type Props = {
   folders: [string, boolean][];
@@ -42,7 +42,7 @@ export function FolderButton({ folders, onFolderToggle }: Props) {
           {folders.map(([folder, isActive]) => (
             <div key={folder} onClick={() => onFolderToggle(folder)}>
               <span>{folder}</span>
-              {isActive && <CheckCircle size={"1rem"}></CheckCircle>}
+              {isActive && <SuccessCircleIcon width={20}></SuccessCircleIcon>}
             </div>
           ))}
         </div>

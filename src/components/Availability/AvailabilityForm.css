@@ -20,6 +20,12 @@
 
   .row {
     margin-bottom: 16px;
+
+    @media screen and (max-width: 800px) {
+      & {
+        flex-direction: column;
+      }
+    }
   }
 
   .group {

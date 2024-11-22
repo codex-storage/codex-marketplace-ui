@@ -16,4 +16,10 @@
       border: 1px solid #96969633;
     }
   }
+
+  @media (max-width: 800px) {
+    .folder-button {
+      display: none;
+    }
+  }
 }

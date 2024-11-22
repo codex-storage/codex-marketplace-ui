@@ -1,9 +1,4 @@
 .storage-request {
-  .modal dialog {
-    width: 80%;
-    max-width: 100% !important;
-  }
-
   header {
     display: flex;
     align-items: flex-start;

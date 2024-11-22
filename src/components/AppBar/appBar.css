@@ -86,10 +86,10 @@
       cursor: pointer;
     }
   }
-}
 
-/* @media (min-width: 1000px) {
-  .appBar-burger {
-    display: none;
+  @media (max-width: 800px) {
+    aside {
+      display: none;
+    }
   }
-} */
+}

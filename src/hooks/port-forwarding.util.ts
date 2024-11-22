@@ -1,8 +1,14 @@
 import { CodexDebugInfo, SafeValue, CodexError } from "@codex-storage/sdk-js"
 
 export const PortForwardingUtil = {
-    check: (port: number) => fetch(import.meta.env.VITE_GEO_IP_URL + "/port/" + port)
-        .then((res) => res.json()),
+    check: (ip: string, port: number) => {
+        const headers = {
+            "X-Real-IP-Custom": ip
+        }
+
+        return fetch(import.meta.env.VITE_GEO_IP_URL + "/port/" + port, { headers })
+            .then((res) => res.json())
+    },
 
     getTcpPort(info: CodexDebugInfo): SafeValue<number> {
         if (info.addrs.length === 0) {

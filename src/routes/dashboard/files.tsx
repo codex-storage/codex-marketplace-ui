@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Files } from "../../components/Files/Files";
 import "./files.css";
 import { UploadCard } from "../../components/UploadCard/UploadCard";
@@ -10,28 +9,24 @@ import FetchIcon from "../../assets/icons/fetch.svg?react";
 import { Card } from "../../components/Card/Card";
 import FilesIconOutline from "../../assets/icons/files-outline.svg?react";
 
-export const Route = createFileRoute("/dashboard/files")({
-  component: () => (
-    <div className="files-page">
-      <Card
-        icon={<FilesIconOutline width={24}></FilesIconOutline>}
-        title="Files">
-        <Files></Files>
+export const FilesRoute = () => (
+  <div className="files-page">
+    <Card icon={<FilesIconOutline width={24}></FilesIconOutline>} title="Files">
+      <Files></Files>
+    </Card>
+
+    <aside>
+      <Card icon={<UploadIcon width={24}></UploadIcon>} title="Upload">
+        <UploadCard />
       </Card>
 
-      <aside>
-        <Card icon={<UploadIcon width={24}></UploadIcon>} title="Upload">
-          <UploadCard />
-        </Card>
+      <Card icon={<DownloadIcon></DownloadIcon>} title="Download">
+        <Download />
+      </Card>
 
-        <Card icon={<DownloadIcon></DownloadIcon>} title="Download">
-          <Download />
-        </Card>
-
-        <Card icon={<FetchIcon></FetchIcon>} title="Fetch manifest">
-          <ManifestFetch />
-        </Card>
-      </aside>
-    </div>
-  ),
-});
+      <Card icon={<FetchIcon></FetchIcon>} title="Fetch manifest">
+        <ManifestFetch />
+      </Card>
+    </aside>
+  </div>
+);

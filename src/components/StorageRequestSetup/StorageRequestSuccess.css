@@ -1,7 +1,7 @@
-.storageRequestDone {
+.storage-success {
   margin: auto;
-}
 
-.storageRequestDone-icon {
-  color: var(--codex-color-primary);
+  svg {
+    color: var(--codex-color-primary);
+  }
 }

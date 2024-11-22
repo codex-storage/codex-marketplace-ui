@@ -8,7 +8,7 @@ export function Debug() {
 
   if (isPending) {
     return (
-      <div className="settings-debug-loader">
+      <div>
         <Spinner width="3rem" />
       </div>
     );

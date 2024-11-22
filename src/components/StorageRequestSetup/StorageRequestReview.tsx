@@ -2,11 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import "./StorageRequestReview.css";
 import { Alert } from "@codex-storage/marketplace-ui-components";
 import { CardNumbers } from "../CardNumbers/CardNumbers";
-import { FileWarning } from "lucide-react";
+import WarningIcon from "../../assets/icons/warning.svg?react";
 import { StorageRequest, StorageRequestComponentProps } from "./types";
 import DurabilityIcon from "../../assets/icons/durability.svg?react";
 import AlphaIcon from "../../assets/icons/alpha.svg?react";
-import PresetIcon from "../../assets/icons/preset.svg?react";
+import PresetCustomIcon from "../../assets/icons/durability-custom.svg?react";
+import PresetLowIcon from "../../assets/icons/durability-low.svg?react";
+import PresetMediumIcon from "../../assets/icons/durability-medium.svg?react";
+import PresetHighIcon from "../../assets/icons/durability-high.svg?react";
 import CommitmentIcon from "../../assets/icons/commitment.svg?react";
 import RequestDurationIcon from "../../assets/icons/request-duration.svg?react";
 import { attributes } from "../../utils/attributes";
@@ -222,7 +225,7 @@ export function StorageRequestReview({
             })}
             onClick={() => onDurabilityChange(0)}>
             <span>Custom</span>
-            <PresetIcon></PresetIcon>
+            <PresetCustomIcon></PresetCustomIcon>
           </div>
           <div
             {...attributes({
@@ -230,7 +233,7 @@ export function StorageRequestReview({
             })}
             onClick={() => onDurabilityChange(1)}>
             <span>Low</span>
-            <PresetIcon></PresetIcon>
+            <PresetLowIcon></PresetLowIcon>
           </div>
           <div
             {...attributes({
@@ -239,7 +242,7 @@ export function StorageRequestReview({
             onClick={() => onDurabilityChange(2)}>
             <span>Medium</span>
             <span>Recommanded</span>
-            <PresetIcon></PresetIcon>
+            <PresetMediumIcon></PresetMediumIcon>
           </div>
           <div
             {...attributes({
@@ -247,7 +250,7 @@ export function StorageRequestReview({
             })}
             onClick={() => onDurabilityChange(3)}>
             <span>High</span>
-            <PresetIcon></PresetIcon>
+            <PresetHighIcon></PresetHighIcon>
           </div>
         </div>
 
@@ -325,7 +328,7 @@ export function StorageRequestReview({
             onValidation={isInvalidNumber}
             title="Request expiration in minutes"></CardNumbers>
           <Alert
-            Icon={<FileWarning />}
+            Icon={<WarningIcon />}
             title="Warning"
             variant="warning"
             className="storageRequestReview-alert">

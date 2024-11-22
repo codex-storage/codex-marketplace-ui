@@ -10,16 +10,18 @@
     table thead tr th {
       background-color: #14141499;
     }
-  }
-}
 
-.purchases-loader {
-  margin: auto;
-  display: block;
-}
-
-@media (max-width: 800px) {
-  .purchases-modal {
-    width: calc(100% - 2rem);
+    @media (max-width: 800px) {
+      th:nth-child(2),
+      td:nth-child(2),
+      th:nth-child(3),
+      td:nth-child(3),
+      th:nth-child(5),
+      td:nth-child(5),
+      th:nth-child(6),
+      td:nth-child(6) {
+        display: none;
+      }
+    }
   }
 }

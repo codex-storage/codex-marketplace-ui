@@ -67,7 +67,7 @@ export function StorageRequestFileChooser({
         id="cid"
         placeholder="CID"
         onChange={onChange}
-        value={storageRequest.cid}
+        value={storageRequest.cid || ""}
         options={options}
         onSelected={onSelected}
         size="medium"

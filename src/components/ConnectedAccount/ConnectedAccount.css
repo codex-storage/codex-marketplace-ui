@@ -2,7 +2,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  min-width: 550px;
+  /* min-width: 550px; */
 
   main {
     flex: 1;

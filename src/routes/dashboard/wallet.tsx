@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { ConnectedAccount } from "../../components/ConnectedAccount/ConnectedAccount";
 import { Card } from "../../components/Card/Card";
 import WalletIcon from "../../assets/icons/wallet.svg?react";
@@ -24,7 +23,7 @@ import {
   Tabs,
 } from "@codex-storage/marketplace-ui-components";
 
-const Wallet = () => {
+export const WalletRoute = () => {
   const tabs: TabProps[] = [
     {
       label: "Tokens",
@@ -114,7 +113,3 @@ const Wallet = () => {
     </div>
   );
 };
-
-export const Route = createFileRoute("/dashboard/wallet")({
-  component: Wallet,
-});

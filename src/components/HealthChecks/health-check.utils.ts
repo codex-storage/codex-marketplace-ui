@@ -1,6 +1,6 @@
 import { CodexDebugInfo, SafeValue, CodexError } from "@codex-storage/sdk-js"
 
-export const HealthCheckUtil = {
+export const HealthCheckUtils = {
     removePort(url: string) {
         const parts = url.split(":")
         return parts[0] + ":" + parts[1]
@@ -27,6 +27,21 @@ export const HealthCheckUtil = {
         } catch (_) {
             return true
         }
+    },
+
+    extractAnnounceAddresses(announceAddresses: string[]): SafeValue<string> {
+        if (announceAddresses.length === 0) {
+            return { error: true, data: new CodexError("Not existing announce address") }
+        }
+
+
+        const ip = announceAddresses[0].split("/")
+
+        if (ip.length !== 5) {
+            return { error: true, data: new CodexError("Misformatted ip") }
+        }
+
+        return { error: false, data: ip[2] }
     },
 
     getTcpPort(info: CodexDebugInfo): SafeValue<number> {

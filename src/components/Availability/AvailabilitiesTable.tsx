@@ -11,7 +11,6 @@ import { Times } from "../../utils/times";
 import { Fragment, useState } from "react";
 import { AvailabilityReservations } from "./AvailabilityReservations";
 import { AvailabilityIdCell } from "./AvailabilityIdCell";
-import { Arrays } from "../../utils/arrays";
 import { SlotRow } from "./SlotRow";
 import { AvailabilityWithSlots } from "./types";
 import { AvailabilityDiskRow } from "./AvailabilityDiskRow";
@@ -68,7 +67,8 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
   const rows = sorted.map((a) => {
     const showDetails = details.includes(a.id);
 
-    const onShowDetails = () => setDetails(Arrays.toggle(details, a.id));
+    const onShowDetails = () =>
+      setDetails(AvailabilityUtils.toggle(details, a.id));
     const hasSlots = a.slots.length > 0;
 
     return (

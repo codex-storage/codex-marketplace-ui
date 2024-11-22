@@ -10,7 +10,7 @@ export function PeersQuality({ good }: Props) {
   if (good) {
     return (
       <div className="peers-quality">
-        <SuccessCircleIcon></SuccessCircleIcon>
+        <SuccessCircleIcon width={20}></SuccessCircleIcon>
         <span>Peer connections in good standing. </span>
       </div>
     );

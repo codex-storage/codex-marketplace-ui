@@ -1,34 +1,34 @@
 import { assert, describe, it } from "vitest";
-import { HealthCheckUtil } from "./health-check.utils";
+import { HealthCheckUtils } from "./health-check.utils";
 
 describe("health check", () => {
     it("remove the port from an url", async () => {
-        assert.deepEqual(HealthCheckUtil.removePort("http://localhost:8080"), "http://localhost");
+        assert.deepEqual(HealthCheckUtils.removePort("http://localhost:8080"), "http://localhost");
     });
 
     it("get the port from an url", async () => {
-        assert.deepEqual(HealthCheckUtil.getPort("http://localhost:8080"), 8080);
+        assert.deepEqual(HealthCheckUtils.getPort("http://localhost:8080"), 8080);
     });
 
     it("get the default port when the url does not contain the port", async () => {
-        assert.deepEqual(HealthCheckUtil.getPort("http://localhost"), 80);
+        assert.deepEqual(HealthCheckUtils.getPort("http://localhost"), 80);
     });
 
     it("returns true when the url contains a port", async () => {
-        assert.deepEqual(HealthCheckUtil.containsPort("http://localhost:8080"), true);
+        assert.deepEqual(HealthCheckUtils.containsPort("http://localhost:8080"), true);
     });
 
     it("returns false when the url does not contain a port", async () => {
-        assert.deepEqual(HealthCheckUtil.containsPort("http://localhost"), false);
+        assert.deepEqual(HealthCheckUtils.containsPort("http://localhost"), false);
     });
 
 
     it("returns true when the url is invalid", async () => {
-        assert.deepEqual(HealthCheckUtil.isUrlInvalid("http://"), true);
+        assert.deepEqual(HealthCheckUtils.isUrlInvalid("http://"), true);
     });
 
     it("returns false when the url is valid", async () => {
-        assert.deepEqual(HealthCheckUtil.isUrlInvalid("http://localhost:8080"), false);
+        assert.deepEqual(HealthCheckUtils.isUrlInvalid("http://localhost:8080"), false);
     });
 
     it("returns the tcp port", async () => {
@@ -57,7 +57,7 @@ describe("health check", () => {
                 "revision": "2fb7031e"
             }
         }
-        assert.deepEqual(HealthCheckUtil.getTcpPort(debug), { error: false, data: 8070 });
+        assert.deepEqual(HealthCheckUtils.getTcpPort(debug), { error: false, data: 8070 });
     });
 
     it("returns an error when the addr is empty", async () => {
@@ -85,7 +85,7 @@ describe("health check", () => {
                 "revision": "2fb7031e"
             }
         }
-        assert.deepEqual(HealthCheckUtil.getTcpPort(debug).error, true);
+        assert.deepEqual(HealthCheckUtils.getTcpPort(debug).error, true);
     });
 
     it("returns an error when the addr is misformated", async () => {
@@ -114,7 +114,7 @@ describe("health check", () => {
                 "revision": "2fb7031e"
             }
         }
-        assert.deepEqual(HealthCheckUtil.getTcpPort(debug).error, true);
+        assert.deepEqual(HealthCheckUtils.getTcpPort(debug).error, true);
     });
 
     it("returns an error when the port is misformated", async () => {
@@ -143,6 +143,14 @@ describe("health check", () => {
                 "revision": "2fb7031e"
             }
         }
-        assert.deepEqual(HealthCheckUtil.getTcpPort(debug).error, true);
+        assert.deepEqual(HealthCheckUtils.getTcpPort(debug).error, true);
+    });
+
+    it("extracts the announced ip", async () => {
+        assert.deepEqual(HealthCheckUtils.extractAnnounceAddresses([
+            "/ip4/127.0.0.1/tcp/8070"
+        ]).data, "127.0.0.1");
+        assert.deepEqual(HealthCheckUtils.extractAnnounceAddresses([]).error, true);
+        assert.deepEqual(HealthCheckUtils.extractAnnounceAddresses(["hello"]).error, true);
     });
 })

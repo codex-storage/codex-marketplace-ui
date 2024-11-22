@@ -5,6 +5,13 @@
   border-radius: 16px;
   margin-bottom: 16px;
 
+  @media (max-width: 800px) {
+    & {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
   > div:first-child {
     padding: 16px;
   }

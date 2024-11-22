@@ -42,9 +42,9 @@ export function AvailabilityEdit({
   hasLabel = true,
 }: Props) {
   const steps = useRef(["Sale", "Confirmation", "Success"]);
-  const [availability, setAvailability] = useState<AvailabilityState>(
-    defaultAvailabilityData
-  );
+  const [availability, setAvailability] = useState<
+    AvailabilityState & { slots?: unknown }
+  >(defaultAvailabilityData);
   const { state, dispatch } = useStepperReducer();
   const { mutateAsync, error } = useAvailabilityMutation(dispatch, state);
   const editAvailabilityValue = useRef(0);
@@ -112,7 +112,8 @@ export function AvailabilityEdit({
     WebStorage.set("availability-step", step);
 
     if (step == CONFIRM_STATE) {
-      const { slots, name, ...rest } = availability as any;
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      const { slots, name, ...rest } = availability;
       mutateAsync(rest);
     } else {
       dispatch({

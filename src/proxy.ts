@@ -5,7 +5,6 @@ import {
   SafeValue,
 } from "@codex-storage/sdk-js";
 import { CodexSdk as Sdk } from "./sdk/codex";
-import { PortForwardingUtil as PUtil } from "./hooks/port-forwarding.util";
 import { WebStorage } from "./utils/web-storage";
 
 class CodexDataMock extends CodexData {
@@ -142,13 +141,3 @@ export const CodexSdk = {
 };
 
 
-export const PortForwardingUtil = {
-  ...PUtil,
-  check: (port: number) => {
-    if (import.meta.env.CI) {
-      return Promise.resolve({ reachable: true })
-    }
-
-    return PUtil.check(port)
-  }
-}

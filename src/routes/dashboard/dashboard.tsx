@@ -1,8 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Files } from "../../components/Files/Files.tsx";
 import { WelcomeCard } from "../../components/Welcome/WelcomeCard.tsx";
 import { Download } from "../../components/Download/Download.tsx";
-import "./index.css";
+import "./dashboard.css";
 import { Versions } from "../../components/Versions/Versions.tsx";
 import { WebStorage } from "../../utils/web-storage.ts";
 import { ConnectedAccount } from "../../components/ConnectedAccount/ConnectedAccount.tsx";
@@ -19,14 +18,11 @@ import DownloadIcon from "../../assets/icons/download.svg?react";
 import FetchIcon from "../../assets/icons/fetch.svg?react";
 import { ManifestFetch } from "../../components/ManifestFetch/ManifestFetch.tsx";
 import FilesIconOutline from "../../assets/icons/files-outline.svg?react";
+import { useNavigate } from "react-router-dom";
 
-export const Route = createFileRoute("/dashboard/")({
-  component: Dashboard,
-});
-
-function Dashboard() {
+export function DashboardRoute() {
   const username = WebStorage.onBoarding.getDisplayName();
-  const naviguate = useNavigate({ from: window.location.pathname });
+  const naviguate = useNavigate();
   const emoji = WebStorage.onBoarding.getEmoji();
 
   return (
@@ -56,14 +52,14 @@ function Dashboard() {
             icon={<NodesIcon width={24}></NodesIcon>}
             title="Storage"
             buttonLabel="Details"
-            buttonAction={() => naviguate({ to: "/dashboard/availabilities" })}>
+            buttonAction={() => naviguate("/dashboard/availabilities")}>
             <NodeSpace></NodeSpace>
           </Card>
           <Card
             icon={<PeersIcon width={20}></PeersIcon>}
             title="Peers"
             buttonLabel="Details"
-            buttonAction={() => naviguate({ to: "/dashboard/peers" })}>
+            buttonAction={() => naviguate("/dashboard/peers")}>
             <PeersCard></PeersCard>
           </Card>
         </div>

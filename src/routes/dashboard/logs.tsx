@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import "./logs.css";
 import { RequireAssitance } from "../../components/RequireAssitance/RequireAssitance";
 import { LogLevel } from "../../components/LogLevel/LogLevel";
@@ -11,7 +10,7 @@ const throwOnError = false;
 
 // Sentry.showReportDialog({});
 
-const Logs = () => {
+export const LogsRoute = () => {
   const { data } = useDebug(throwOnError);
 
   useEffect(() => {
@@ -26,6 +25,7 @@ const Logs = () => {
     };
   }, []);
 
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const { table, ...rest } = data ?? {};
 
   return (
@@ -55,7 +55,3 @@ const Logs = () => {
     </div>
   );
 };
-
-export const Route = createFileRoute("/dashboard/logs")({
-  component: Logs,
-});

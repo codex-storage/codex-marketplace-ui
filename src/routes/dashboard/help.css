@@ -1,44 +1,44 @@
 .help {
   max-width: 600px;
   margin: auto;
-}
 
-.help-title {
-  margin-bottom: 3rem;
-  margin-top: 3rem;
-}
+  h1 {
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+  }
 
-.help-text {
-  color: var(--codex-color-light);
-}
+  > div {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--codex-border-color);
+    gap: 1rem;
+    display: flex;
+    align-items: flex-start;
 
-.help-itemTitle {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  font-weight: bold;
-  margin-bottom: 0.75rem;
-}
+    div {
+      font-size: 1.125rem;
+    }
+  }
 
-.help-itemIcon {
-  color: var(--codex-color-disabled);
-  min-width: 1.5rem;
-  height: auto;
-}
+  h2 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+  }
 
-.help-itemBody {
-  font-size: 1.125rem;
-}
+  p {
+    color: var(--codex-color-light);
+  }
 
-.help-item {
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--codex-border-color);
-  gap: 1rem;
-  display: flex;
-  align-items: flex-start;
-}
+  svg {
+    color: var(--codex-color-disabled);
+    min-width: 1.5rem;
+    height: auto;
+  }
 
-.help-link {
-  color: var(--codex-color-primary);
-  text-decoration: underline;
+  a {
+    color: var(--codex-color-primary);
+    text-decoration: underline;
+  }
 }

@@ -20,7 +20,7 @@ test('create a storage request', async ({ page }) => {
     await expect(page.getByText('Your request is being processed.')).toBeVisible();
     await page.getByRole('button', { name: 'Finish' }).click();
     await expect(page.getByText('No data.')).not.toBeVisible();
-    await page.getByRole('cell', { name: 'pending' }).getByRole('paragraph').click();
+    await expect(page.getByTestId('cell-pending').first()).toBeVisible();
 })
 
 test('select a uploaded cid when creating a storage request', async ({ page }) => {
@@ -30,7 +30,7 @@ test('select a uploaded cid when creating a storage request', async ({ page }) =
     ]);
     await page.locator('a').filter({ hasText: 'Purchases' }).click();
     await page.getByRole('button', { name: 'Storage Request' }).click();
-    await page.getByPlaceholder('Select or type your CID').click();
+    await page.getByPlaceholder('CID').click();
     await page.locator('.dropdown ul li').nth(1).click();
     await expect(page.getByText('button[disabled]')).not.toBeVisible();
 })
@@ -73,6 +73,6 @@ test('remove the CID when the file is deleted', async ({ page }) => {
         path.join(__dirname, "assets", 'chatgpt.jpg'),
     ]);
     await expect(page.locator('#cid')).not.toBeEmpty()
-    await page.locator('.button-icon--small').click();
+    await page.locator('.button-icon--small').nth(1).click();
     await expect(page.locator('#cid')).toBeEmpty()
 })

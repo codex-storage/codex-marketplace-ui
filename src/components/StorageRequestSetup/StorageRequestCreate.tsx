@@ -13,10 +13,10 @@ import {
 import { StorageRequestSuccess } from "./StorageRequestSuccess";
 import { Times } from "../../utils/times";
 import { useStorageRequestMutation } from "./useStorageRequestMutation";
-import { Plus } from "lucide-react";
 import "./StorageRequestCreate.css";
 import { StorageRequestError } from "./StorageRequestError";
 import PurchaseIcon from "../../assets/icons/purchase.svg?react";
+import PlusIcon from "../../assets/icons/plus.svg?react";
 
 const CONFIRM_STATE = 2;
 
@@ -121,7 +121,7 @@ export function StorageRequestCreate() {
     <div className="storage-request">
       <Button
         label="Storage Request"
-        Icon={Plus}
+        Icon={() => <PlusIcon width={24}></PlusIcon>}
         onClick={onOpen}
         variant="outline"
         size="small"

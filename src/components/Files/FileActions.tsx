@@ -27,7 +27,7 @@ export function FileActions({
         <ButtonIcon
           animation="bounce"
           onClick={() => window.open(url + content.cid, "_blank")}
-          Icon={DownloadIcon}></ButtonIcon>
+          Icon={() => <DownloadIcon width={20}></DownloadIcon>}></ButtonIcon>
 
         <FolderButton
           folders={folders.map(([folder, files]) => [

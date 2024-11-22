@@ -13,6 +13,13 @@
     gap: 16px;
     margin-bottom: 16px;
 
+    @media screen and (max-width: 801px) {
+      & {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
     > div {
       height: 74px;
       position: relative;
@@ -58,6 +65,12 @@
       cursor: pointer;
       transition: 0.35s box-shadow;
 
+      @media screen and (max-width: 801px) {
+        & {
+          width: 100%;
+        }
+      }
+
       &:hover {
         box-shadow: 0 0 0 2px var(--codex-preset-border-color);
       }
@@ -69,8 +82,8 @@
 
       svg {
         position: absolute;
-        right: 0;
-        top: 0;
+        right: -16px;
+        top: -7px;
         color: var(--codex-preset-color);
       }
 
@@ -127,6 +140,12 @@
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
+
+    @media screen and (max-width: 801px) {
+      & {
+        flex-direction: column;
+      }
+    }
 
     > * {
       flex: 1;

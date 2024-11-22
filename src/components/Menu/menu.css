@@ -6,33 +6,25 @@
   transition: left 0.25s;
   position: sticky;
   z-index: 10;
-  view-transition-name: main-menu;
   height: 100%;
   top: 0;
   transition:
     width 0.5s,
     font-size 0.5s,
-    left 0.05s;
-  min-width: 0;
+    left 0.5s;
   width: 272px;
   min-width: 80px;
 
-  @media (max-width: 1199px) {
+  @media (max-width: 800px) {
     & {
-      width: 80px;
-      .items {
-        a {
-          width: 26px;
-          gap: 0;
-          display: flex;
-          justify-content: center;
+      left: -300px;
+      position: fixed;
+      z-index: 12;
+    }
 
-          span + span {
-            font-size: 0;
-            display: none;
-          }
-        }
-      }
+    &[aria-expanded] {
+      left: 0px;
+      font-size: 12px;
     }
   }
 
@@ -63,9 +55,11 @@
         display: flex;
         justify-content: center;
 
-        span + span {
-          font-size: 0;
-          display: none;
+        @media (min-width: 801px) {
+          span + span {
+            font-size: 0;
+            display: none;
+          }
         }
       }
     }
@@ -154,17 +148,17 @@
       top: 115px;
     }
 
-    &:has(.active:nth-child(4))::before {
+    /* &:has(.active:nth-child(4))::before {
       top: 158px;
-    }
-
+    } */
+    /* 
     &:has(.active:nth-child(5))::before {
       top: 201px;
     }
 
     &:has(.active:nth-child(6))::before {
       top: 244px;
-    }
+    } */
 
     &:has(.active:nth-child(8))::before {
       top: 339px;
@@ -227,7 +221,7 @@
       margin-left: 6px;
 
       &:hover:not([aria-disabled="true"]),
-      &.active {
+      &.active:not([aria-disabled="true"]) {
         background-color: var(--codex-highlight-color);
         color: #c7c7c7;
       }
@@ -244,10 +238,15 @@
       span + span {
         display: inline-block;
         overflow: hidden;
-        min-width: 0;
       }
 
-      &.active span:first-child {
+      @media (min-width: 801px) {
+        span + span {
+          min-width: 0;
+        }
+      }
+
+      &.active:not([aria-disabled="true"]) span:first-child {
         color: var(--codex-color-primary);
       }
     }

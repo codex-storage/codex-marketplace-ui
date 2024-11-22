@@ -55,6 +55,14 @@ export const PeerUtils = {
         return (actives / total) * 180
     },
 
+    calcularePercent: (peers: PeerNode[]) => {
+        const actives = PeerUtils.countActives(peers);
+        const total = peers.length || 1;
+
+        return (actives / total) * 100
+    },
+
+
     isGoodQuality(actives: number) {
         return actives > 0
     },

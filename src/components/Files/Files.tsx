@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { PrettyBytes } from "../../utils/bytes";
-import { Dates } from "../../utils/dates";
 import "./Files.css";
 import {
   Tabs,
@@ -166,7 +165,9 @@ export function Files({ limit }: Props) {
         cells={[
           <FileCell content={c}></FileCell>,
           <Cell>{PrettyBytes(c.manifest.datasetSize)}</Cell>,
-          <Cell>{Dates.format(c.manifest.uploadedAt).toString()}</Cell>,
+          <Cell>
+            {FilesUtils.formatDate(c.manifest.uploadedAt).toString()}
+          </Cell>,
           <FileActions
             content={c}
             folders={folders}
@@ -198,7 +199,7 @@ export function Files({ limit }: Props) {
             pattern="[A-Za-z0-9_\-]*"
             autoComplete="off"
             maxLength={9}
-            size={"medium" as any}
+            variant={"medium"}
             placeholder="Folder name"
             onChange={onFolderChange}></Input>
 

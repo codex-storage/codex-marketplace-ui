@@ -48,7 +48,7 @@ export function ManifestFetch() {
         id="cid"
         value={cid}
         placeholder="CID"
-        size={"medium" as any}
+        variant={"medium"}
         autoComplete="off"
         onChange={onCidChange}></Input>
       <Button label="Fetch" onClick={onDownload} variant="outline"></Button>

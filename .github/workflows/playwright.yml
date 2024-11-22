@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  codex_version: v0.1.7
-  circuit_version: v0.1.7
-  marketplace_address: "0xfE822Df439d987849a90B64a4C0e26a297DBD47F"
+  codex_version: v0.1.8
+  circuit_version: v0.1.8
+  marketplace_address: "0x5Bd66fA15Eb0E546cd26808248867a572cFF5706"
   eth_provider: "https://rpc.testnet.codex.storage"
   VITE_CODEX_API_URL: ${{ secrets.VITE_CODEX_API_URL }}
   VITE_GEO_IP_URL: ${{ secrets.VITE_GEO_IP_URL }}
@@ -119,7 +119,7 @@ jobs:
         run: npm run test
 
       - uses: actions/upload-artifact@v4
-        # if: ${{ !cancelled() }}
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/

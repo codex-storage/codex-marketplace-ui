@@ -114,7 +114,7 @@ export function PurchasesTable() {
 
   if (isPending) {
     return (
-      <div className="purchases-loader">
+      <div>
         <Spinner width="3rem" />
       </div>
     );

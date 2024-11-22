@@ -2,13 +2,13 @@
   max-width: 600px;
   margin: auto;
   padding: 32px;
-}
 
-.disclaimer-title {
-  margin-bottom: 3rem;
-  margin-top: 3rem;
-}
+  h1 {
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+  }
 
-.disclaimer-text {
-  line-height: 1.5rem;
+  p {
+    line-height: 1.5rem;
+  }
 }

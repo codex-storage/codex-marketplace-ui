@@ -14,17 +14,17 @@ test('update the URL with wrong URL applies', async ({ page }) => {
     await page.getByLabel('Address').click();
     await page.getByLabel('Address').fill('hello');
     await expect(page.getByLabel('Address')).toHaveAttribute("aria-invalid")
-    await expect(page.locator(".refresh svg")).toHaveAttribute("aria-disabled")
+    await expect(page.locator(".refresh svg")).toHaveAttribute("color", "#494949")
     await page.getByLabel('Address').fill('http://127.0.0.1:8079');
     await expect(page.getByLabel('Address')).not.toHaveAttribute("aria-invalid")
     await expect(page.locator(".refresh svg")).not.toHaveAttribute("aria-disabled")
     await expect(page.getByLabel('Address')).toHaveValue("http://127.0.0.1")
     await expect(page.getByLabel('Port')).toHaveValue("8079")
     await page.locator(".refresh").click()
-    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-error")).toBeVisible()
-    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-success")).not.toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(2).getByTestId("icon-error")).toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(2).getByTestId("icon-success")).not.toBeVisible()
     await page.getByLabel('Address').fill('http://127.0.0.1:8080');
     await page.locator(".refresh").click()
-    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-error")).not.toBeVisible()
-    await expect(page.locator(".health-checks ul li").nth(3).getByTestId("icon-success")).toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(2).getByTestId("icon-error")).not.toBeVisible()
+    await expect(page.locator(".health-checks ul li").nth(2).getByTestId("icon-success")).toBeVisible()
 })

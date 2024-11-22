@@ -14,7 +14,7 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
     pending: PurchaseStateIcon,
     submitted: PurchaseStateIcon,
     started: PurchaseStateIcon,
-    finished: SuccessCircleIcon,
+    finished: () => <SuccessCircleIcon width={20} />,
     cancelled: ErrorCircleIcon,
     errored: ErrorCircleIcon,
   };
@@ -26,10 +26,10 @@ export const CustomStateCellRender = ({ state, message }: Props) => {
       <p className={"cell-state"}>
         {message ? (
           <Tooltip message={message}>
-            <Icon width={20} className="cell-stateIcon" />
+            <Icon width={20} data-testid={"cell-" + state} />
           </Tooltip>
         ) : (
-          <Icon width={20} className="cell-stateIcon" />
+          <Icon width={20} data-testid={"cell-" + state} />
         )}
       </p>
     </Cell>
