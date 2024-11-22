@@ -1,6 +1,6 @@
 import "./root.css";
 import { Menu } from "../components/Menu/Menu";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AppBar } from "../components/AppBar/AppBar";
 import { Backdrop } from "@codex-storage/marketplace-ui-components";
 import { Outlet, ScrollRestoration } from "react-router-dom";
@@ -10,7 +10,7 @@ export const Root = () => {
   const isMobile = useIsMobile();
   const [isExpanded, setIsExpanded] = useState(!isMobile);
 
-  const onExpanded = (val: boolean) => setIsExpanded(val);
+  const onExpanded = useCallback((val: boolean) => setIsExpanded(val), []);
 
   const onIconClick = () => {
     if (isMobile) {
