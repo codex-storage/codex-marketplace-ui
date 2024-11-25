@@ -99,9 +99,7 @@ export const WalletRoute = () => {
           </ul>
         </>
       </Card>
-      <Card
-        icon={<RequestDurationIcon width={24}></RequestDurationIcon>}
-        title="Activity">
+      <Card icon={<span></span>} title="">
         <div>
           <div>
             <RequestDurationIcon width={24}></RequestDurationIcon>

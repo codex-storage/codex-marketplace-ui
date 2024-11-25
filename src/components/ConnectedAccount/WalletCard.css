@@ -133,20 +133,29 @@
       background-color: #161616;
       border-radius: 8px;
       border: 1px solid #96969633;
-      padding: 6px 6px 6px 44px;
+      padding: 6px 24px 6px 34px;
       outline: none;
       -moz-appearance: none; /* Firefox */
       -webkit-appearance: none; /* Safari and Chrome */
       appearance: none;
       position: relative;
       transition: box-shadow 0.35s;
+      height: 31px;
+      font-size: 0;
 
       &:hover {
         box-shadow: 0 0 0 3px var(--codex-border-color);
       }
 
-      &:has(option[value="US"]:checked) {
+      &:has(option[value="USD"]:checked) {
         background-image: url(/icons/us-flag.svg);
+        background-position: 10px;
+        background-repeat: no-repeat;
+        background-size: 16px;
+      }
+
+      &:has(option[value="EUR"]:checked) {
+        background-image: url(/icons/euro-flag.svg);
         background-position: 10px;
         background-repeat: no-repeat;
         background-size: 16px;
@@ -154,6 +163,7 @@
 
       option {
         border-radius: 32px;
+        font-size: 16px;
       }
     }
 
@@ -191,5 +201,10 @@
       left: 0;
       top: 10px;
     }
+  }
+
+  .lines {
+    height: 200;
+    transform: scale(1.25);
   }
 }

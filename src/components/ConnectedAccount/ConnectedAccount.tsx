@@ -2,18 +2,36 @@ import "./ConnectedAccount.css";
 import { WalletCard } from "./WalletCard";
 import { ProgressCircle } from "./ProgressCircle";
 import ArrowRightIcon from "../../assets/icons/arrow-right.svg?react";
+import { useState } from "react";
+import { attributes } from "../../utils/attributes";
+
+type TabType = "weekly" | "daily" | "monthly";
 
 export function ConnectedAccount() {
+  const [tab, setTab] = useState<TabType>("monthly");
+
   return (
     <div className="connected-account">
       <main>
-        <WalletCard></WalletCard>
+        <WalletCard tab={tab}></WalletCard>
       </main>
       <footer>
         <ul>
-          <li>Daily</li>
-          <li aria-selected>Weekly</li>
-          <li>Monthly</li>
+          <li
+            onClick={() => setTab("daily")}
+            {...attributes({ "aria-selected": tab === "daily" })}>
+            Daily
+          </li>
+          <li
+            onClick={() => setTab("weekly")}
+            {...attributes({ "aria-selected": tab === "weekly" })}>
+            Weekly
+          </li>
+          <li
+            onClick={() => setTab("monthly")}
+            {...attributes({ "aria-selected": tab === "monthly" })}>
+            Monthly
+          </li>
         </ul>
         <div>
           <div className="row gap">

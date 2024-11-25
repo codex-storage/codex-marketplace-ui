@@ -76,7 +76,7 @@ export const PeersRoute = () => {
   });
 
   const actives = PeerUtils.countActives(sorted);
-  const percent = PeerUtils.calcularePercent(sorted);
+  const degrees = PeerUtils.calculareDegrees(sorted);
   const good = PeerUtils.isGoodQuality(actives);
 
   return (
@@ -96,7 +96,7 @@ export const PeersRoute = () => {
               <span>Connections</span>
             </header>
             <main>
-              <PeersChart actives={actives} percent={percent}></PeersChart>
+              <PeersChart actives={actives} degrees={degrees}></PeersChart>
             </main>
             <footer>
               <PeersQuality good={good}></PeersQuality>

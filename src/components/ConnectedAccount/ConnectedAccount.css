@@ -30,6 +30,10 @@
         text-align: left;
         color: #969696;
 
+        &:hover {
+          cursor: pointer;
+        }
+
         &[aria-selected] {
           background: #2f2f2f;
           color: white;
