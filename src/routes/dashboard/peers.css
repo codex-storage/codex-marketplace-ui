@@ -10,7 +10,7 @@
 
   > div:first-child {
     width: 100%;
-    border: 1px solid #96969633;
+    border: 1px solid rgba(150, 150, 150, 0.2);
     border-radius: 16px;
     position: relative;
 
@@ -37,7 +37,7 @@
       }
 
       li {
-        border-bottom: 1px solid #969696cc;
+        border-bottom: 1px solid rgba(150, 150, 150, 0.8);
         padding: 16px 0;
         text-align: right;
       }
@@ -48,7 +48,7 @@
         line-height: 20px;
         letter-spacing: -0.006em;
         text-align: left;
-        color: #7b7b7b;
+        color: rgb(123, 123, 123);
       }
 
       li:not(:first-child) {
@@ -88,8 +88,8 @@
     }
 
     .connections {
-      background-color: #232323;
-      border: 1px solid #96969633;
+      background-color: rgb(35, 35, 35);
+      border: 1px solid rgba(150, 150, 150, 0.2);
       border-radius: 16px;
       max-width: 280px;
       padding: 16px;
@@ -117,9 +117,9 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #969696;
+        color: rgba(150, 150, 150, 1);
         padding-bottom: 16px;
-        border-bottom: 1px solid #96969633;
+        border-bottom: 1px solid rgba(150, 150, 150, 0.2);
 
         span {
           font-family: Inter;
@@ -132,7 +132,7 @@
       }
 
       footer {
-        border-top: 1px solid #96969633;
+        border-top: 1px solid rgba(150, 150, 150, 0.2);
         padding-top: 16px;
       }
     }
@@ -153,13 +153,13 @@
         border-radius: 8px;
 
         &.status--active {
-          color: #1daf61;
-          background-color: #6fcb9433;
+          color: rgb(29, 175, 97);
+          background-color: rgb(111, 203, 148, 0.2);
         }
 
         &.status--inactive {
-          color: #fb3748;
-          background-color: #fb374833;
+          color: rgb(251, 55, 72);
+          background-color: rgb(251, 55, 72, 0.2);
         }
       }
     }

@@ -23,12 +23,12 @@
     }
 
     table thead tr th {
-      background-color: #14141499;
+      background-color: rgba(20, 20, 20, 0.6);
     }
 
     table tbody tr.availabilty-row {
       td {
-        background-color: #292929;
+        background-color: rgb(41, 41, 41);
         padding: 6px 12px;
 
         &:first-child {
@@ -63,7 +63,7 @@
         font-weight: 400;
         line-height: 16px;
         text-align: left;
-        color: #ffffffcc;
+        color: rgba (255, 255, 255, 0.8);
       }
     }
   }
@@ -88,7 +88,7 @@
     }
 
     .node-space {
-      border-bottom: 1px solid #96969633;
+      border-bottom: 1px solid rgba(150, 150, 150, 0.2);
       padding-bottom: 16px;
 
       h6 {
@@ -116,7 +116,7 @@
         line-height: 20px;
         letter-spacing: -0.006em;
         text-align: left;
-        color: #969696cc;
+        color: rgba(150, 150, 150, 0.8);
       }
     }
   }

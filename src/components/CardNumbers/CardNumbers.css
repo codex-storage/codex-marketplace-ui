@@ -1,10 +1,10 @@
 .card-number {
-  --codex-card-number-label-color: #7b7b7b;
-  --codex-card-number-unit-color: #969696;
+  --codex-card-number-label-color: rgb(123, 123, 123);
+  --codex-card-number-unit-color: rgba(150, 150, 150, 1);
 
   &[aria-invalid] {
-    --codex-card-number-label-color: var(--codex-input-color-error);
-    --codex-card-number-unit-color: var(--codex-input-color-error);
+    --codex-card-number-label-color: var(-codex-color-error);
+    --codex-card-number-unit-color: var(-codex-color-error);
   }
 
   position: relative;
@@ -32,21 +32,6 @@
   svg {
     color: var(--codex-card-number-unit-color);
   }
-
-  /* svg::after {
-    content: attr(data-title);
-    background-color: #2f2f2f;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    line-height: 14px;
-    display: block;
-    white-space: nowrap;
-    position: absolute;
-    right: 1rem;
-    overflow: visible;
-  } */
 
   span {
     font-family: Inter;

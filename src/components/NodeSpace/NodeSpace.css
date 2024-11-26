@@ -8,6 +8,6 @@
     text-align: left;
     padding-top: 16px;
     margin-bottom: 16px;
-    border-top: 1px solid #96969633;
+    border-top: 1px solid rgba(150, 150, 150, 0.2);
   }
 }

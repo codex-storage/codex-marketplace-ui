@@ -70,7 +70,7 @@ export function StorageRequestFileChooser({
         value={storageRequest.cid || ""}
         options={options}
         onSelected={onSelected}
-        size="medium"
+        variant="medium"
       />
 
       <div className="row gap">

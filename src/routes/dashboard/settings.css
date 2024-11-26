@@ -24,7 +24,7 @@
     .user-info {
       padding-bottom: 16px;
       margin-bottom: 16px;
-      border-bottom: 1px solid #96969633;
+      border-bottom: 1px solid rgba(150, 150, 150, 0.2);
     }
   }
 
@@ -41,19 +41,8 @@
   .address svg {
     top: 55px;
   }
-}
-/*
-.settings-title {
-  font-weight: bold;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  margin-bottom: 0.75rem;
-}
 
-.settings-input {
-  margin-bottom: 0.75rem;
+  .input input {
+    --codex-input-background-color: rgba(35, 35, 35, 1);
+  }
 }
-
-.settings-debug-loader {
-  margin: auto;
-} */

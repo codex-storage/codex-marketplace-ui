@@ -39,7 +39,7 @@
       font-weight: 700;
       line-height: 14.52px;
       letter-spacing: 0.01em;
-      color: #969696cc;
+      color: rgba(150, 150, 150, 0.8);
       text-transform: uppercase;
     }
 
@@ -62,7 +62,7 @@
       border-radius: 50%;
       width: 52px;
       height: 52px;
-      background-color: #4a9a73;
+      background-color: rgb(74, 154, 115);
       display: flex;
       align-items: center;
       justify-content: center;

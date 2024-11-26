@@ -1,6 +1,6 @@
 .file-details {
-  background-color: #232323;
-  border-left: 1px solid #96969633;
+  background-color: rgb(35, 35, 35);
+  border-left: 1px solid rgba(150, 150, 150, 0.2);
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
   padding: 16px;
@@ -23,8 +23,8 @@
     }
 
     .button-icon {
-      background-color: #2f2f2f;
-      border: 1px solid #96969633;
+      background-color: rgb(47, 47, 47);
+      border: 1px solid rgba(150, 150, 150, 0.2);
 
       svg {
         position: relative;
@@ -35,8 +35,8 @@
   }
 
   .preview {
-    background-color: #14141499;
-    border: 1px solid #69696933;
+    background-color: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(105, 105, 105, 0.2);
     height: 150px;
     margin: auto;
     border-radius: 10px;
@@ -63,7 +63,7 @@
       line-height: 24px;
       letter-spacing: -0.011em;
       text-align: left;
-      color: #ffffff33;
+      color: rgb(255, 255, 255, 0.2);
 
       p {
         margin-top: 8px;
@@ -95,7 +95,7 @@
         line-height: 20px;
         letter-spacing: -0.006em;
         text-align: left;
-        color: #ffffffcc;
+        color: rgba (255, 255, 255, 0.8);
       }
 
       &:last-child p:nth-child(2) {
@@ -106,14 +106,14 @@
         letter-spacing: -0.006em;
         text-align: left;
 
-        color: #6beca1;
+        color: rgb(107, 236, 161);
       }
     }
   }
 
   .buttons {
     padding: 16px 0;
-    border-bottom: 1px solid #96969633;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
     display: flex;
     gap: 16px;
 
@@ -128,7 +128,7 @@
     header {
       margin-top: 16px;
       display: block;
-      border-bottom: 1px solid #96969633;
+      border-bottom: 1px solid rgba(150, 150, 150, 0.2);
       padding-bottom: 16px;
 
       > span {
@@ -138,15 +138,15 @@
     }
 
     thead tr th {
-      border-top: 1px solid #96969633;
-      border-bottom: 1px solid #96969633;
+      border-top: 1px solid rgba(150, 150, 150, 0.2);
+      border-bottom: 1px solid rgba(150, 150, 150, 0.2);
 
       &:first-child {
-        border-left: 1px solid #96969633;
+        border-left: 1px solid rgba(150, 150, 150, 0.2);
       }
 
       &:last-child {
-        border-right: 1px solid #96969633;
+        border-right: 1px solid rgba(150, 150, 150, 0.2);
       }
     }
 

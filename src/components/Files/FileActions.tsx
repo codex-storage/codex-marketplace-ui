@@ -25,6 +25,7 @@ export function FileActions({
     <Cell className="file-actions">
       <div>
         <ButtonIcon
+          variant="small"
           animation="bounce"
           onClick={() => window.open(url + content.cid, "_blank")}
           Icon={() => <DownloadIcon width={20}></DownloadIcon>}></ButtonIcon>

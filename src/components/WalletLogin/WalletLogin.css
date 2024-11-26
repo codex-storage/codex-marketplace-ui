@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background-color: #252525;
+  background-color: rgb(37, 37, 37);
   filter: grayscale(30);
   transition: filter 0.5s;
 
@@ -17,7 +17,7 @@
       font-size: 8px;
       font-weight: 700;
       text-transform: uppercase;
-      color: #6e6e6e;
+      color: rgb(110, 110, 110);
       display: block;
       font-size: 10px;
     }
@@ -27,7 +27,7 @@
     font-family: Inter;
     font-size: 12px;
     font-weight: 700;
-    color: #ffffff99;
+    color: rgb(255, 255, 255, 0.6);
     font-style: normal;
     font-size: 16px;
   }
@@ -45,7 +45,7 @@
       font-weight: 700;
       line-height: 10px;
       text-align: left;
-      color: #3ee089;
+      color: rgb(62, 224, 137);
       font-style: normal;
     }
 
@@ -54,7 +54,7 @@
       font-size: 10px;
       font-weight: 700;
       line-height: 10px;
-      color: #6e6e6e;
+      color: rgb(110, 110, 110);
       cursor: pointer;
     }
   }

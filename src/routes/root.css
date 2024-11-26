@@ -5,7 +5,7 @@
 
   > main {
     flex: 1;
-    background-color: #141414;
+    background-color: rgb(20, 20, 20);
 
     > div {
       padding: 16px;
@@ -50,7 +50,7 @@
   font-weight: 500;
   line-height: 24px;
   letter-spacing: -0.011em;
-  color: #99a0ae;
+  color: rgb(153, 160, 174);
 }
 
 .dashboard-welcome-versionValue {

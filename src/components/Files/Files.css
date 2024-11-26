@@ -24,7 +24,7 @@
   }
 
   table thead tr th {
-    background-color: #14141499;
+    background-color: rgba(20, 20, 20, 0.6);
   }
 
   @media (max-width: 800px) {

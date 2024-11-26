@@ -13,8 +13,8 @@
       display: flex;
       list-style-type: none;
       margin-top: 16px;
-      border: 1px solid #96969633;
-      background-color: #14141499;
+      border: 1px solid rgba(150, 150, 150, 0.2);
+      background-color: rgba(20, 20, 20, 0.6);
       height: 24px;
       border-radius: 6px;
 
@@ -28,22 +28,22 @@
         font-weight: 500;
         line-height: 16px;
         text-align: left;
-        color: #969696;
+        color: rgba(150, 150, 150, 1);
 
         &:hover {
           cursor: pointer;
         }
 
         &[aria-selected] {
-          background: #2f2f2f;
+          background: rgb(47, 47, 47);
           color: white;
         }
       }
     }
 
     button {
-      background-color: #161616;
-      border: 1px solid #96969633;
+      background-color: rgb(22, 22, 22);
+      border: 1px solid rgba(150, 150, 150, 0.2);
       height: 24px;
       width: 24px;
       border-radius: 6px;
@@ -71,7 +71,7 @@
       line-height: 20px;
       letter-spacing: -0.006em;
       text-align: left;
-      color: #969696;
+      color: rgba(150, 150, 150, 1);
     }
 
     var {
@@ -91,7 +91,7 @@
       font-weight: 500;
       line-height: 16px;
       text-align: left;
-      color: #7d7d7d;
+      color: rgb(125, 125, 125);
     }
   }
 }

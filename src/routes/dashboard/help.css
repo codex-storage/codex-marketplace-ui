@@ -10,7 +10,7 @@
   > div {
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--codex-border-color);
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
     gap: 1rem;
     display: flex;
     align-items: flex-start;
@@ -28,11 +28,11 @@
   }
 
   p {
-    color: var(--codex-color-light);
+    color: rgb(150 150 150);
   }
 
   svg {
-    color: var(--codex-color-disabled);
+    color: rgb(113, 113, 113);
     min-width: 1.5rem;
     height: auto;
   }

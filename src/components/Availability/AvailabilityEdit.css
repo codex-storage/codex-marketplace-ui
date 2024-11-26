@@ -30,16 +30,12 @@
   }
 
   svg {
-    color: #969696;
+    color: rgba(150, 150, 150, 1);
   }
 
   header {
     display: flex;
     gap: 8px;
-  }
-
-  input {
-    background-color: transparent;
   }
 
   .space-allocation {

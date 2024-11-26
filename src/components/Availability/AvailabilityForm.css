@@ -10,7 +10,7 @@
   }
 
   option {
-    background-color: #232323;
+    background-color: rgb(35, 35, 35);
   }
 
   header {
@@ -35,13 +35,13 @@
 
     &[aria-invalid] {
       .input-group > div > div > div:nth-child(2) {
-        border-color: var(--codex-input-color-error);
+        border-color: var(-codex-color-error);
       }
 
       label,
       svg,
       select {
-        color: var(--codex-input-color-error);
+        color: var(-codex-color-error);
       }
     }
   }

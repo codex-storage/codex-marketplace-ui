@@ -13,7 +13,7 @@
     }
 
     > ul li {
-      border-bottom: 1px solid #96969633;
+      border-bottom: 1px solid rgba(150, 150, 150, 0.2);
       margin-bottom: 16px;
       padding-bottom: 16px;
     }
@@ -23,8 +23,8 @@
     justify-content: space-between;
     margin-top: 16px;
     margin-bottom: 16px;
-    border-top: 1px solid #96969633;
-    border-bottom: 1px solid #96969633;
+    border-top: 1px solid rgba(150, 150, 150, 0.2);
+    border-bottom: 1px solid rgba(150, 150, 150, 0.2);
     padding-top: 16px;
     padding-bottom: 16px;
     display: none;
@@ -48,24 +48,24 @@
         font-weight: 500;
         line-height: 16px;
         text-align: left;
-        color: #969696;
+        color: rgba(150, 150, 150, 1);
       }
     }
 
     span {
       height: 36px;
       width: 1px;
-      background-color: #ffffff33;
+      background-color: rgb(255, 255, 255, 0.2);
       margin: auto 0;
     }
   }
 
   .button-icon {
-    background-color: #2f2f2f;
+    background-color: rgb(47, 47, 47);
     height: 60px;
     width: 60px;
-    color: #96969666;
-    border: 0.75px solid #96969633;
+    color: rgb(150, 150, 150, 0.4);
+    border: 0.75px solid rgba(150, 150, 150, 0.2);
 
     svg {
       mix-blend-mode: unset;
@@ -90,7 +90,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      color: #969696;
+      color: rgba(150, 150, 150, 1);
       font-size: 20px;
     }
   }
@@ -121,7 +121,7 @@
           line-height: 20px;
           letter-spacing: -0.006em;
           text-align: left;
-          color: #ffffffb2;
+          color: rgb(255, 255, 255, 0.7);
         }
 
         p {

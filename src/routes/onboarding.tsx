@@ -5,6 +5,7 @@ import AlphaIcon from "../assets/icons/alpha.svg?react";
 import AlphaText from "../assets/icons/alphatext.svg?react";
 import ArrowCircleIcon from "../assets/icons/arrow-circle.svg?react";
 import { useNavigate } from "react-router-dom";
+import ArrowIcon from "../assets/icons/arrow-onboarding.svg?react";
 
 export function OnBoardingRoute() {
   const [modal, setModal] = useState(false);
@@ -21,7 +22,7 @@ export function OnBoardingRoute() {
       <OnBoardingLayout defaultIsStepValid={false} step={0}>
         <>
           <section className="alpha">
-            <AlphaIcon color="var(--codex-color-error-hexa)" width={26} />
+            <AlphaIcon color="rgb(204, 108, 108)" width={26} />
             <div>
               <AlphaText
                 color="rgba(255, 255, 255, 0.6)"
@@ -42,7 +43,9 @@ export function OnBoardingRoute() {
             </p>
           </section>
           <section className="get-started">
-            <a onClick={onNextStep}>Let’s get started →</a>
+            <a onClick={onNextStep}>
+              Let’s get started <ArrowIcon width={18} height={18}></ArrowIcon>
+            </a>
 
             <Modal
               onClose={onLegalDisclaimerClose}

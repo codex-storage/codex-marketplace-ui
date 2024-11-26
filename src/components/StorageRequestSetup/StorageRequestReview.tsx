@@ -324,14 +324,9 @@ export function StorageRequestReview({
             unit={"Expiration"}
             value={storageRequest.expiration.toString()}
             onChange={onExpirationChange}
-            className="storageRequestReview-expiration"
             onValidation={isInvalidNumber}
             title="Request expiration in minutes"></CardNumbers>
-          <Alert
-            Icon={<WarningIcon />}
-            title="Warning"
-            variant="warning"
-            className="storageRequestReview-alert">
+          <Alert Icon={<WarningIcon />} title="Warning" variant="warning">
             If no suitable hosts are found for the CID{" "}
             {Strings.shortId(storageRequest.cid)} matching your storage
             requirements, you will incur a charge a small amount of tokens.

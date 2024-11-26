@@ -11,7 +11,7 @@
     align-items: flex-start;
 
     > div:first-child {
-      background-color: rgb(var(--codex-color-primary-rgb), 0.2);
+      background-color: rgb(193, 240, 164, 0.2);
       border-radius: 50%;
       padding: 0.5rem;
       display: flex;
@@ -19,7 +19,7 @@
       justify-content: center;
 
       svg {
-        color: rgb(var(--codex-color-primary-rgb));
+        color: rgb(193, 240, 164);
       }
     }
 

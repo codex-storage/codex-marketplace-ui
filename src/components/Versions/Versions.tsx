@@ -13,7 +13,7 @@ export function Versions() {
 
   return (
     <div className="versions">
-      <AlphaIcon color="var(--codex-color-error-hexa)" width={20} />
+      <AlphaIcon color="rgb(204, 108, 108)" width={20} />
       <div>
         <p>Client</p>
         <small>VER. {version}</small>
@@ -21,7 +21,7 @@ export function Versions() {
       <div>
         <p>Vault</p>
         <small>VER. {VersionsUtil.codexVersion()}</small>
-        <AlphaText color="var(--codex-color-error-hexa)" width={37}></AlphaText>
+        <AlphaText color="rgb(204, 108, 108)" width={37}></AlphaText>
       </div>
     </div>
   );

@@ -74,12 +74,10 @@ export function AppBar({ onIconClick, onExpanded }: Props) {
 
   const title =
     location.pathname.split("/")[2] || location.pathname.split("/")[1];
-  const networkIconColor = online
-    ? "#3EE089"
-    : "var(--codex-input-color-error)";
+  const networkIconColor = online ? "#3EE089" : "var(-codex-color-error)";
   const nodesIconColor =
     codex.enabled === false
-      ? "var(--codex-input-color-error)"
+      ? "var(-codex-color-error)"
       : persistence.enabled
         ? "#3EE089"
         : "var(--codex-input-color-warning)";

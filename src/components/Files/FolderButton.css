@@ -4,11 +4,12 @@
     transform: translate(310px, -200px);
     opacity: 0;
     transition: opacity 0.15s;
-    background-color: var(--codex-background);
+    background-color: rgba(47, 47, 47, 1);
     padding: 0.5rem;
-    border-radius: var(--codex-border-radius);
+    border-radius: 8px;
     width: 150px;
-    border: 1px solid var(--codex-border-color);
+    right: -40px;
+    border: 1px solid rgba(150, 150, 150, 0.2);
     z-index: -1;
 
     &[aria-expanded] {
@@ -21,13 +22,13 @@
       padding: 0.75rem;
       transition: background-color 0.35s;
       cursor: pointer;
-      border-radius: var(--codex-border-radius);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       &:hover {
-        background-color: var(--codex-background-light);
+        background-color: rgba(150, 150, 150, 0.1);
       }
     }
 

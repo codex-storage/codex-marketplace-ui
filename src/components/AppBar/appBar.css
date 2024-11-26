@@ -1,12 +1,12 @@
 .app-bar {
   height: 80px;
   justify-content: space-between;
-  border-bottom: 1px solid var(--codex-border-color);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.2);
   display: flex;
   padding: 16px;
-  border-bottom: 1px solid #96969633;
+  border-bottom: 1px solid rgba(150, 150, 150, 0.2);
   box-sizing: border-box;
-  background-color: #1c1c1c;
+  background-color: rgb(28, 28, 28);
   border-right: 12px solid transparent;
   position: sticky;
   top: 0;
@@ -19,15 +19,15 @@
   }
 
   &:not(.app-bar--offline):not(.app-bar--no-persistence) {
-    border-right-color: #6ccc93;
+    border-right-color: rgb(108, 204, 147);
   }
 
   &.app-bar--offline {
-    border-right-color: var(--codex-input-color-error);
+    border-right-color: rgb(251, 55, 72);
   }
 
   &.app-bar--no-persistence:not(.app-bar--offline) {
-    border-right-color: rgb(var(--codex-color-warning));
+    border-right-color: rgb(251, 198, 75);
   }
 
   h1 {
@@ -44,28 +44,28 @@
       400 14px/20px "Inter",
       sans-serif;
     letter-spacing: -0.006em;
-    color: #969696cc;
+    color: rgba(150, 150, 150, 0.8);
   }
 
   > div {
     span {
-      background: #141414;
+      background: rgb(20, 20, 20);
       height: 48px;
       width: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid #353639;
+      border: 1px solid rgb(53, 54, 57);
       border-radius: 50%;
-      color: #969696;
+      color: rgba(150, 150, 150, 1);
     }
   }
 
   aside {
     svg {
       padding: 10px;
-      background-color: #141414;
-      border-radius: var(--codex-border-radius);
+      background-color: rgb(20, 20, 20);
+      border-radius: 5px;
     }
 
     span {
@@ -73,7 +73,7 @@
         500 14px/20px "Inter",
         sans-serif;
       letter-spacing: -0.006em;
-      color: #8d8d8d;
+      color: rgb(141, 141, 141);
 
       @media (max-width: 999px) {
         & {

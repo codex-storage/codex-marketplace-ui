@@ -1,9 +1,9 @@
 .require-assistance {
-  background-color: #0a1410;
+  background-color: rgb(10, 20, 16);
   box-sizing: border-box;
   padding: 16px;
   border-radius: 16px;
-  border-left: 4px solid #6ccc93;
+  border-left: 4px solid rgb(108, 204, 147);
   height: 144px;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
     font-weight: 400;
     line-height: 20px;
     text-align: left;
-    color: #6ccc93;
+    color: rgb(108, 204, 147);
   }
 
   h6 {
@@ -31,7 +31,7 @@
     line-height: 19.36px;
     letter-spacing: 0.01em;
     text-align: left;
-    color: #7bfbaf;
+    color: rgb(123, 251, 175);
     margin-bottom: 4px;
   }
 }

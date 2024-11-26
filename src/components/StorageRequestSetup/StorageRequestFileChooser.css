@@ -5,7 +5,7 @@
 
   hr {
     flex: 1;
-    border: 1px solid #96969633;
+    border: 1px solid rgba(150, 150, 150, 0.2);
     margin-top: 24px;
     margin-bottom: 24px;
 
@@ -16,7 +16,7 @@
       line-height: 12px;
       letter-spacing: 0.02em;
       text-align: left;
-      color: #696969;
+      color: rgb(105, 105, 105);
     }
   }
 
