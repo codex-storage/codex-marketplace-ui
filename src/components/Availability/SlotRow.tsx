@@ -1,5 +1,5 @@
 import { Cell, Row } from "@codex-storage/marketplace-ui-components";
-import { PrettyBytes } from "../../utils/bytes";
+import { Bytes } from "../../utils/bytes";
 import "./SlotRow.css";
 import { classnames } from "../../utils/classnames";
 import { attributes } from "../../utils/attributes";
@@ -47,7 +47,7 @@ export function SlotRow({ bytes, active, id }: Props) {
             <SlotIcon />
             <div>
               <b>Slot {id}</b>
-              <small>{PrettyBytes(bytes)} allocated for the slot</small>
+              <small>{Bytes.pretty(bytes)} allocated for the slot</small>
             </div>
           </div>
         </Cell>,

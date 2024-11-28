@@ -1,5 +1,5 @@
 import { Cell, Row } from "@codex-storage/marketplace-ui-components";
-import { PrettyBytes } from "../../utils/bytes";
+import { Bytes } from "../../utils/bytes";
 import { classnames } from "../../utils/classnames";
 import HardriveIcon from "../../assets/icons/hardrive.svg?react";
 
@@ -19,7 +19,7 @@ export function AvailabilityDiskRow({ bytes }: Props) {
             <HardriveIcon />
             <div>
               <b>Node</b>
-              <small>{PrettyBytes(bytes)} allocated for the node</small>
+              <small>{Bytes.pretty(bytes)} allocated for the node</small>
             </div>
           </div>
         </Cell>,

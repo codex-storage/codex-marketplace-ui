@@ -14,11 +14,27 @@ type Props = {
 };
 
 export function FileCell({ content }: Props) {
-  const [toast, setToast] = useState({ time: 0, message: "" });
+  const [toast, setToast] = useState({
+    time: 0,
+    message: "",
+    variant: "success" as "success" | "error",
+  });
 
   const onCopy = (cid: string) => {
-    navigator.clipboard.writeText(cid);
-    setToast({ message: "CID copied to the clipboard.", time: Date.now() });
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(cid);
+      setToast({
+        message: "CID copied to the clipboard.",
+        time: Date.now(),
+        variant: "success" as "success",
+      });
+    } else {
+      setToast({
+        message: "Sorry the CID cannot be copied to the clipboard.",
+        time: Date.now(),
+        variant: "error" as "error",
+      });
+    }
   };
 
   return (
@@ -44,7 +60,11 @@ export function FileCell({ content }: Props) {
             )}></ButtonIcon>
         </div>
 
-        <Toast message={toast.message} time={toast.time} variant={"success"} />
+        <Toast
+          message={toast.message}
+          time={toast.time}
+          variant={toast.variant}
+        />
       </Cell>
     </>
   );

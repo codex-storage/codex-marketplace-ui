@@ -10,6 +10,37 @@
     padding: 10px;
   }
 
+  ul {
+    transition: bottom 0.35s;
+    position: fixed;
+    bottom: -500px;
+    left: 0;
+    right: 0;
+    background-color: rgba(47, 47, 47, 1);
+    border-top: 1px solid rgba(150, 150, 150, 0.2);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+
+    padding: 16px;
+
+    &[aria-expanded] {
+      bottom: 0;
+      z-index: 11;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    li + li {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(150, 150, 150, 0.2);
+    }
+  }
+
   @media (max-width: 800px) {
     .folder-button {
       display: none;

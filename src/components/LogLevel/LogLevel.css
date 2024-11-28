@@ -7,6 +7,12 @@
   > div:first-child {
     position: relative;
 
+    @media (max-width: 800px) {
+      & {
+        flex: 1;
+      }
+    }
+
     svg {
       position: absolute;
       top: 11px;
@@ -22,5 +28,11 @@
   select {
     border-color: rgba(150, 150, 150, 1);
     padding-left: 40px;
+
+    @media (max-width: 800px) {
+      & {
+        width: 100%;
+      }
+    }
   }
 }

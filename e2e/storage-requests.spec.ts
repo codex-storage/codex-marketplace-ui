@@ -76,3 +76,58 @@ test('remove the CID when the file is deleted', async ({ page }) => {
     await page.locator('.button-icon--small').nth(1).click();
     await expect(page.locator('#cid')).toBeEmpty()
 })
+
+test('create a storage request by using decimal values', async ({ page }) => {
+    await page.goto('/dashboard');
+    await page.locator('a').filter({ hasText: 'Purchases' }).click();
+    await page.getByRole('button', { name: 'Storage Request' }).click();
+
+    await page.locator('div').getByTestId("upload").setInputFiles([
+        path.join(__dirname, "assets", 'chatgpt.jpg'),
+    ]);
+    await expect(page.locator('#cid')).not.toBeEmpty()
+    await expect(page.getByText('Success, the CID has been')).toBeVisible();
+    await page.getByRole('button', { name: 'Next' }).click();
+
+    await page.getByLabel("Full period of the contract").fill("10")
+    await expect(page.locator('footer .button--primary')).toHaveAttribute("disabled");
+
+    await page.getByLabel("Full period of the contract").fill("1")
+    await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");
+
+    await page.getByLabel("Full period of the contract").fill("0")
+    await expect(page.locator('footer .button--primary')).toHaveAttribute("disabled");
+
+    const value = (Math.random() * 7);
+    await page.getByLabel("Full period of the contract").fill(value.toFixed(1))
+    await expect(page.locator('footer .button--primary')).not.toHaveAttribute("disabled");
+
+    await page.getByRole('button', { name: 'Next' }).click();
+    await expect(page.getByText('Your request is being processed.')).toBeVisible();
+    await page.getByRole('button', { name: 'Finish' }).click();
+    await expect(page.getByText('No data.')).not.toBeVisible();
+    await expect(page.getByText(value.toFixed(1) + " days").first()).toBeVisible();
+})
+
+// test('create a storage request by using months', async ({ page }) => {
+//     await page.goto('/dashboard');
+//     await page.locator('a').filter({ hasText: 'Purchases' }).click();
+//     await page.getByRole('button', { name: 'Storage Request' }).click();
+
+//     await page.locator('div').getByTestId("upload").setInputFiles([
+//         path.join(__dirname, "assets", 'chatgpt.jpg'),
+//     ]);
+//     await expect(page.locator('#cid')).not.toBeEmpty()
+//     await expect(page.getByText('Success, the CID has been')).toBeVisible();
+//     await page.getByRole('button', { name: 'Next' }).click();
+
+//     await page.getByLabel("Full period of the contract").fill("3")
+//     await page.getByRole('combobox').selectOption('months');
+//     await expect(page.getByLabel("Full period of the contract")).toHaveValue("3")
+
+//     await page.getByRole('button', { name: 'Next' }).click();
+//     await expect(page.getByText('Your request is being processed.')).toBeVisible();
+//     await page.getByRole('button', { name: 'Finish' }).click();
+//     await expect(page.getByText('No data.')).not.toBeVisible();
+//     await expect(page.getByText("3 months").first()).toBeVisible();
+// })

@@ -29,7 +29,7 @@ export function useStorageRequestMutation(
       //   }
 
       WebStorage.delete("storage-request-step");
-      WebStorage.delete("storage-request");
+      WebStorage.delete("storage-request-3");
 
       setError(null);
 

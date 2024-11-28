@@ -4,6 +4,13 @@
   padding: 16px;
   background-color: rgb(35, 35, 35);
 
+  @media (max-width: 800px) {
+    &,
+    td:nth-child(2) {
+      padding: 8px;
+    }
+  }
+
   > header {
     display: flex;
     align-items: center;

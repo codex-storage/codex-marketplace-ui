@@ -8,9 +8,9 @@
     background-color: rgb(20, 20, 20);
 
     > div {
-      padding: 16px;
+      padding: 8px;
 
-      @media (min-width: 1000px) {
+      @media (min-width: 800px) {
         padding: 24px 48px;
       }
     }

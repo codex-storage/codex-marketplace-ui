@@ -6,31 +6,33 @@ export type TimesUnit =
   | "hours"
   | "seconds";
 
-const plural = (value: number, unit: TimesUnit) =>
-  value > 1 ? value + ` ${unit}` : value + ` ${unit.slice(0, -1)}`;
+const plural = (value: number, unit: TimesUnit) => {
+  const val = Number.isInteger(value) ? value : value.toFixed(1)
+  return value > 1 ? val + ` ${unit}` : val + ` ${unit.slice(0, -1)}`;
+}
 
 export const Times = {
   toSeconds(value: number, unit: TimesUnit) {
-    let seconds = value;
+    let val = value;
     /* eslint-disable no-fallthrough */
     switch (unit) {
       // @ts-expect-error - We don't want to break
       case "years":
-        seconds *= 365;
+        val *= 365;
       // @ts-expect-error - We don't want to break
       case "months":
-        seconds *= 30;
+        val *= 30;
       // @ts-expect-error - We don't want to break
       case "days":
-        seconds *= 24;
+        val *= 24;
       // @ts-expect-error - We don't want to break
       case "hours":
-        seconds *= 60;
+        val *= 60;
       case "minutes":
-        seconds *= 60;
+        val *= 60;
     }
 
-    return seconds;
+    return val;
   },
 
   pretty(value: number) {
@@ -62,7 +64,7 @@ export const Times = {
     return plural(value, "seconds");
   },
 
-  unit(value: number) {
+  unit(value: number): "months" | "days" | "hours" {
     let seconds = 30 * 24 * 60 * 60;
 
     if (value >= seconds) {
@@ -77,7 +79,7 @@ export const Times = {
     return "hours"
   },
 
-  unitValue(unit: "hours" | "days" | "months") {
+  value(unit: "hours" | "days" | "months") {
     switch (unit) {
       case "months": {
         return 30 * 24 * 60 * 60
@@ -90,4 +92,5 @@ export const Times = {
       }
     }
   }
+
 };

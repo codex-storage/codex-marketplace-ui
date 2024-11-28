@@ -36,6 +36,12 @@
 
   section > *:first-child {
     flex: 0.5;
+
+    @media (max-width: 800px) {
+      & {
+        flex: 0.2;
+      }
+    }
   }
 
   h1 {
@@ -202,6 +208,12 @@
 
     right: 6rem;
     bottom: 16px;
+
+    @media (max-width: 800px) {
+      & {
+        right: 16px;
+      }
+    }
 
     &:hover {
       animation-name: example;

@@ -35,8 +35,19 @@
   }
 
   .button {
-    width: 187px;
     gap: 8px;
+
+    @media (min-width: 801px) {
+      & {
+        width: 187px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      span {
+        display: none;
+      }
+    }
   }
 }
 

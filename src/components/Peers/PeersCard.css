@@ -18,6 +18,12 @@
     top: -35px;
     bottom: 0;
     margin: auto;
+
+    @media (max-width: 800px) {
+      & {
+        transform: scale(0.8);
+      }
+    }
   }
 
   footer {

@@ -14,6 +14,7 @@ import CommitmentIcon from "../../assets/icons/commitment.svg?react";
 import RequestDurationIcon from "../../assets/icons/request-duration.svg?react";
 import { attributes } from "../../utils/attributes";
 import { Strings } from "../../utils/strings";
+import { Commitment } from "./Commitment";
 
 type Durability = {
   nodes: number;
@@ -26,6 +27,8 @@ const durabilities = [
   { nodes: 4, tolerance: 2, proofProbability: 3 },
   { nodes: 5, tolerance: 2, proofProbability: 4 },
 ];
+
+const TESTNET_MAX_VALUE = 7;
 
 const findDurabilityIndex = (d: Durability) => {
   const s = JSON.stringify({
@@ -57,10 +60,10 @@ export function StorageRequestReview({
   );
 
   useEffect(() => {
-    const invalid = isInvalidConstrainst(
-      storageRequest.nodes,
-      storageRequest.tolerance
-    );
+    const invalid =
+      isInvalidConstrainst(storageRequest.nodes, storageRequest.tolerance) ||
+      storageRequest.availability > TESTNET_MAX_VALUE ||
+      storageRequest.availability == 0;
 
     dispatch({
       type: "toggle-buttons",
@@ -133,25 +136,28 @@ export function StorageRequestReview({
   const isInvalidAvailability = (data: string) => {
     const [value] = data.split(" ");
 
-    const error = isInvalidNumber(value);
+    const error =
+      isInvalidNumber(value) ||
+      isInvalidAvailabilityNumber(value) ||
+      isRequiredNumber(value);
 
     if (error) {
       return error;
     }
-
-    // if (!unit.endsWith("s")) {
-    //   unit += "s";
-    // }
-
-    // if (!units.includes(unit)) {
-    //   return "Invalid unit must one of: minutes, hours, days, months, years";
-    // }
 
     return "";
   };
 
   const isInvalidNumber = (value: string) =>
     isNaN(Number(value)) ? "The value is not a number" : "";
+
+  const isRequiredNumber = (value: string) =>
+    value == "0" ? "The value has to be more than 0." : "";
+
+  const isInvalidAvailabilityNumber = (value: string) =>
+    parseInt(value, 10) > TESTNET_MAX_VALUE
+      ? "The maximum value is on the current Testnet is 7 days"
+      : "";
 
   const onNodesChange = (value: string) =>
     onUpdateDurability({ nodes: Number(value) });
@@ -162,16 +168,12 @@ export function StorageRequestReview({
   const onProofProbabilityChange = (value: string) =>
     onUpdateDurability({ proofProbability: Number(value) });
 
-  const onAvailabilityChange = (value: string) => {
+  const onAvailabilityChange = (value: string, unit: "days" | "months") => {
     const [availability] = value.split(" ");
-
-    // if (!availabilityUnit.endsWith("s")) {
-    //   availabilityUnit += "s";
-    // }
 
     onStorageRequestChange({
       availability: Number(availability),
-      availabilityUnit: "months",
+      availabilityUnit: unit,
     });
   };
 
@@ -183,18 +185,6 @@ export function StorageRequestReview({
 
   const onCollateralChange = (value: string) =>
     onStorageRequestChange({ collateral: Number(value) });
-
-  // const pluralizeUnit = () => {
-  //   if (data.availability > 1 && !data.availabilityUnit.endsWith("s")) {
-  //     return data.availability + " " +data.availabilityUnit + "s";
-  //   }
-
-  //   if (data.availability <= 1 && data.availabilityUnit.endsWith("s")) {
-  //     return data.availabilityUnit.slice(0, -1);
-  //   }
-
-  //   return data.availabilityUnit;
-  // };
 
   const availability = storageRequest.availability;
 
@@ -286,22 +276,19 @@ export function StorageRequestReview({
         </div>
 
         <div className="grid">
-          <CardNumbers
-            helper="The duration of the request in months"
-            id="duration"
-            title={"Full period of the contract"}
+          <Commitment
+            unit={storageRequest.availabilityUnit}
             value={availability.toString()}
             onChange={onAvailabilityChange}
-            onValidation={isInvalidAvailability}
-            unit="Contract duration"></CardNumbers>
+            onValidation={isInvalidAvailability}></Commitment>
           <CardNumbers
-            helper="Represents how much collateral is asked from hosts that wants to fill a slots"
+            helper="Represents how much collateral is asked from hosts if they don't fulfill the contract."
             id="collateral"
             unit={"Collateral"}
             value={storageRequest.collateral.toString()}
             onChange={onCollateralChange}
             onValidation={isInvalidNumber}
-            title="Reward tokens for hosts"></CardNumbers>
+            title="Penality tokens"></CardNumbers>
           <CardNumbers
             helper="The maximum amount of tokens paid per second per slot to hosts the client is willing to pay."
             id="reward"
@@ -309,7 +296,7 @@ export function StorageRequestReview({
             value={storageRequest.reward.toString()}
             onChange={onRewardChange}
             onValidation={isInvalidNumber}
-            title="Penality tokens"></CardNumbers>
+            title="Reward tokens for hosts"></CardNumbers>
         </div>
 
         <div className="row">

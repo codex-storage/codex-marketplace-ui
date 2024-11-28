@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { PrettyBytes } from "../../utils/bytes";
+import { Bytes } from "../../utils/bytes";
 import "./Files.css";
 import {
   Tabs,
@@ -164,7 +164,7 @@ export function Files({ limit }: Props) {
       <Row
         cells={[
           <FileCell content={c}></FileCell>,
-          <Cell>{PrettyBytes(c.manifest.datasetSize)}</Cell>,
+          <Cell>{Bytes.pretty(c.manifest.datasetSize)}</Cell>,
           <Cell>
             {FilesUtils.formatDate(c.manifest.uploadedAt).toString()}
           </Cell>,

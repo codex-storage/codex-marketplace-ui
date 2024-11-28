@@ -9,7 +9,7 @@ export function usePersistence(isCodexOnline: boolean) {
     queryKey: [],
     queryFn: async () => {
       return CodexSdk.marketplace()
-        .purchases()
+        .activeSlots()
         .then((data) => Promises.rejectOnError(data, report));
     },
 

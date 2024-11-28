@@ -6,6 +6,12 @@
 
   > .card {
     flex: 1 1 50%;
+
+    @media (max-width: 800px) {
+      & {
+        flex: 1 1 100%;
+      }
+    }
   }
 
   .table {

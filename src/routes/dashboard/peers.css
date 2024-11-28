@@ -175,4 +175,12 @@
   .gauge {
     margin: auto;
   }
+
+  @media (max-width: 800px) {
+    .peers-chart {
+      transform: scale(0.8);
+      margin: auto;
+      left: 0;
+    }
+  }
 }

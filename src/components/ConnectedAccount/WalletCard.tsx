@@ -33,24 +33,52 @@ export function WalletCard({ tab }: Props) {
     }
   }, [chart, div]);
 
+  useEffect(() => {
+    const refresh = () => chart.current?.resize();
+
+    window.addEventListener("resize", refresh);
+
+    return () => {
+      window.removeEventListener("resize", refresh);
+    };
+  }, []);
+
   const onCurrencyChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.currentTarget.value;
     setCurrency(value);
 
     if (value === "USD") {
       setTokenValue(1540);
-    } else {
+    } else if (["BTC", "ETH"].includes(value) === false) {
       const json = await fetch(
         "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json"
       ).then((res) => res.json());
-      setTokenValue(defaultTokenValue * json.usd.eur);
+      setTokenValue(defaultTokenValue * json.usd[value.toLocaleLowerCase()]);
+    } else {
+      const json = await fetch(
+        "https://api.coinbase.com/v2/prices/" +
+          value.toLocaleLowerCase() +
+          "-USD/spot.json"
+      ).then((res) => res.json());
+      setTokenValue(defaultTokenValue / json.data.amount);
     }
   };
 
   if (chart.current) {
+    const today = new Date();
+    const startOfWeek = today.getDate() - today.getDay() + 1;
+    const startDates = [];
+
+    today.setDate(startOfWeek);
+
+    for (let i = 0; i < 5; i++) {
+      startDates.push(today.toISOString().split("T")[0]);
+      today.setDate(today.getDate() + 7);
+    }
+
     const data = {
       daily: ["MON", "TUE", "WED", "THU", "WED", "SAT", "SUN"],
-      weekly: ["1", "2", "3", "4", "5", "6"],
+      weekly: startDates,
       monthly: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN"],
     }[tab];
 
@@ -72,6 +100,14 @@ export function WalletCard({ tab }: Props) {
         type: "value",
         show: false,
       },
+      grid: [
+        {
+          left: 0,
+          right: 0,
+          top: 50,
+          bottom: 50,
+        },
+      ],
       series: [
         {
           data: [220, 932, 401, 934, 1290, 1330, 1450].slice(0, data.length),
@@ -89,7 +125,7 @@ export function WalletCard({ tab }: Props) {
       },
     };
 
-    chart.current.setOption(option);
+    chart.current.setOption(option, true);
   }
 
   return (
@@ -115,7 +151,10 @@ export function WalletCard({ tab }: Props) {
         <section>
           {/* <WalletChart></WalletChart> */}
           {/* <WalletLines></WalletLines> */}
-          <div className="lines" ref={div} style={{ height: 200 }}></div>
+          <div
+            className="lines"
+            ref={div}
+            style={{ height: 200, width: "100%" }}></div>
         </section>
       </main>
 
@@ -124,14 +163,20 @@ export function WalletCard({ tab }: Props) {
           <span>TOKEN</span>
           <div className="row">
             <var>
-              {tokenValue.toFixed(2)} {currency}
+              {tokenValue.toFixed(["BTC", "ETH"].includes(currency) ? 8 : 2)}{" "}
+              {currency}
             </var>
             <small>+ 5%</small>
           </div>
         </div>
         <select defaultValue={currency} onChange={onCurrencyChange}>
           <option value={"USD"}>USD</option>
+          <option value={"BTC"}>BTC</option>
+          <option value={"ETH"}>ETH</option>
           <option value={"EUR"}>EUR</option>
+          <option value={"AUD"}>AUD</option>
+          <option value={"CAD"}>CAD</option>
+          <option value={"CNY"}>CNY</option>
         </select>
       </footer>
     </div>

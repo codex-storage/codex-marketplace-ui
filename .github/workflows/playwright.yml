@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  codex_version: v0.1.8
-  circuit_version: v0.1.8
-  marketplace_address: "0x5Bd66fA15Eb0E546cd26808248867a572cFF5706"
+  codex_version: v0.1.9
+  circuit_version: v0.1.9
+  marketplace_address: "0xAB03b6a58C5262f530D54146DA2a552B1C0F7648"
   eth_provider: "https://rpc.testnet.codex.storage"
   VITE_CODEX_API_URL: ${{ secrets.VITE_CODEX_API_URL }}
   VITE_GEO_IP_URL: ${{ secrets.VITE_GEO_IP_URL }}

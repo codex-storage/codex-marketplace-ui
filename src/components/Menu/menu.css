@@ -19,6 +19,7 @@
       left: -300px;
       position: fixed;
       z-index: 12;
+      width: 100%;
     }
 
     &[aria-expanded] {

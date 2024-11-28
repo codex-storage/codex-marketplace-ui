@@ -9,6 +9,8 @@ import {
 } from "@codex-storage/marketplace-ui-components";
 import { CodexSdk } from "../../sdk/codex";
 import { CodexAvailabilityCreateResponse } from "@codex-storage/sdk-js";
+import { Times } from "../../utils/times";
+import { AvailabilityUtils } from "./availability.utils";
 
 
 export function useAvailabilityMutation(
@@ -42,15 +44,15 @@ export function useAvailabilityMutation(
 
       return fn({
         ...input,
-        duration,
-        totalSize: Math.trunc(totalSize),
+        duration: Times.value(durationUnit) * duration,
+        totalSize: Math.trunc(totalSize * AvailabilityUtils.unitValue(totalSizeUnit)),
       });
     },
     onSuccess: (res, body) => {
       queryClient.invalidateQueries({ queryKey: ["availabilities"] });
       queryClient.invalidateQueries({ queryKey: ["space"] });
 
-      WebStorage.delete("availability");
+      WebStorage.delete("availability-1");
       WebStorage.delete("availability-step");
 
       if (typeof res === "object" && body.name) {

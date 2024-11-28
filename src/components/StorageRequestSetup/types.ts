@@ -16,29 +16,14 @@ export type StoragePriceStepValue = {
   expiration: number;
 };
 
-export type StorageAvailabilityUnit =
-  | "days"
-  | "months"
-  | "years"
-  | "minutes"
-  | "hours";
-
 export type StorageAvailabilityValue = {
   value: number;
-  unit: StorageAvailabilityUnit;
 };
-
-export type AvailabilityUnit =
-  | "days"
-  | "months"
-  | "years"
-  | "minutes"
-  | "hours";
 
 export type StorageRequest = {
   cid: string;
   availability: number;
-  availabilityUnit: AvailabilityUnit;
+  availabilityUnit: "months" | "days";
   tolerance: number;
   proofProbability: number;
   nodes: number;

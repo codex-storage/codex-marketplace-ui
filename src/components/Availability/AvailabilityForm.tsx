@@ -11,7 +11,6 @@ import NodesIcon from "../../assets/icons/nodes.svg?react";
 import InfoIcon from "../../assets/icons/info.svg?react";
 import { attributes } from "../../utils/attributes";
 import { AvailabilityUtils } from "./availability.utils";
-import { Times } from "../../utils/times";
 
 export function AvailabilityForm({
   dispatch,
@@ -39,27 +38,24 @@ export function AvailabilityForm({
     const element = e.currentTarget;
 
     onAvailabilityChange({
-      totalSize: 0,
       totalSizeUnit: element.value as "tb" | "gb",
     });
   };
 
   const onDurationChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
-    const unitValue = Times.unitValue(availability.durationUnit);
 
     onAvailabilityChange({
-      duration: parseInt(element.value) * unitValue,
+      duration: parseInt(element.value),
     });
   };
 
   const onDurationUnitChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const element = e.currentTarget;
     const unit = element.value as "hours" | "days" | "months";
-    const unitValue = Times.unitValue(unit);
 
     onAvailabilityChange({
-      duration: unitValue,
+      duration: availability.duration,
       durationUnit: unit,
     });
   };
@@ -67,10 +63,9 @@ export function AvailabilityForm({
   const onAvailablityChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.currentTarget;
     const v = element.value;
-    const unit = AvailabilityUtils.unitValue(availability.totalSizeUnit);
 
     onAvailabilityChange({
-      totalSize: parseFloat(v) * unit,
+      totalSize: parseFloat(v),
     });
   };
 
@@ -87,7 +82,12 @@ export function AvailabilityForm({
     const available = AvailabilityUtils.maxValue(space);
 
     onAvailabilityChange({
-      totalSize: available,
+      totalSize:
+        Math.floor(
+          ((available - 1) /
+            AvailabilityUtils.unitValue(availability.totalSizeUnit)) *
+            10
+        ) / 10,
     });
   };
 
@@ -96,20 +96,17 @@ export function AvailabilityForm({
     available += editAvailabilityValue;
   }
 
-  const isValid =
-    availability.totalSize > 0 && available >= availability.totalSize;
+  const totalSizeInBytes =
+    availability.totalSize *
+    AvailabilityUtils.unitValue(availability.totalSizeUnit);
+
+  const isValid = totalSizeInBytes > 0 && available >= totalSizeInBytes;
 
   const helper = isValid
     ? "Total size of sale's storage in bytes"
     : "The total size cannot exceed the space available.";
 
-  const value = AvailabilityUtils.toUnit(
-    availability.totalSize,
-    availability.totalSizeUnit
-  ).toFixed(2);
-
-  const unitValue = Times.unitValue(availability.durationUnit);
-  const duration = availability.duration / unitValue;
+  const duration = availability.duration;
 
   return (
     <div className="availability-form">
@@ -143,13 +140,12 @@ export function AvailabilityForm({
             name="totalSize"
             type="number"
             label="Total size"
-            min={0.01}
             isInvalid={!isValid}
             max={available.toFixed(2)}
             onChange={onAvailablityChange}
             onGroupChange={onTotalSizeUnitChange}
-            step={"0.01"}
-            value={value}
+            value={availability.totalSize.toString()}
+            min={"0"}
             group={[
               ["gb", "GB"],
               // ["tb", "TB"],

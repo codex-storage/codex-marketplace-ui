@@ -45,6 +45,12 @@
       sans-serif;
     letter-spacing: -0.006em;
     color: rgba(150, 150, 150, 0.8);
+
+    @media (max-width: 800px) {
+      & {
+        display: none;
+      }
+    }
   }
 
   > div {
@@ -88,7 +94,7 @@
   }
 
   @media (max-width: 800px) {
-    aside {
+    .wallet-login {
       display: none;
     }
   }

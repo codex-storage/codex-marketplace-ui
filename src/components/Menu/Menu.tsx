@@ -16,6 +16,7 @@ import PurchaseIcon from "../../assets/icons/purchase.svg?react";
 import HostIcon from "../../assets/icons/host.svg?react";
 import LogsIcon from "../../assets/icons/logs.svg?react";
 import SettingsIcon from "../../assets/icons/settings.svg?react";
+import CloseIcon from "../../assets/icons/close.svg?react";
 import HelpIcon from "../../assets/icons/help.svg?react";
 import DisclaimerIcon from "../../assets/icons/disclaimer.svg?react";
 import { NavLink } from "react-router-dom";
@@ -65,6 +66,8 @@ export function Menu({ isExpanded, onExpanded }: Props) {
     }
   };
 
+  const Icon = isMobile ? CloseIcon : ExpandIcon;
+
   return (
     <>
       <aside
@@ -77,7 +80,7 @@ export function Menu({ isExpanded, onExpanded }: Props) {
             <Logo onClick={onLogoClick} width={30} />
             <Logotype height={34} />
             <div>
-              <ExpandIcon onClick={onExpandMenu}></ExpandIcon>
+              <Icon onClick={onExpandMenu}></Icon>
             </div>
           </header>
 
@@ -142,20 +145,20 @@ export function Menu({ isExpanded, onExpanded }: Props) {
             </NavLink>
             <NavLink onClick={onClose} to="/dashboard/availabilities">
               <span>
-                <HostIcon />
+                <HostIcon width={20} height={20} />
               </span>
               <span>Host</span>
             </NavLink>
             <hr />
             <NavLink onClick={onClose} to="/dashboard/peers">
               <span>
-                <PeersIcon width={20} />
+                <PeersIcon width={20} height={20} />
               </span>
               <span>Peers</span>
             </NavLink>
             <NavLink onClick={onClose} to="/dashboard/logs">
               <span>
-                <LogsIcon width={24} />
+                <LogsIcon width={20} height={20} />
               </span>
               <span>Log</span>
             </NavLink>

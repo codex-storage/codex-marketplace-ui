@@ -1,0 +1,7 @@
+.commitment {
+  --codex-input-group-background-color: transparent;
+
+  span {
+    right: 155px;
+  }
+}

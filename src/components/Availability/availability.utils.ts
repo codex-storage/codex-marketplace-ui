@@ -39,7 +39,8 @@ export const AvailabilityUtils = {
         return bytes / this.unitValue(unit || "gb")
     },
     maxValue(space: CodexNodeSpace) {
-        return space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes
+        // Remove 1 byte to allow to create an availability with the max space possible
+        return space.quotaMaxBytes - space.quotaReservedBytes - space.quotaUsedBytes - 1
     },
     unitValue(unit: "gb" | "tb") {
         return unit === "tb" ? TB : GB
@@ -47,7 +48,7 @@ export const AvailabilityUtils = {
     isValid: (
         availability: AvailabilityState,
         max: number
-    ) => availability.totalSize > 0 && availability.totalSize <= max
+    ) => availability.totalSize > 0 && availability.totalSize * AvailabilityUtils.unitValue(availability.totalSizeUnit) <= max
     ,
     toggle: <T>(arr: Array<T>, value: T) =>
         arr.includes(value) ? arr.filter(i => i !== value) : [...arr, value],
@@ -88,5 +89,5 @@ export const AvailabilityUtils = {
         "#D2493C22",
         "#D2493C11",
         "#D2493C00",
-    ]
+    ],
 }

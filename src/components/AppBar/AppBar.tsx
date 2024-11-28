@@ -28,7 +28,7 @@ type Props = {
 };
 
 const icons: Record<string, ReactElement> = {
-  dashboard: <DashboardIcon />,
+  dashboard: <DashboardIcon width={24} />,
   peers: <PeersIcon width={24} />,
   settings: <SettingsIcon width={24} />,
   files: <FilesIcon width={24} />,
@@ -74,16 +74,16 @@ export function AppBar({ onIconClick, onExpanded }: Props) {
 
   const title =
     location.pathname.split("/")[2] || location.pathname.split("/")[1];
-  const networkIconColor = online ? "#3EE089" : "var(-codex-color-error)";
+  const networkIconColor = online ? "#3EE089" : "var(--codex-color-error)";
   const nodesIconColor =
     codex.enabled === false
-      ? "var(-codex-color-error)"
+      ? "var(--codex-color-error)"
       : persistence.enabled
         ? "#3EE089"
         : "var(--codex-input-color-warning)";
 
   const icon = isMobile ? (
-    <Logo onClick={() => onExpanded(true)}></Logo>
+    <Logo onClick={() => onExpanded(true)} width={30}></Logo>
   ) : (
     icons[title]
   );

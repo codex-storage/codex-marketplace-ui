@@ -10,7 +10,7 @@ import "./availabilities.css";
 import { AvailabilitiesTable } from "../../components/Availability/AvailabilitiesTable";
 import { AvailabilityEdit } from "../../components/Availability/AvailabilityEdit";
 import { Strings } from "../../utils/strings";
-import { PrettyBytes } from "../../utils/bytes";
+import { Bytes } from "../../utils/bytes";
 import { Sunburst } from "../../components/Availability/Sunburst";
 import { Errors } from "../../utils/errors";
 import { AvailabilityWithSlots } from "../../components/Availability/types";
@@ -111,7 +111,7 @@ export function AvailabilitiesRoute() {
       (a, index) => ({
         title: Strings.shortId(a.id),
         size: a.totalSize,
-        tooltip: a.id + "\u000D\u000A" + PrettyBytes(a.totalSize),
+        tooltip: a.id + "\u000D\u000A" + Bytes.pretty(a.totalSize),
         color: AvailabilityUtils.availabilityColors[index],
       })
     );
@@ -170,7 +170,7 @@ export function AvailabilitiesRoute() {
             <footer>
               <b>Node</b>
               <small>
-                {PrettyBytes(space.quotaMaxBytes)} allocated for the node
+                {Bytes.pretty(space.quotaMaxBytes)} allocated for the node
               </small>
             </footer>
           </div>

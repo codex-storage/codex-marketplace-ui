@@ -147,18 +147,38 @@
         box-shadow: 0 0 0 3px rgba(150, 150, 150, 0.2);
       }
 
-      &:has(option[value="USD"]:checked) {
-        background-image: url(/icons/us-flag.svg);
+      &:has(option:checked) {
         background-position: 10px;
         background-repeat: no-repeat;
         background-size: 16px;
       }
 
+      &:has(option[value="USD"]:checked) {
+        background-image: url(/icons/us-flag.svg);
+      }
+
       &:has(option[value="EUR"]:checked) {
         background-image: url(/icons/euro-flag.svg);
-        background-position: 10px;
-        background-repeat: no-repeat;
-        background-size: 16px;
+      }
+
+      &:has(option[value="AUD"]:checked) {
+        background-image: url(/icons/aud-flag.svg);
+      }
+
+      &:has(option[value="CAD"]:checked) {
+        background-image: url(/icons/cad-flag.svg);
+      }
+
+      &:has(option[value="CNY"]:checked) {
+        background-image: url(/icons/cny-flag.svg);
+      }
+
+      &:has(option[value="BTC"]:checked) {
+        background-image: url(/icons/btc-flag.svg);
+      }
+
+      &:has(option[value="ETH"]:checked) {
+        background-image: url(/icons/eth-flag.svg);
       }
 
       option {
@@ -205,6 +225,5 @@
 
   .lines {
     height: 200;
-    transform: scale(1.25);
   }
 }

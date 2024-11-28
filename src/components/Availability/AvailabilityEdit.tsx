@@ -10,7 +10,7 @@ import { CodexNodeSpace } from "@codex-storage/sdk-js";
 import { AvailabilityConfirm } from "./AvailabilityConfirmation";
 import { WebStorage } from "../../utils/web-storage";
 import { AvailabilityState } from "./types";
-import { GB, STEPPER_DURATION } from "../../utils/constants";
+import { STEPPER_DURATION } from "../../utils/constants";
 import { useAvailabilityMutation } from "./useAvailabilityMutation";
 import { AvailabilitySuccess } from "./AvailabilitySuccess";
 import { AvailabilityError } from "./AvailabilityError";
@@ -28,8 +28,8 @@ type Props = {
 const CONFIRM_STATE = 2;
 
 const defaultAvailabilityData: AvailabilityState = {
-  totalSize: 0.5 * GB,
-  duration: Times.unitValue("days"),
+  totalSize: 0.5,
+  duration: 1,
   minPrice: 0,
   maxCollateral: 0,
   totalSizeUnit: "gb",
@@ -52,7 +52,7 @@ export function AvailabilityEdit({
   useEffect(() => {
     Promise.all([
       WebStorage.get<number>("availability-step"),
-      WebStorage.get<AvailabilityState>("availability"),
+      WebStorage.get<AvailabilityState>("availability-1"),
     ]).then(([s, a]) => {
       if (s) {
         dispatch({
@@ -62,30 +62,10 @@ export function AvailabilityEdit({
       }
 
       if (a) {
-        setAvailability(a);
+        setAvailability({ ...defaultAvailabilityData, ...a });
       }
     });
   }, [dispatch]);
-
-  // We use a custom event to not re render the sunburst component
-  // useEffect(() => {
-  //   const onAvailabilityIdChange = (e: Event) => {
-  //     const custom = e as CustomEvent;
-  //     setAvailabilityId(custom.detail);
-  //   };
-
-  //   document.addEventListener(
-  //     "codexavailabilityid",
-  //     onAvailabilityIdChange,
-  //     false
-  //   );
-
-  //   return () =>
-  //     document.removeEventListener(
-  //       "codexavailabilityid",
-  //       onAvailabilityIdChange
-  //     );
-  // }, []);
 
   const components = [
     AvailabilityForm,
@@ -157,7 +137,7 @@ export function AvailabilityEdit({
 
       editAvailabilityValue.current = a.totalSize;
       WebStorage.set("availability-step", 0);
-      WebStorage.set("availability", a);
+      WebStorage.set("availability-1", a);
 
       const unit = Times.unit(a.duration);
 
