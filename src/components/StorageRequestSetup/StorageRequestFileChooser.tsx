@@ -12,6 +12,7 @@ import { StorageRequestComponentProps } from "./types";
 import { useQueryClient } from "@tanstack/react-query";
 import ChooseCidIcon from "../../assets/icons/choose-cid.svg?react";
 import UploadIcon from "../../assets/icons/upload.svg?react";
+import { FilesUtils } from "../Files/files.utils";
 
 export function StorageRequestFileChooser({
   storageRequest,
@@ -39,6 +40,8 @@ export function StorageRequestFileChooser({
   };
 
   const onSuccess = (data: string) => {
+    FilesUtils.setUploadedAt(data, Date.now() / 1000);
+
     queryClient.invalidateQueries({ queryKey: ["cids"] });
 
     onStorageRequestChange({ cid: data });

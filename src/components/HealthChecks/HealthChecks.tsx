@@ -8,7 +8,6 @@ import { classnames } from "../../utils/classnames";
 import "./HealthChecks.css";
 import { CodexSdk } from "../../sdk/codex";
 import { HealthCheckUtils } from "./health-check.utils";
-import { PortForwardingUtil } from "../../hooks/port-forwarding.util";
 import SuccessCircleIcon from "../../assets/icons/success-circle.svg?react";
 import ErrorCircleIcon from "../../assets/icons/error-circle.svg?react";
 import DeviceIcon from "../../assets/icons/device.svg?react";
@@ -21,7 +20,6 @@ type Props = {
 };
 
 const throwOnError = false;
-const defaultPort = 8070;
 
 export function HealthChecks({ online, onStepValid }: Props) {
   const codex = useDebug(throwOnError);
@@ -87,15 +85,6 @@ export function HealthChecks({ online, onStepValid }: Props) {
       .then(() => codex.refetch());
   };
 
-  let forwardingPortValue = defaultPort;
-
-  if (codex.isSuccess && codex.data) {
-    const port = PortForwardingUtil.getTcpPort(codex.data);
-    if (!port.error) {
-      forwardingPortValue = port.data;
-    }
-  }
-
   return (
     <div className="health-checks">
       <div
@@ -140,10 +129,7 @@ export function HealthChecks({ online, onStepValid }: Props) {
       </div>
 
       <p>
-        <li>
-          Port forwarding should be {forwardingPortValue} for TCP and 8090 by
-          default for UDP.
-        </li>
+        <li>Ensure that port forwarding is enabled for your settings.</li>
       </p>
 
       <ul>

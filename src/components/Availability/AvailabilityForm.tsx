@@ -184,32 +184,35 @@ export function AvailabilityForm({
       <div className="row gap">
         <div className="group">
           <Input
-            id="minPrice"
-            name="minPrice"
+            id="minPricePerBytePerSecond"
+            name="minPricePerBytePerSecond"
             type="number"
-            label="Min price"
+            label="Min price per byte per second"
             min={0}
             onChange={onInputChange}
-            value={availability.minPrice.toString()}
+            value={availability.minPricePerBytePerSecond.toString()}
           />
-          <Tooltip message={"Minimum price to be paid (in amount of tokens)"}>
+          <Tooltip
+            message={
+              "inimal price per byte per second paid (in amount of tokens) for the hosted request's slot for the request's duration"
+            }>
             <InfoIcon></InfoIcon>
           </Tooltip>
         </div>
 
         <div className="group">
           <Input
-            id="maxCollateral"
-            name="maxCollateral"
+            id="totalCollateral"
+            name="totalCollateral"
             type="number"
-            label="Max collateral"
+            label="Total collateral"
             min={0}
             onChange={onInputChange}
-            value={availability.maxCollateral.toString()}
+            value={availability.totalCollateral.toString()}
           />
           <Tooltip
             message={
-              "Maximum collateral user is willing to pay per filled Slot (in amount of tokens)"
+              "Total collateral (in amount of tokens) that can be used for matching requests"
             }>
             <InfoIcon></InfoIcon>
           </Tooltip>

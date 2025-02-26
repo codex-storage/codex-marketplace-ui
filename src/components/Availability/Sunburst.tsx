@@ -68,11 +68,11 @@ export function Sunburst({ availabilities, space }: Props) {
             "Duration " +
             Times.pretty(a.duration) +
             "<br/>" +
-            "Max collateral " +
-            a.maxCollateral +
+            "Total remaining collateral " +
+            a.totalRemainingCollateral +
             "<br/>" +
-            "Min price " +
-            a.minPrice +
+            "Min price per byte per second " +
+            a.minPricePerBytePerSecond +
             "<br/>" +
             "Size " +
             Bytes.pretty(a.totalSize)

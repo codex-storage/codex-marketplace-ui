@@ -7,9 +7,9 @@ export type TimesUnit =
   | "seconds";
 
 const plural = (value: number, unit: TimesUnit) => {
-  const val = Number.isInteger(value) ? value : value.toFixed(1)
+  const val = Number.isInteger(value) ? value : value.toFixed(1);
   return value > 1 ? val + ` ${unit}` : val + ` ${unit.slice(0, -1)}`;
-}
+};
 
 export const Times = {
   toSeconds(value: number, unit: TimesUnit) {
@@ -73,24 +73,23 @@ export const Times = {
 
     seconds /= 30;
     if (value >= seconds) {
-      return "days"
+      return "days";
     }
 
-    return "hours"
+    return "hours";
   },
 
   value(unit: "hours" | "days" | "months") {
     switch (unit) {
       case "months": {
-        return 30 * 24 * 60 * 60
+        return 30 * 24 * 60 * 60;
       }
       case "days": {
-        return 24 * 60 * 60
+        return 24 * 60 * 60;
       }
       default: {
-        return 60 * 60
+        return 60 * 60;
       }
     }
-  }
-
+  },
 };

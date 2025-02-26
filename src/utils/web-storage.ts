@@ -1,6 +1,5 @@
 import { createStore, del, entries, get, set } from "idb-keyval";
 
-
 export const WebStorage = {
   set(key: string, value: unknown) {
     return set(key, value);
@@ -16,27 +15,27 @@ export const WebStorage = {
 
   onBoarding: {
     getStep() {
-      return parseInt(localStorage.getItem("onboarding-step") || "0", 10)
+      return parseInt(localStorage.getItem("onboarding-step") || "0", 10);
     },
 
     setStep(step: number) {
-      localStorage.setItem("onboarding-step", step.toString())
+      localStorage.setItem("onboarding-step", step.toString());
     },
 
     setDisplayName(displayName: string) {
-      localStorage.setItem("display-name", displayName)
+      localStorage.setItem("display-name", displayName);
     },
 
     getDisplayName() {
-      return localStorage.getItem("display-name") || ""
+      return localStorage.getItem("display-name") || "";
     },
 
     setEmoji(emoji: string) {
-      localStorage.setItem("emoji", emoji)
+      localStorage.setItem("emoji", emoji);
     },
 
     getEmoji() {
-      return localStorage.getItem("emoji") || "🤖"
+      return localStorage.getItem("emoji") || "🤖";
     },
   },
 
@@ -48,33 +47,35 @@ export const WebStorage = {
     },
 
     async list(): Promise<[string, string[]][]> {
-      const items = await entries<string, string[]>(this.store) || []
+      const items = (await entries<string, string[]>(this.store)) || [];
 
       if (items.length == 0) {
-        return [["Favorites", []]]
+        return [["Favorites", []]];
       }
 
       if (items[0][0] !== "Favorites") {
-        return [["Favorites", []], ...items]
+        return [["Favorites", []], ...items];
       }
 
-
-      return items
+      return items;
     },
     delete(key: string) {
       return del(key, this.store);
     },
     async addFile(folder: string, cid: string) {
-      const files = await get<string[]>(folder, this.store) || []
+      const files = (await get<string[]>(folder, this.store)) || [];
 
-      return set(folder, [...files, cid], this.store)
+      return set(folder, [...files, cid], this.store);
     },
 
     async deleteFile(folder: string, cid: string) {
-      const files = await get<string[]>(folder, this.store) || []
+      const files = (await get<string[]>(folder, this.store)) || [];
 
-      return set(folder, files.filter(item => item !== cid), this.store)
-
+      return set(
+        folder,
+        files.filter((item) => item !== cid),
+        this.store
+      );
     },
   },
 
@@ -96,7 +97,6 @@ export const WebStorage = {
 
   purchases: {
     store: createStore("purchases", "purchases"),
-
 
     async get(key: string) {
       return get<string>(key, this.store);
@@ -120,6 +120,6 @@ export const WebStorage = {
       async set(key: string, date: string) {
         return set(key, date, this.store);
       },
-    }
-  }
+    },
+  },
 };

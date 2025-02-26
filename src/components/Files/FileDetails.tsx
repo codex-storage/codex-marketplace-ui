@@ -117,7 +117,7 @@ export function FileDetails({ onClose, details }: Props) {
                 <p>Date:</p>
                 <p>
                   {FilesUtils.formatDate(
-                    details.manifest.uploadedAt
+                    FilesUtils.getUploadedAt(details.cid)
                   ).toString()}
                 </p>
               </li>

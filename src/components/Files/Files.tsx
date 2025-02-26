@@ -166,7 +166,7 @@ export function Files({ limit }: Props) {
           <FileCell content={c}></FileCell>,
           <Cell>{Bytes.pretty(c.manifest.datasetSize)}</Cell>,
           <Cell>
-            {FilesUtils.formatDate(c.manifest.uploadedAt).toString()}
+            {FilesUtils.formatDate(FilesUtils.getUploadedAt(c.cid)).toString()}
           </Cell>,
           <FileActions
             content={c}

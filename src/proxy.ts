@@ -7,10 +7,7 @@ import {
 import { CodexSdk as Sdk } from "./sdk/codex";
 import { WebStorage } from "./utils/web-storage";
 
-class CodexDataMock extends CodexData {
-
-}
-
+class CodexDataMock extends CodexData {}
 
 class CodexMarketplaceMock extends CodexMarketplace {
   // override async purchases(): Promise<SafeValue<CodexPurchase[]>> {
@@ -31,25 +28,28 @@ class CodexMarketplaceMock extends CodexMarketplace {
   // }
 
   /**
-   * Maintains a temporary link between the CID and the file metadata. 
-   * When the metadata is available in the manifest, the CID link 
-   * should still be maintained, but the metadata should be retrieved 
+   * Maintains a temporary link between the CID and the file metadata.
+   * When the metadata is available in the manifest, the CID link
+   * should still be maintained, but the metadata should be retrieved
    * using a REST API call.
    */
-  override async createStorageRequest(input: CodexCreateStorageRequestInput): Promise<SafeValue<string>> {
-    const res = await super.createStorageRequest(input)
+  override async createStorageRequest(
+    input: CodexCreateStorageRequestInput
+  ): Promise<SafeValue<string>> {
+    console.info(input);
+    const res = await super.createStorageRequest(input);
 
     if (res.error) {
-      return res
+      console.error(res.data);
+      return res;
     }
 
-    await WebStorage.purchases.set("0x" + res.data, input.cid)
+    await WebStorage.purchases.set("0x" + res.data, input.cid);
 
     // await PurchaseDatesStorage.set(res.data, new Date().toJSON())
 
-    return res
+    return res;
   }
-
 
   // override createStorageRequest(
   //   input: CodexCreateStorageRequestInput
@@ -139,5 +139,3 @@ export const CodexSdk = {
   marketplace: () => new CodexMarketplaceMock(CodexSdk.url()),
   data: () => new CodexDataMock(CodexSdk.url()),
 };
-
-

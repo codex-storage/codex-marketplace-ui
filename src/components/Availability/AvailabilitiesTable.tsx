@@ -57,8 +57,8 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
     ["id", onSortById],
     ["total size", onSortBySize],
     ["duration", onSortByDuration],
-    ["min price", onSortByPrice],
-    ["max collateral", onSortByCollateral],
+    ["min price per byte", onSortByPrice],
+    ["remaining collateral", onSortByCollateral],
     ["actions"],
   ] satisfies [string, ((state: TabSortState) => void)?][];
 
@@ -88,8 +88,8 @@ export function AvailabilitiesTable({ availabilities, space }: Props) {
             <AvailabilityIdCell value={a} />,
             <Cell>{Bytes.pretty(a.totalSize)}</Cell>,
             <Cell>{Times.pretty(a.duration)}</Cell>,
-            <Cell>{a.minPrice.toString()}</Cell>,
-            <Cell>{a.maxCollateral.toString()}</Cell>,
+            <Cell>{a.minPricePerBytePerSecond.toString()}</Cell>,
+            <Cell>{a.totalRemainingCollateral.toString()}</Cell>,
             <AvailabilityActionsCell availability={a} />,
           ]}></Row>
 

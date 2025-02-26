@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CodexSdk } from "../sdk/codex";
 import { CodexDataResponse } from "@codex-storage/sdk-js";
 import { Promises } from "../utils/promises";
+import { FilesUtils } from "../components/Files/files.utils";
 
 export function useData() {
   const { data = { content: [] } satisfies CodexDataResponse } =
@@ -29,5 +30,8 @@ export function useData() {
       throwOnError: true,
     });
 
-  return data.content;
+  return data.content.map((c) => ({
+    ...c,
+    uploadedAt: FilesUtils.getUploadedAt(c.cid),
+  }));
 }

@@ -7,6 +7,7 @@ import {
 import "./FileCell.css";
 import { WebStorage } from "../../utils/web-storage";
 import { CodexDataContent } from "@codex-storage/sdk-js";
+import { FilesUtils } from "../Files/files.utils";
 
 type FileMetadata = {
   mimetype: string | null;
@@ -37,11 +38,10 @@ export function FileCell({ requestId, purchaseCid, data, onMetadata }: Props) {
 
         const content = data.find((m) => m.cid === cid);
         if (content) {
-          const {
-            filename = "-",
-            mimetype = "application/octet-stream",
-            uploadedAt = 0,
-          } = content.manifest;
+          const { filename = "-", mimetype = "application/octet-stream" } =
+            content.manifest;
+          const uploadedAt = FilesUtils.getUploadedAt(content.cid);
+
           setMetadata({
             filename,
             mimetype,

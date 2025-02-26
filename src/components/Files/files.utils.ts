@@ -20,75 +20,95 @@ export const FilesUtils = {
     return !!type && type.startsWith("video");
   },
   isArchive(mimetype: string | null) {
-    return !!mimetype && archiveMimetypes.includes(mimetype)
+    return !!mimetype && archiveMimetypes.includes(mimetype);
   },
   type(mimetype: string | null) {
     if (FilesUtils.isArchive(mimetype)) {
-      return "archive"
+      return "archive";
     }
 
     if (FilesUtils.isVideo(mimetype)) {
-      return "video"
+      return "video";
     }
 
     if (FilesUtils.isImage(mimetype)) {
-      return "image"
+      return "image";
     }
 
-    return "document"
+    return "document";
   },
-  sortByName: (state: TabSortState) =>
-    (a: CodexDataContent, b: CodexDataContent) => {
-      const { manifest: { filename: afilename } } = a
-      const { manifest: { filename: bfilename } } = b
+  sortByName:
+    (state: TabSortState) => (a: CodexDataContent, b: CodexDataContent) => {
+      const {
+        manifest: { filename: afilename },
+      } = a;
+      const {
+        manifest: { filename: bfilename },
+      } = b;
 
       return state === "desc"
         ? (bfilename || "")
-          .toLocaleLowerCase()
-          .localeCompare((afilename || "").toLocaleLowerCase())
+            .toLocaleLowerCase()
+            .localeCompare((afilename || "").toLocaleLowerCase())
         : (afilename || "")
-          .toLocaleLowerCase()
-          .localeCompare((bfilename || "").toLocaleLowerCase())
+            .toLocaleLowerCase()
+            .localeCompare((bfilename || "").toLocaleLowerCase());
     },
-  sortBySize: (state: TabSortState) =>
-    (a: CodexDataContent, b: CodexDataContent) => state === "desc"
-      ? b.manifest.datasetSize - a.manifest.datasetSize
-      : a.manifest.datasetSize - b.manifest.datasetSize
-  ,
-  sortByDate: (state: TabSortState) =>
-    (a: CodexDataContent, b: CodexDataContent) => state === "desc"
-      ? new Date(b.manifest.uploadedAt).getTime() -
-      new Date(a.manifest.uploadedAt).getTime()
-      : new Date(a.manifest.uploadedAt).getTime() -
-      new Date(b.manifest.uploadedAt).getTime()
-  ,
-  removeCidFromFolder(folders: [string, string[]][], folder: string, cid: string): [string, string[]][] {
+  sortBySize:
+    (state: TabSortState) => (a: CodexDataContent, b: CodexDataContent) =>
+      state === "desc"
+        ? b.manifest.datasetSize - a.manifest.datasetSize
+        : a.manifest.datasetSize - b.manifest.datasetSize,
+  sortByDate:
+    (state: TabSortState) => (a: CodexDataContent, b: CodexDataContent) => {
+      const aUploadedAt = FilesUtils.getUploadedAt(a.cid);
+      const bUploadedAt = FilesUtils.getUploadedAt(b.cid);
+
+      return state === "desc"
+        ? new Date(bUploadedAt).getTime() - new Date(aUploadedAt).getTime()
+        : new Date(aUploadedAt).getTime() - new Date(bUploadedAt).getTime();
+    },
+
+  removeCidFromFolder(
+    folders: [string, string[]][],
+    folder: string,
+    cid: string
+  ): [string, string[]][] {
     return folders.map(([name, files]) =>
-      name === folder
-        ? [name, files.filter((id) => id !== cid)]
-        : [name, files]
-    )
+      name === folder ? [name, files.filter((id) => id !== cid)] : [name, files]
+    );
   },
-  addCidToFolder(folders: [string, string[]][], folder: string, cid: string): [string, string[]][] {
+  addCidToFolder(
+    folders: [string, string[]][],
+    folder: string,
+    cid: string
+  ): [string, string[]][] {
     return folders.map(([name, files]) =>
       name === folder ? [name, [...files, cid]] : [name, files]
-    )
+    );
   },
   exists(folders: [string, string[]][], name: string) {
-    return !!folders.find(([folder]) => folder === name)
+    return !!folders.find(([folder]) => folder === name);
   },
-  toggleFilters: (filters: string[], filter: string) => filters.includes(filter)
-    ? filters.filter((f) => f !== filter)
-    : [...filters, filter],
-  listInFolder(files: CodexDataContent[], folders: [string, string[]][], index: number) {
+  toggleFilters: (filters: string[], filter: string) =>
+    filters.includes(filter)
+      ? filters.filter((f) => f !== filter)
+      : [...filters, filter],
+  listInFolder(
+    files: CodexDataContent[],
+    folders: [string, string[]][],
+    index: number
+  ) {
     return index === 0
       ? files
       : files.filter((file) => folders[index - 1][1].includes(file.cid));
   },
   applyFilters(files: CodexDataContent[], filters: string[]) {
     return files.filter(
-      (file) => filters.length === 0 || filters.includes(this.type(file.manifest.mimetype))
-    )
+      (file) =>
+        filters.length === 0 ||
+        filters.includes(this.type(file.manifest.mimetype))
+    );
   },
   formatDate(date: number) {
     if (!date) {
@@ -99,7 +119,14 @@ export const FilesUtils = {
       dateStyle: "medium",
       timeStyle: "short",
     }).format(new Date(date * 1000));
-  }
+  },
+  getUploadedAt(key: string) {
+    return parseInt(localStorage.getItem(key + "-uploadedAt") || "0", 10);
+  },
+
+  setUploadedAt(key: string, value: number) {
+    localStorage.setItem(key + "-uploadedAt", value.toString());
+  },
 };
 
 export type CodexFileMetadata = {

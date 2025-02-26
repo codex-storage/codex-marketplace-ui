@@ -14,8 +14,8 @@ export type AvailabilityState = {
   totalSize: number;
   duration: number;
   durationUnit: "hours" | "days" | "months";
-  minPrice: number;
-  maxCollateral: number;
+  minPricePerBytePerSecond: number;
+  totalCollateral: number;
   totalSizeUnit: "gb" | "tb";
   name?: string;
 };

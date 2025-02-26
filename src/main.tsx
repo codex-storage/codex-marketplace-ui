@@ -21,6 +21,7 @@ import { SettingsRoute } from "./routes/dashboard/settings.tsx";
 import { HelpRoute } from "./routes/dashboard/help.tsx";
 import { DisclaimerRoute } from "./routes/dashboard/disclaimer.tsx";
 import { RouteErrorBoundary } from "./components/RouteErrorBoundary/RouteErrorBoundary.tsx";
+import { HealthCheckUtils } from "./components/HealthChecks/health-check.utils.ts";
 
 if (import.meta.env.PROD && !import.meta.env.CI) {
   Sentry.init({
@@ -117,14 +118,36 @@ const queryClient = new QueryClient();
 const rootElement = document.getElementById("root")!;
 
 if (rootElement) {
-  CodexSdk.load().then(() => {
-    render(
-      <StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </StrictMode>,
-      rootElement
-    );
-  });
+  CodexSdk.load()
+    .then(() => {
+      const queryString = window.location.search;
+      if (queryString) {
+        const urlParams = new URLSearchParams(queryString);
+        const param = urlParams.get("api-port");
+        if (param) {
+          const port = parseInt(param, 10);
+          if (!isNaN(port)) {
+            const address = HealthCheckUtils.removePort(CodexSdk.url());
+
+            const url = address + ":" + port;
+
+            if (HealthCheckUtils.isUrlInvalid(url)) {
+              return;
+            }
+
+            return CodexSdk.updateURL(url);
+          }
+        }
+      }
+    })
+    .then(() => {
+      render(
+        <StrictMode>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </StrictMode>,
+        rootElement
+      );
+    });
 }

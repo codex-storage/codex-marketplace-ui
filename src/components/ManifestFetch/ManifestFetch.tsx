@@ -11,6 +11,17 @@ export function ManifestFetch() {
 
   const { refetch } = useQuery({
     queryFn: () => {
+      CodexSdk.data()
+        .networkDownload(cid)
+        .then((s) => {
+          if (s.error === false) {
+            setCid("");
+            queryClient.invalidateQueries({ queryKey: ["cids"] });
+            console.info("Done");
+          }
+          return Promises.rejectOnError(s);
+        });
+
       return CodexSdk.data()
         .fetchManifest(cid)
         .then((s) => {

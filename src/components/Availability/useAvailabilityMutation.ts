@@ -12,7 +12,6 @@ import { CodexAvailabilityCreateResponse } from "@codex-storage/sdk-js";
 import { Times } from "../../utils/times";
 import { AvailabilityUtils } from "./availability.utils";
 
-
 export function useAvailabilityMutation(
   dispatch: Dispatch<StepperAction>,
   state: StepperState
@@ -33,11 +32,18 @@ export function useAvailabilityMutation(
       const fn: (
         input: Omit<AvailabilityState, "totalSizeUnit" | "durationUnit">
       ) => Promise<"" | CodexAvailabilityCreateResponse> = input.id
-          ? (input) =>
-            CodexSdk.marketplace()
-              .updateAvailability({ ...input, id: input.id || "" })
-              .then((s) => Promises.rejectOnError(s))
-          : (input) =>
+        ? (input) => {
+            return CodexSdk.marketplace()
+              .updateAvailability({
+                totalSize: input.totalSize,
+                duration: input.duration,
+                minPricePerBytePerSecond: input.minPricePerBytePerSecond,
+                totalCollateral: input.totalCollateral,
+                id: input.id || "",
+              })
+              .then((s) => Promises.rejectOnError(s));
+          }
+        : (input) =>
             CodexSdk.marketplace()
               .createAvailability(input)
               .then((s) => Promises.rejectOnError(s));
@@ -45,7 +51,9 @@ export function useAvailabilityMutation(
       return fn({
         ...input,
         duration: Times.value(durationUnit) * duration,
-        totalSize: Math.trunc(totalSize * AvailabilityUtils.unitValue(totalSizeUnit)),
+        totalSize: Math.trunc(
+          totalSize * AvailabilityUtils.unitValue(totalSizeUnit)
+        ),
       });
     },
     onSuccess: (res, body) => {
@@ -56,7 +64,7 @@ export function useAvailabilityMutation(
       WebStorage.delete("availability-step");
 
       if (typeof res === "object" && body.name) {
-        WebStorage.availabilities.add(res.id, body.name)
+        WebStorage.availabilities.add(res.id, body.name);
       }
 
       setError(null);
